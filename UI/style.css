@@ -196,7 +196,7 @@ label input{
   margin: 20px;
   float:right;
 }
-#postquestion{
+#postquestion, #comment{
   display: none;
   width: 70%;
 }
