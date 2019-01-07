@@ -6,6 +6,11 @@
         Questioner
      </title>
         <link rel="stylesheet"href="style.css">
+      <script>
+      function openForm(fid) {
+ document.getElementById(fid).style.display = "block";
+   }
+      </script>
       </head>
       <body>
         <div class="header">
@@ -15,7 +20,21 @@
    </div>
         <div class="body_container">
           <h1>Meetups created.</h1>
-          <p>Create meetup? <button  type="button" class="createbtn">create</button></p>
+          <p>Create meetup? <button onclick="openForm('myForm')" type="button" class="createbtn">create</button></p>
+          <div class="meetup-form" id="myForm">
+  <form class="form-container">
+    <h1>Create a meetup</h1>
+
+    <p ><b>Title:</b></p>
+    <input type="text" placeholder="Enter Title" name="title" required>
+
+    <p><b>Description:</b></p>
+    <textarea  id="postmeetup" cols="108" rows="10" placeholder="Write your Description here"></textarea>
+
+    <button type="submit" class="btn">Submit</button>
+    <button type="button" class="clbtn" onclick="closeForm()">Close</button>
+</form>
+</div>
           <hr>
           <div class="row">
               <a  onclick="Openmeetup('quiz')">
