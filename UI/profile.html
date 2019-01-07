@@ -15,8 +15,8 @@
        }
        document.getElementById(div_id).style.display='block'
      }
-     function openForm() {
-document.getElementById("postquestion").style.display = "block";
+     function openForm(fid) {
+document.getElementById(fid).style.display = "block";
   }
      </script>
    </head>
@@ -76,9 +76,15 @@ document.getElementById("postquestion").style.display = "block";
        <div id="quiz" class="question">
          <div class="left">
            <h1> Dancing routines</h1>
-           <h2> Top questions <button onclick="openForm()" type="button" class="askbtn">Ask</button></h2>
+           <h2> Top questions <button onclick="openForm('postquestion')" type="button" class="askbtn">Ask</button></h2>
               <textarea name="question" id="postquestion"  placeholder="Post your question here."></textarea>
            <p><b> What are the hardest routines in hiphop?</b></p>
+           <div class="feedback">
+    <p><i class="fa fa-thumbs-up"></i>27
+       <i class="fa fa-thumbs-down"></i>9
+       <a onclick="openForm('comment')"><i  class="fa fa-comment-o"></i></a>
+     </p>
+</div>
 
          </div>
          <div class="right">
