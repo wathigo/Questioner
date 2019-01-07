@@ -9,10 +9,14 @@
      <script>
      function openForm(form_id){
        if (form_id == 'register'){
-         document.getElementById('login').style.display='none'
+         document.getElementById('login').style.display='none';
        }
-       else {
-         document.getElementById('register').style.display='none'
+       else if(form_id == 'login') {
+         document.getElementById('register').style.display='none';
+       }
+       else{
+         document.getElementById('login').style.display='none';
+         document.getElementById('register').style.display='none';
        }
        var i, body_content;
        body_content = document.getElementsByClassName("body_content");
@@ -33,9 +37,9 @@
    </head>
    <body>
      <div class="header">
-  <a href="#default" class="name">Qustioner</a>
+  <a href="index.html" class="name">Qustioner</a>
   <div class="header-right">
-    <a href="#home">Admin</a>
+    <a onclick="openForm('Admnlogin')">Admin</a>
     <a onclick="openForm('login')">login</a>
     <a onclick="openForm('register')">signup</a>
   </div>
@@ -113,6 +117,28 @@
         <div class="btns">
         <button type="button" onclick="closeForm('login')" class="cancelbtn">Cancel</button>
         <button onclick="location.href='profile.html'" type="submit" class="signupbtn">Sign In</button>
+      </div>
+
+    </div>
+  </form>
+</div>
+<div id="Admnlogin" class="signIn_form">
+  <span onclick="closeForm('login')" class="close" title="Close signIn_form">&times;</span>
+  <form class="signIn_form-content">
+    <div class="container">
+      <h1>Sign In</h1>
+      <p>Please fill in this form to log in to your account.</p>
+      <hr>
+
+      <label for="email"><b>Email:</b></label>
+      <input type="text" placeholder="Enter Email" id="email" required>
+
+      <label for="psw"><b>Password:</b></label>
+      <input type="password" placeholder="Enter Password" id="psw" required>
+
+        <div class="btns">
+        <button type="button" onclick="closeForm('login')" class="cancelbtn">Cancel</button>
+        <button onclick="location.href='admin.html'" type="submit" class="signupbtn">Sign In</button>
       </div>
 
     </div>
