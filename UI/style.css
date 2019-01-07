@@ -112,7 +112,7 @@
   float: left;
 }
 #nav-toggle{
-  font-size: 30px;
+  font-size: 20px;
 }
 .footer {
   background-color:#900C3F;
@@ -196,7 +196,7 @@ label input{
   margin: 20px;
   float:right;
 }
-#postquestion{
+#postquestion, #comment{
   display: none;
   width: 70%;
 }

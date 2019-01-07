@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
     <head>
       <meta charset="utf-8">
@@ -22,14 +23,7 @@ document.getElementById(fid).style.display = "block";
    </head>
      <body>
        <div class="header">
-         <div class="dropdown">
-        <a id="nav-toggle" href="#">&#9776;</a>
-        <div class="dropdown-content">
-  <a href="#">Top questions</a>
-  <a href="#">Questions posted</a>
-  <a href="#">Quetsions commented on</a>
-</div>
-</div>
+        <a id="nav-toggle" onclick="Openmeetup('profile')">My profile</a>
     <div class="header-right">
       <a href="index.html">Questioner</a>
     </div>
@@ -85,7 +79,7 @@ document.getElementById(fid).style.display = "block";
        <a onclick="openForm('comment')"><i  class="fa fa-comment-o"></i></a>
      </p>
 </div>
-
+<textarea name="question" id="comment"  placeholder="Comment"></textarea>
          </div>
          <div class="right">
            <p>Are you going to attend?</p>
@@ -93,9 +87,43 @@ document.getElementById(fid).style.display = "block";
             <button  type="button" class="acbtn">no</button>
        </div>
      </div>
+     <div id="profile" class="question">
+       <div class="left">
+         <h2> Top question feeds </h2>
+         <p><b> What are the hardest routines in hiphop?</b></p>
+         <div class="feedback">
+  <p><i class="fa fa-thumbs-up"></i>27
+     <i class="fa fa-thumbs-down"></i>9
+     <a onclick="openForm('comment')"><i  class="fa fa-comment-o"></i></a>
+   </p>
+</div>
+<textarea name="question" id="comment"  placeholder="Comment"></textarea>
+         <p><b> What are the hardest routines in hiphop?</b></p>
+         <div class="feedback">
+  <p><i class="fa fa-thumbs-up"></i>27
+     <i class="fa fa-thumbs-down"></i>9
+     <a onclick="openForm('comment')"><i  class="fa fa-comment-o"></i></a>
+   </p>
+</div>
+<textarea name="question" id="comment"  placeholder="Comment"></textarea>
+         <p><b> What are the hardest routines in hiphop?</b></p>
+         <div class="feedback">
+  <p><i class="fa fa-thumbs-up"></i>27
+     <i class="fa fa-thumbs-down"></i>9
+     <a onclick="openForm('comment')"><i  class="fa fa-comment-o"></i></a>
+   </p>
+</div>
+<textarea name="question" id="comment"  placeholder="Comment"></textarea>
+</div>
+     <div class="right">
+      <p>Questions posted: 10</p>
+      <p>Questions commented: 26</p>
+     </div>
+   </div>
 
 
        <div class="footer">
          <p>@2019 Questioner. All rights reserved.</p>
        </div>
      </body>
+</html>
