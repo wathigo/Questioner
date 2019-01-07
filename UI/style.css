@@ -200,4 +200,8 @@ label input{
   display: none;
   width: 70%;
 }
+.delbtn{
+  background-color: red;
+  border-radius: 2px;
+}
 </style>
