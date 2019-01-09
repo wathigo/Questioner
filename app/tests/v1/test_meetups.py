@@ -22,4 +22,4 @@ class TestMeetups(unittest.TestCase):
                 "Description": "There will be a meetup for gamers on 25th of August..."
                 }),\
             headers={"content-type": "application/json"})
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 201)
