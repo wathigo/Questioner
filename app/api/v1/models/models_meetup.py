@@ -7,11 +7,10 @@ class MeetupRecord():
 
     def save(self, title, description):
         data = {
-        "createdOn" : datetime.datetime.now(),
-        "id" : len(meetup_rec)+1,
-        "Title": title,
-        "Description": description
-        }
+            "createdOn" : datetime.datetime.now(),
+            "id" : len(meetup_rec)+1,
+            "Title": title,
+            "Description": description}
         meetup_rec.append(data)
         return meetup_rec
 
