@@ -23,3 +23,6 @@ class TestMeetups(unittest.TestCase):
                 }),\
             headers={"content-type": "application/json"})
         self.assertEqual(response.status_code, 201)
+
+    def test_02_get(self):
+        response = self.client.get('/api/v1/meetups', headers={"content-type": "application/json"})
