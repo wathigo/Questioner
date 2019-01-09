@@ -18,3 +18,8 @@ class TestVotes(unittest.TestCase):
         response = self.client.patch('/api/v1/questions/1/upvote', \
             headers={"content-type": "application/json"})
         self.assertEqual(response.status_code, 201)
+
+    def test_patch_downvote(self):
+        response = self.client.patch('/api/v1/questions/1/downvote', \
+            headers={"content-type": "application/json"})
+        self.assertEqual(response.status_code, 201)
