@@ -6,8 +6,9 @@ api = Api(version_one)
 
 from .views.views_meetups import Meetup, Meetups
 from .views.views_questions import Questions
-from .views.views_votes import Upvotes
+from .views.views_votes import Upvotes, Downvotes
 api.add_resource(Meetup, '/meetups')
 api.add_resource(Meetups, '/meetups/<int:id>')
 api.add_resource(Questions, '/meetups/<int:id>/questions')
 api.add_resource(Upvotes, '/questions/<int:id>/upvote')
+api.add_resource(Downvotes, '/questions/<int:id>/downvote')
