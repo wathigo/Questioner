@@ -11,3 +11,6 @@ class MeetupRecord():
         }
         meetup_rec.append(data)
         return meetup_rec
+
+    def get_items(self):
+        return meetup_rec

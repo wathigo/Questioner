@@ -12,4 +12,8 @@ class Meetup(MeetupRecord, Resource):
         title = data['Title']
         description = data['Description']
         responce = self.rec.save(title, description)
-        return make_response(jsonify({"My new comment records are": responce}), 201)
+        return make_response(jsonify({"My new meetup records are": responce}), 201)
+
+    def get(self):
+        data = self.rec.get_items()
+        return make_response(jsonify({"My new meetup records are": data}), 201)
