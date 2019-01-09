@@ -9,7 +9,7 @@ class VotesRecord():
     def find(self, id):
         response = None
         for item in self.rec:
-            if item['id'] == id:
+            if item['question_id'] == id:
                 response = item
         return response
 
@@ -37,4 +37,13 @@ class VotesRecord():
             return record
         else: ### record does not exists
             response = self.save(id, True)
+        return response
+
+    def downvote(self, id):
+        record = self.find(id)
+        if record is not None:  ### Record exists...
+            record['downvotes'] = record['downvotes'] + 1
+            return record
+        else: ### record does not exists
+            response = self.save(id, False)
         return response
