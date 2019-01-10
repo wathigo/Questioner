@@ -1,5 +1,6 @@
 ## Questioner
 [![Build Status](https://travis-ci.org/wathigo/Questioner.svg?branch=develop)](https://travis-ci.org/wathigo/Questioner)
+[![Coverage Status](https://coveralls.io/repos/github/wathigo/Questioner/badge.svg?branch=develop)](https://coveralls.io/github/wathigo/Questioner?branch=develop)
 
 This is a platform where users can post questions that they want addressed during a meetup. Those who want to  attend can then upvote or downvote the question. Users can also comment to a question.
 Here are the concepts that are necessary for completion of this project:
