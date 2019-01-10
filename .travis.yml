@@ -5,6 +5,7 @@ python:
 
 install:
     - pip install -r requirements.txt
+    - pip install coveralls
 
 script:
     - pytest --cov=./app
@@ -13,3 +14,6 @@ script:
 branches:
     only:
       - develop
+
+after_success:
+    - coveralls
