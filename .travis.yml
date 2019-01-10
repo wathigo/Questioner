@@ -8,8 +8,7 @@ install:
     - pip install coveralls
 
 script:
-    - pytest 
-
+    - coverage run --source=app -m pytest && coverage report
 
 branches:
     only:
