@@ -9,6 +9,12 @@
          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
      <script>
      function Openmeetup(div_id){
+       if (div_id == "quiz"){
+         document.getElementById("profile").style.display = "none"
+       }
+       else{
+         document.getElementById("quiz").style.display = "none"
+       }
        var i, body_content;
        body_content = document.getElementsByClassName("body_container");
        for (i = 0; i < body_content.length; i++){
@@ -17,7 +23,7 @@
        document.getElementById(div_id).style.display='block'
      }
      function openForm(fid) {
-document.getElementById(fid).style.display = "block";
+       document.getElementById(fid).style.display = "block";
   }
      </script>
    </head>

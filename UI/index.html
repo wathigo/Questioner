@@ -10,9 +10,11 @@
      function openForm(form_id){
        if (form_id == 'register'){
          document.getElementById('login').style.display='none';
+         document.getElementById('Admnlogin').style.display='none';
        }
        else if(form_id == 'login') {
          document.getElementById('register').style.display='none';
+         document.getElementById('Admnlogin').style.display='none';
        }
        else{
          document.getElementById('login').style.display='none';
@@ -94,7 +96,7 @@
 
         <div class="btns">
         <button type="button" onclick="closeForm('register')" class="cancelbtn">Cancel</button>
-        <button type="submit" class="signupbtn">Sign Up</button>
+        <button type="submit" onclick="location.href='profile.html'" class="signupbtn">Sign Up</button>
       </div>
 
     </div>
@@ -137,7 +139,7 @@
       <input type="password" placeholder="Enter Password" id="psw" required>
 
         <div class="btns">
-        <button type="button" onclick="closeForm('login')" class="cancelbtn">Cancel</button>
+        <button type="button" onclick="closeForm('Admnlogin')" class="cancelbtn">Cancel</button>
         <button onclick="location.href='admin.html'" type="submit" class="signupbtn">Sign In</button>
       </div>
 

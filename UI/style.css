@@ -150,7 +150,6 @@
   margin-left: 50px;
   margin-right: 50px;
   height: 700px;
-  overflow: scroll;
   color: white;
 }
 .signIn_form-content .container{
@@ -226,5 +225,21 @@ label input{
 }
 textarea{
   width: 80%;
+}
+.submitbtn, .btn{
+  background-color: #900C3F;
+  color: white;
+  border-radius: 15px;
+  height: 40px;
+  width: 100px;
+}
+.cancelbtn, .clbtn{
+  background-color: #FF0000;
+  color: white;
+  border-radius: 15px;
+  float: right;
+  height: 40px;
+  width: 100px;
+  margin-right: 65px;
 }
 </style>
