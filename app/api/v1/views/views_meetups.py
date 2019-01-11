@@ -1,14 +1,14 @@
 """ import the necessary modules """
 from flask import jsonify, make_response, request
 from flask_restful import Resource
-from ....utils.validators import ValidateMeetup
+from ....utils.validators import Views
 from ..models.models_meetup import MeetupRecord
 
 class Meetup(MeetupRecord, Resource):
     """ enpoints to route without a meetup id """
     def __init__(self):
         self.rec = MeetupRecord()
-        self.validate = ValidateMeetup()
+        self.validate = Views()
 
     def post(self):
         """ post endpoint for meetup record craetion """
