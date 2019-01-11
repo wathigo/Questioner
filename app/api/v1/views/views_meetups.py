@@ -1,16 +1,21 @@
 """ import the necessary modules """
 from flask import jsonify, make_response, request
 from flask_restful import Resource
+from ....utils.validators import ValidateMeetup
 from ..models.models_meetup import MeetupRecord
 
 class Meetup(MeetupRecord, Resource):
     """ enpoints to route without a meetup id """
     def __init__(self):
         self.rec = MeetupRecord()
+        self.validate = ValidateMeetup()
 
     def post(self):
         """ post endpoint for meetup record craetion """
         data = request.get_json()
+        valid = self.validate.validate_keys(data)
+        if not valid:
+            return make_response(jsonify({"Error": "Invalid key"}), 400)
         title = data['Title']
         description = data['Description']
         date = data['Date']
