@@ -1,7 +1,7 @@
 
 """ Class to validate views """
 class Views():
-    """ Validate post meetup request keys """
+    """ Edge cases for views """
     def validate_keys(self, data):
         try:
             title = data['Title']
@@ -14,9 +14,19 @@ class Views():
         return data
 
     def validate_question_keys(self, data):
+        """ Edge case for post question request endpoint"""
         try:
             question = data['question']
 
-        except:
+        except KeyError:
+            data = False
+        return data
+
+    def validate_reserve_keys(self, data):
+        """ Edge case for post reserve request """
+        try:
+            status = data['status']
+
+        except KeyError:
             data = False
         return data
