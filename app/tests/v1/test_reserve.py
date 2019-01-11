@@ -17,7 +17,7 @@ class TestQuestions(unittest.TestCase):
     def create_record(self):
         response = self.client.post('/api/v1/meetups/1/rsvps', \
             data=json.dumps({
-                "reserve" : "yes"
+                "status" : "yes"
                 }),\
             headers={"content-type": "application/json"})
         return response
