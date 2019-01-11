@@ -9,14 +9,14 @@ class Upvotes(VotesRecord, Resource):
         self.rec = VotesRecord()
 
     def patch(self, id):
-        response = self.rec.upvote(id)
+        response = self.rec.vote(id, True)
         return make_response(jsonify({"My updated votes records are": response}), 201)
 
 
-class Downvotes(VotesRecord, Resource):
+class Downvotes(Upvotes, VotesRecord, Resource):
     def __init__(self):
-        self.rec = VotesRecord()
+        super(Downvotes, self).__init__()
 
     def patch(self, id):
-        response = self.rec.downvote(id)
+        response = self.rec.vote(id, False)
         return make_response(jsonify({"My updated votes records are": response}), 201)
