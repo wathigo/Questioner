@@ -30,20 +30,11 @@ class VotesRecord():
         self.rec.append(data)
         return self.rec
 
-    def upvote(self, id):
+    def vote(self, id, vote):
         record = self.find(id)
         if record is not None:  ### Record exists...
             record['upvotes'] = record['upvotes'] + 1
             return record
         else: ### record does not exists
-            response = self.save(id, True)
-        return response
-
-    def downvote(self, id):
-        record = self.find(id)
-        if record is not None:  ### Record exists...
-            record['downvotes'] = record['downvotes'] + 1
-            return record
-        else: ### record does not exists
-            response = self.save(id, False)
+            response = self.save(id, vote)
         return response
