@@ -1,25 +1,28 @@
 import datetime
-meetup_rec = []
+MEETUP_RECORD = []
 
 class MeetupRecord():
     def __init__(self):
-        self.mettup_records = meetup_rec
+        self.meetup_records = MEETUP_RECORD
 
-    def save(self, title, description):
+    def save(self, title, description, date, location):
         data = {
             "createdOn" : datetime.datetime.now(),
-            "id" : len(meetup_rec)+1,
+            "id" : len(self.meetup_records)+1,
             "Title": title,
-            "Description": description}
-        meetup_rec.append(data)
-        return meetup_rec
+            "Description": description,
+            "Date" : date,
+            "Location" : location
+            }
+        self.meetup_records.append(data)
+        return self.meetup_records
 
     def get_items(self):
-        return meetup_rec
+        return self.meetup_records
 
     def get_item(self, item_id):
         item = None
-        for record in meetup_rec:
+        for record in self.meetup_records:
             if record['id'] == item_id:
                 item = record
         return item

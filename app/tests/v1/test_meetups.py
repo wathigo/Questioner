@@ -18,7 +18,9 @@ class TestMeetups(unittest.TestCase):
         response = self.client.post('/api/v1/meetups', \
             data=json.dumps({
                 "Title": "Gaming",
-                "Description": "There will be a meetup for gamers on 25th of August..."
+                "Description": "There will be a meetup for gamers on 25th of August...",
+                "Date" : "25th of November",
+                "Location" : "Moi Avenue"
                 }),\
             headers={"content-type": "application/json"})
         return response
@@ -30,7 +32,21 @@ class TestMeetups(unittest.TestCase):
 
     def test_02_get(self):
         response = self.client.get('/api/v1/meetups', headers={"content-type": "application/json"})
+        self.assertEqual(response.status_code, 200)
 
     def test_03_get(self):
         self.create_record()
-        response = self.client.get('/api/v1/meetups/1', headers={"content-type": "application/json"})
+        response = self.client.get('/api/v1/meetups/1', \
+        headers={"content-type": "application/json"})
+        self.assertEqual(response.status_code, 200)
+
+    def test_o4_put(self):
+        self.create_record()
+        response = self.client.put('/api/v1/meetups/1', \
+            data=json.dumps({
+                "Title": "Gaming",
+                "Description": "There will be a meetup for gamers on 25th of August...",
+                "Date" : "25th of August",
+                "Location" : "Andela Kenya"
+                }), headers={"content-type": "application/json"})
+        self.assertEqual(response.status_code, 200)
