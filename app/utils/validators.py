@@ -28,6 +28,22 @@ class Views():
             response = valid_email
         return response
 
+    def validate_user_login(self, data):
+        """ Validate user login """
+        response = False
+        try:
+            email = data['Email']
+            password = data['Password']
+        except KeyError:
+            response = 'Invalid keys'
+        valid_email = self.validate_email(email)
+        valid_password = self.validate_password(password)
+        if valid_email:
+            response = valid_email
+        if valid_password:
+            response = valid_password
+        return response
+
     def validate_email(self, email):
         response = False
         if re.match(r"(^[a-zA-z0-9_.]+@[a-zA-z0-9-]+\.[a-z]+$)", email) is None:
