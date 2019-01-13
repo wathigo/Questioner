@@ -40,13 +40,13 @@ class Meetups(MeetupRecord, Resource):
         if item is not None: ### item found
             return make_response(jsonify({"My meetup record is": item}), 200)
         else:
-            return make_response(jsonify({"Message": "Item not found!"}))
+            return make_response(jsonify({"Message": "Item not found!"}), 404)
 
     def put(self, id):
         data = request.get_json()
         item = self.rec.get_item(id)
         if item is None: ### item not found
-            return make_response(jsonify({"Message": "Item not found!"}), 204)
+            return make_response(jsonify({"Message": "Item not found!"}), 404)
         item['Title'] = data['Title']
         item['Description'] = data['Description']
         item['Date'] = data['Date']

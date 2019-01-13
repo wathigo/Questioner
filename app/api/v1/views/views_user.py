@@ -23,3 +23,25 @@ class Users(UserRecord, Resource):
         password = data['Password']
         response = self.rec.save(fname, lname, email, password)
         return make_response(jsonify({"My new meetup records are": response}), 201)
+
+
+class UserLogin(UserRecord, Resource):
+    """ class to login a user """
+    def __init__(self):
+        self.rec = UserRecord()
+        self.validate = Views()
+
+    def post(self):
+        """ post request endpoint for user login """
+        data = request.get_json()
+        valid = self.validate.validate_user_login(data)
+        if valid:
+            return make_response(jsonify({"Error": valid}), 400)
+        email = data['Email']
+        password = data['Password']
+        user = self.rec.authenticate_user(email, password)
+        if not user:
+            return make_response(jsonify({"Error": "User not found"}), 404)
+        if user == 'f':
+            return make_response(jsonify({"Message": "Password does not match!"}), 400)
+        return make_response(jsonify({"Message": user}), 200)
