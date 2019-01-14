@@ -15,9 +15,12 @@ class Questions(QuestionRecord, Resource):
         data = request.get_json()
         valid = self.validate.validate_question_keys(data)
         if not valid:
-            return make_response(jsonify({"Error": "Invalid key"}), 400)
+            return make_response(jsonify({"status" : 400,
+                                          "Error": "Invalid key"}), 400)
         question = data['question']
         response = self.question_models.save(id, question)
         if response is not None:
-            return make_response(jsonify({"My new question records are": response}), 201)
-        return make_response(jsonify({"Error": "Record could not be created"}), 500)
+            return make_response(jsonify({"status" : 201,
+                                          "My new question records are": response}), 201)
+        return make_response(jsonify({"status" : 500,
+                                      "Error": "Record could not be created"}), 500)

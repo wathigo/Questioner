@@ -16,13 +16,15 @@ class Users(UserRecord, Resource):
         data = request.get_json()
         valid = self.validate.validate_user(data)
         if valid:
-            return make_response(jsonify({"Error": valid}), 400)
+            return make_response(jsonify({"status" : 400,
+                                          "Error": valid}), 400)
         fname = data['FirstName']
         lname = data['LastName']
         email = data['Email']
         password = data['Password']
         response = self.rec.save(fname, lname, email, password)
-        return make_response(jsonify({"My new meetup records are": response}), 201)
+        return make_response(jsonify({"status" : 201,
+                                      "My new meetup records are": response}), 201)
 
 
 class UserLogin(UserRecord, Resource):
@@ -36,12 +38,16 @@ class UserLogin(UserRecord, Resource):
         data = request.get_json()
         valid = self.validate.validate_user_login(data)
         if valid:
-            return make_response(jsonify({"Error": valid}), 400)
+            return make_response(jsonify({"status" : 400,
+                                          "Error": valid}), 400)
         email = data['Email']
         password = data['Password']
         user = self.rec.authenticate_user(email, password)
         if not user:
-            return make_response(jsonify({"Error": "User not found"}), 404)
+            return make_response(jsonify({"status" : 404,
+                                          "Error": "User not found"}), 404)
         if user == 'f':
-            return make_response(jsonify({"Message": "Password does not match!"}), 400)
-        return make_response(jsonify({"Message": user}), 200)
+            return make_response(jsonify({"status" : 400,
+                                          "Message": "Password does not match!"}), 400)
+        return make_response(jsonify({"status" :200,
+                                      "Message": user}), 200)
