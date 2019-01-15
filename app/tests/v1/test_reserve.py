@@ -15,7 +15,7 @@ class TestQuestions(unittest.TestCase):
         self.client = self.app.test_client()
 
     def create_record(self):
-        response = self.client.post('/api/v1/meetups/1/rsvps', \
+        response = self.client.post('/api/v1/meetups/1/rsvps/user/1', \
             data=json.dumps({
                 "status" : "yes"
                 }),\
