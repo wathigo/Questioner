@@ -13,10 +13,10 @@ class Meetup(MeetupRecord, Resource):
     def post(self):
         """ post endpoint for meetup record creation """
         data = request.get_json()
-        valid = self.validate.validate_keys(data)
-        if not valid:
+        valid = self.validate.validate_meetups(data)
+        if valid:
             return make_response(jsonify({"status" : 400,
-                                          "Error": "Invalid key"}), 400)
+                                          "Error": valid}), 400)
         title = data['Title']
         description = data['Description']
         date = data['Date']

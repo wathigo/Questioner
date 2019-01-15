@@ -67,15 +67,19 @@ class Views():
 
     def validate_meetups(self, data):
         """ Validate meetups requests"""
+        response = False
         try:
             title = data['Title']
             description = data['Description']
             date = data['Date']
             location = data['Location']
-
         except KeyError:
-            data = False
-        return data
+            response = "invalid key!"
+        invalid_data = self.validate_all_values(data)
+        if invalid_data:
+            response = invalid_data
+        return response
+
 
     def validate_question_keys(self, data):
         """ Edge case for post question request endpoint"""
