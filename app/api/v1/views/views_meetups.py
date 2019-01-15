@@ -23,13 +23,13 @@ class Meetup(MeetupRecord, Resource):
         location = data['Location']
         responce = self.rec.save(title, description, date, location)
         return make_response(jsonify({"status" : 201,
-                                      "My new meetup records are": responce}), 201)
+                                      "data": responce}), 201)
 
     def get(self):
         """ get endpoint to get all the records """
         data = self.rec.get_items()
         return make_response(jsonify({"status": 200,
-                                      "My meetup records are": data}), 200)
+                                      "data": data}), 200)
 
 
 class Meetups(MeetupRecord, Resource):
@@ -42,7 +42,7 @@ class Meetups(MeetupRecord, Resource):
         item = self.rec.get_item(id)
         if item is not None: ### item found
             return make_response(jsonify({"status" : 200,
-                                          "My meetup record is": item}), 200)
+                                          "data": item}), 200)
         else:
             return make_response(jsonify({"status" : 404,
                                           "Message": "Item not found!"}), 404)
@@ -58,4 +58,4 @@ class Meetups(MeetupRecord, Resource):
         item['Date'] = data['Date']
         item['Location'] = data['Location']
         return make_response(jsonify({"status" : 200,
-                                      "Record updated successfully": item}), 200)
+                                      "data": item}), 200)

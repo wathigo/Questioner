@@ -7,7 +7,7 @@ class TestReserve(BaseTests):
     """Tests for Reserve record requsts"""
     def create_record(self):
         """ Create a new reserve record for testing"""
-        response = self.client.post('/api/v1/meetups/1/rsvps/user/1', \
+        response = self.client.post('/api/v1/meetups/1/rsvps', \
             data=json.dumps({
                 "status" : "yes"
                 }),\

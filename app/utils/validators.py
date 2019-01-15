@@ -16,7 +16,7 @@ class Views():
             password = data['Password']
             rpassword = data['RepeatPassword']
         except KeyError:
-            response = "Invalid keys"
+            response = "Missing field!"
         valid_email = self.validate_email(email)
         valid_password = self.validate_password(password)
         if password != rpassword:
@@ -34,7 +34,7 @@ class Views():
             email = data['Email']
             password = data['Password']
         except KeyError:
-            response = 'Invalid keys'
+            response = 'Missing field!'
         response = self.validate_string(data)
         valid_email = self.validate_email(email)
         valid_password = self.validate_password(password)
@@ -74,7 +74,7 @@ class Views():
             date = data['Date']
             location = data['Location']
         except KeyError:
-            response = "invalid key!"
+            response = "Missing field!"
         invalid_data = self.validate_all_values(data)
         if invalid_data:
             response = invalid_data
@@ -83,12 +83,16 @@ class Views():
 
     def validate_question_keys(self, data):
         """ Edge case for post question request endpoint"""
+        response = False
         try:
             question = data['question']
 
         except KeyError:
-            data = False
-        return data
+            data = "Missing field!"
+        invalid = self.validate_all_values(data)
+        if invalid:
+            response = "This value for this field is required!"
+        return response
 
     def validate_reserve_keys(self, data):
         """ Edge case for post reserve request """
@@ -97,7 +101,7 @@ class Views():
             status = data['status']
 
         except KeyError:
-            response = "Invalid key!"
+            response = "Missing field!"
         invalid_value = self.validate_all_values(data)
         is_string = self.validate_string(data)
         if is_string:
@@ -111,7 +115,7 @@ class Views():
         response = False
         for key in data:
             if data[key] == "":
-                response = "All fields are required!"
+                response = "All values for the fields are required!"
         return response
 
     def validate_string(self, data):
