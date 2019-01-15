@@ -83,12 +83,16 @@ class Views():
 
     def validate_question_keys(self, data):
         """ Edge case for post question request endpoint"""
+        response = False
         try:
             question = data['question']
 
         except KeyError:
-            data = False
-        return data
+            data = "Missing field!"
+        invalid = self.validate_all_values(data)
+        if invalid:
+            response = "This value is required!"
+        return response
 
     def validate_reserve_keys(self, data):
         """ Edge case for post reserve request """
