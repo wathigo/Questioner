@@ -28,5 +28,19 @@ This project requires a number of the following packages installed.
 5. Install the necessary packages 'pip install -r requirements.txt'.
 6. Enter 'Flask run' to test the API.
 
+### API Endpoints(v1)
+| **HTTP METHOD**  | **URI**                                        |  **DESCRIPTION**           |
+| -----------      | -----------                                    |  ---------------           |
+| **POST**         | /api/v1/auth/signup                            |  Create a new user.        |  
+| **POST**         | /api/v1/auth/login                             |  Login a user.             |
+| **POST**         | /api/v1/meetups                                |  Create a new meetup.      |
+| **GET**          | /api/v1/meetups                                |  Get all the meetups.      |
+| **GET**          | /api/v1/meetups/<int:id>                       |  Get a specific meetup.    |
+| **PUT**          | /api/v1/meetups/<int:id>                       |  Update a meetup record.   |
+| **POST**         | /api/v1/meetups/<int:id>/rsvps/user/<int:uid>  |  Reserve for a meetup.     |
+| **POST**         | /api/v1/meetups/<int:id>/questions             |  Create a question record. |
+| **PATCH**        | /api/v1/questions/<int:id>/upvote              |  Upvote a qustion.         |
+| **PATCH**        | /api/v1//questions/<int:id>/downvote           |  Downvote a question.      |
+
 ### Running Tests
 Enter 'coverage run --source=app -m pytest && coverage report' command to run tests.
