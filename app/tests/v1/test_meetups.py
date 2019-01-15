@@ -1,20 +1,11 @@
 """ import the necessary modules """
-
-import unittest
 import json
+from . import BaseTests
 
-from app import create_app
-
-from run import appl
-
-class TestMeetups(unittest.TestCase):
-
-    def setUp(self):
-        appl.testing = True
-        self.app = create_app()
-        self.client = self.app.test_client()
-
+class TestMeetups(BaseTests):
+    """ Class to test meetup record requests """
     def create_record(self):
+        """ craete a new meetup record for testing"""
         response = self.client.post('/api/v1/meetups', \
             data=json.dumps({
                 "Title": "Gaming",
@@ -27,20 +18,24 @@ class TestMeetups(unittest.TestCase):
 
     ###Test meetups creation
     def test_01_post(self):
+        """ test meetup creation endpoint"""
         response = self.create_record()
         self.assertEqual(response.status_code, 201)
 
     def test_02_get(self):
+        """ Test get all meetup records endpoint"""
         response = self.client.get('/api/v1/meetups', headers={"content-type": "application/json"})
         self.assertEqual(response.status_code, 200)
 
     def test_03_get(self):
+        """ Test get specific meetup endpoint"""
         self.create_record()
         response = self.client.get('/api/v1/meetups/1', \
         headers={"content-type": "application/json"})
         self.assertEqual(response.status_code, 200)
 
     def test_o4_put(self):
+        """ Test put meetup endpoint"""
         self.create_record()
         response = self.client.put('/api/v1/meetups/1', \
             data=json.dumps({

@@ -1,20 +1,12 @@
 """ import the necessary modules """
-
-import unittest
 import json
-from app import create_app
-from run import appl
+from . import BaseTests
 
 
-""" class to test reserve endpoint """
-class TestQuestions(unittest.TestCase):
-
-    def setUp(self):
-        appl.testing = True
-        self.app = create_app()
-        self.client = self.app.test_client()
-
+class TestReserve(BaseTests):
+    """Tests for Reserve record requsts"""
     def create_record(self):
+        """ Create a new reserve record for testing"""
         response = self.client.post('/api/v1/meetups/1/rsvps/user/1', \
             data=json.dumps({
                 "status" : "yes"
@@ -23,5 +15,6 @@ class TestQuestions(unittest.TestCase):
         return response
 
     def test_01_post(self):
+        """ Test post reserve endpoint"""
         response = self.create_record()
         self.assertEqual(response.status_code, 201)

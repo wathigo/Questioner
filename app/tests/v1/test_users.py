@@ -1,20 +1,10 @@
 """ import the necessary modules """
-
-import unittest
 import json
-
-from app import create_app
-from run import appl
+from . import BaseTests
 
 
-class TestUser(unittest.TestCase):
+class TestUser(BaseTests):
     """ class to test users"""
-    def setUp(self):
-        """ set up for running tests """
-        appl.testing = True
-        self.app = create_app()
-        self.client = self.app.test_client()
-
     def create_record(self):
         """ Create a new user record for testing """
         response = self.client.post('/api/v1/auth/signup', \
