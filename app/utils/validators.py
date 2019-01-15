@@ -7,6 +7,8 @@ class Views():
     def validate_user(self, data):
         """ validate user registration"""
         response = False
+        response = self.validate_all_values(data)
+        response = self.validate_string(data)
         try:
             fname = data['FirstName']
             lname = data['LastName']
@@ -17,9 +19,6 @@ class Views():
             response = "Invalid keys"
         valid_email = self.validate_email(email)
         valid_password = self.validate_password(password)
-        for key in data:
-            if not data[key]:
-                response = 'All fields are required'
         if password != rpassword:
             response = "password does not match!"
         if valid_password is not False:
@@ -36,6 +35,8 @@ class Views():
             password = data['Password']
         except KeyError:
             response = 'Invalid keys'
+        response = self.validate_all_values(data)
+        response = self.validate_string(data)
         valid_email = self.validate_email(email)
         valid_password = self.validate_password(password)
         if valid_email:
@@ -45,33 +46,27 @@ class Views():
         return response
 
     def validate_email(self, email):
+        """ Valiadte email format """
         response = False
         if re.match(r"(^[a-zA-z0-9_.]+@[a-zA-z0-9-]+\.[a-z]+$)", email) is None:
             response = "Invalid email address!"
         return response
 
     def validate_password(self, password):
-        if len(password) < 9:
-            response = "Password must be at least 8 characters long!"
-
-        elif re.search('[0-9]', password) is None:
+        """ Validate user password"""
+        if re.search('[0-9]', password) is None:
             response = 'Password must have at least one number!'
-
-        elif re.search('[A-Z]', password) is None:
-            response = 'Password must have at least one capital letter!'
 
         elif re.search('[a-z]', password) is None:
             response = 'Password must have at least one alphabet letter!'
-
-        elif re.search('[!,#,$,%,&,*,+,-,<,=,>,?,@,^,_,{,|,},~,]', password) is None:
-            response = 'Password must have at least a special character!'
 
         else:
             return False
         return response
 
 
-    def validate_keys(self, data):
+    def validate_meetups(self, data):
+        """ Validate meetups requests"""
         try:
             title = data['Title']
             description = data['Description']
@@ -99,3 +94,22 @@ class Views():
         except KeyError:
             data = False
         return data
+
+    def validate_all_values(self, data):
+        """ Validate if all fields are provided """
+        response = False
+        for key in data:
+            if data[key] == "":
+                response = "All fields are required!"
+        return response
+
+    def validate_string(self, data):
+        """ Valiadate if a value is a string"""
+        response = False
+        if isinstance(data, dict):
+            for key in data:
+                if not isinstance(data[key], str):
+                    response = "All fields must be strings!"
+        elif not isinstance(data, str):
+            response = "This field must be a string!"
+        return response

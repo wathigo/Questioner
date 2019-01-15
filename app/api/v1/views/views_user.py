@@ -24,7 +24,7 @@ class Users(UserRecord, Resource):
         password = data['Password']
         response = self.rec.save(fname, lname, email, password)
         return make_response(jsonify({"status" : 201,
-                                      "My new meetup records are": response}), 201)
+                                      "data": response}), 201)
 
 
 class UserLogin(UserRecord, Resource):
