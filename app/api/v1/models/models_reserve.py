@@ -7,8 +7,9 @@ class ReserveRecord():
     def __init__(self):
         self.records = RESERVE_RECORD
 
-    def save(self, id, reserve):
+    def save(self, id, user_id, reserve):
         data = {
+            "user" : user_id,
             "meetup_id" : id,
             "reserved_on" : datetime.datetime.now(),
             "status" : reserve
