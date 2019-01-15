@@ -35,7 +35,6 @@ class Views():
             password = data['Password']
         except KeyError:
             response = 'Invalid keys'
-        response = self.validate_all_values(data)
         response = self.validate_string(data)
         valid_email = self.validate_email(email)
         valid_password = self.validate_password(password)
@@ -43,6 +42,7 @@ class Views():
             response = valid_email
         if valid_password:
             response = valid_password
+        response = self.validate_all_values(data)
         return response
 
     def validate_email(self, email):
