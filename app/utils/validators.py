@@ -92,12 +92,19 @@ class Views():
 
     def validate_reserve_keys(self, data):
         """ Edge case for post reserve request """
+        response = False
         try:
             status = data['status']
 
         except KeyError:
-            data = False
-        return data
+            response = "Invalid key!"
+        invalid_value = self.validate_all_values(data)
+        is_string = self.validate_string(data)
+        if is_string:
+            response = is_string
+        if invalid_value:
+            response = "This field is required!"
+        return response
 
     def validate_all_values(self, data):
         """ Validate if all fields are provided """
