@@ -27,7 +27,7 @@ class TestValidators(BaseTests):
             "Password" : ""
             }
         response = Views().validate_user_login(data)
-        self.assertEqual(response, "All fields are required!")
+        self.assertEqual(response, "All values for the fields are required!")
 
     def test_meetups_validation(self):
         """ test cerate meetups data validation"""
@@ -38,7 +38,7 @@ class TestValidators(BaseTests):
             "Loction" : "Kakamaga"
             }
         response = Views().validate_meetups(data)
-        self.assertEqual(response, "invalid key!")
+        self.assertEqual(response, "Missing field!")
 
     def test_reserve_validation(self):
         """ Test for reserve validation"""
