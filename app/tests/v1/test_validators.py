@@ -19,6 +19,10 @@ class TestValidators(BaseTests):
         data['Email'] = "wathigosimon@gmail.com"
         response = Views().validate_user(data)
         self.assertEqual(response, "All fields must be strings!")
+        data['FirstName'] = "Simon"
+        data['Password'] = "memory_Bad"
+        response = Views().validate_user(data)
+        self.assertEqual(response, "Password must have at least one number!")
 
     def test_user_login(self):
         """ Test for user login validators"""
