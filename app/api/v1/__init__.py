@@ -13,7 +13,7 @@ from .views.views_user import Users, UserLogin
 api.add_resource(Users, '/auth/signup')
 api.add_resource(UserLogin, '/auth/login')
 api.add_resource(Meetup, '/meetups')
-api.add_resource(Meetups, '/meetups/<int:id>')
+api.add_resource(Meetups, '/meetups/<int:id>/upcoming')
 api.add_resource(Reserve, '/meetups/<int:id>/rsvps')
 api.add_resource(Questions, '/meetups/<int:id>/questions')
 api.add_resource(Upvotes, '/questions/<int:id>/upvote')
