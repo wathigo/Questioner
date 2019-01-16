@@ -88,7 +88,7 @@ class Views():
             question = data['question']
 
         except KeyError:
-            data = "Missing field!"
+            response = "Missing field!"
         invalid = self.validate_all_values(data)
         if invalid:
             response = "This value for this field is required!"
@@ -101,7 +101,7 @@ class Views():
             status = data['status']
 
         except KeyError:
-            response = "Missing field!"
+            response = "Missing fied!"
         invalid_value = self.validate_all_values(data)
         is_string = self.validate_string(data)
         if is_string:

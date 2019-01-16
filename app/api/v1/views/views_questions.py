@@ -21,6 +21,6 @@ class Questions(QuestionRecord, Resource):
         response = self.question_models.save(id, question)
         if response is not None:
             return make_response(jsonify({"status" : 201,
-                                          "data": response}), 201)
+                                          "My new question records are": response}), 201)
         return make_response(jsonify({"status" : 500,
                                       "Error": "Record could not be created"}), 500)
