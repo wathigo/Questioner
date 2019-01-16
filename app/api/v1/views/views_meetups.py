@@ -25,8 +25,13 @@ class Meetup(MeetupRecord, Resource):
         return make_response(jsonify({"status" : 201,
                                       "data": responce}), 201)
 
+class MeetupsUpcoming(MeetupRecord, Resource):
+    """ enpoints to get the upcoming meetups """
+    def __init__(self):
+        self.rec = MeetupRecord()
+
     def get(self):
-        """ get endpoint to get all the records """
+        """ get endpoint to get all the the upcoming meetups """
         data = self.rec.get_items()
         return make_response(jsonify({"status": 200,
                                       "data": data}), 200)
@@ -48,6 +53,7 @@ class Meetups(MeetupRecord, Resource):
                                           "Message": "Item not found!"}), 404)
 
     def put(self, id):
+        """ Update a specific meetup """
         data = request.get_json()
         item = self.rec.get_item(id)
         if item is None: ### item not found

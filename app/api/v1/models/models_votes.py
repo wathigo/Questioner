@@ -9,31 +9,33 @@ class VotesRecord():
     def find(self, id):
         response = None
         for item in self.rec:
-            if item['question_id'] == id:
+            if item['meetup_id'] == id:
                 response = item
         return response
 
     def save(self, id, vote):
         ### True arguement is for an Upvote
         data = {
-            "question_id" : id,
-            "upvotes" : 0,
-            "downvotes" : 0,
+            "meetup_id" : id,
+            "votes" : 0,
             "voted_on" : datetime.datetime.now()
         }
         ### True arguement is for an Upvote
         if vote:
-            data['upvotes'] = data['upvotes'] + 1
+            data['votes'] = data['votes'] + 1
             ### False arguement is for an downvote
-        else:
-            data['downvotes'] = data['downvotes'] + 1
+        elif data['votes'] > 0:
+            data['downvotes'] = data['votes'] - 1
         self.rec.append(data)
         return self.rec
 
     def vote(self, id, vote):
         record = self.find(id)
         if record is not None:  ### Record exists...
-            record['upvotes'] = record['upvotes'] + 1
+            if vote:
+                record['votes'] = record['votes'] + 1
+            elif record['votes'] > 0:
+                record['votes'] = record['votes'] - 1
             return record
         else: ### record does not exists
             response = self.save(id, vote)

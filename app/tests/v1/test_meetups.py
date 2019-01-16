@@ -24,7 +24,8 @@ class TestMeetups(BaseTests):
 
     def test_02_get(self):
         """ Test get all meetup records endpoint"""
-        response = self.client.get('/api/v1/meetups', headers={"content-type": "application/json"})
+        response = self.client.get('/api/v1/meetups/upcoming', \
+        headers={"content-type": "application/json"})
         self.assertEqual(response.status_code, 200)
 
     def test_03_get(self):
