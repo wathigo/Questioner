@@ -24,8 +24,8 @@ class VotesRecord():
         if vote:
             data['votes'] = data['votes'] + 1
             ### False arguement is for an downvote
-        elif data['votes'] > 1:
-            data['downvotes'] = data['downvotes'] - 1
+        elif data['votes'] > 0:
+            data['downvotes'] = data['votes'] - 1
         self.rec.append(data)
         return self.rec
 
@@ -34,7 +34,7 @@ class VotesRecord():
         if record is not None:  ### Record exists...
             if vote:
                 record['votes'] = record['votes'] + 1
-            elif record['votes'] > 1:
+            elif record['votes'] > 0:
                 record['votes'] = record['votes'] - 1
             return record
         else: ### record does not exists
