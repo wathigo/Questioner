@@ -4,6 +4,7 @@ from flask import Blueprint
 
 version_one = Blueprint('api_v1', __name__, url_prefix='/api/v1')
 api = Api(version_one)
+""" import classes containg the endpoints """
 from .views.views_meetups import Meetup, Meetups, MeetupsUpcoming
 from .views.views_questions import Questions
 from .views.views_votes import Upvotes, Downvotes
