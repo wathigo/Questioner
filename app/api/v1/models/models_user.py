@@ -1,32 +1,28 @@
-""" import database module """
-from ....utils.database import db_conn, create_tables
+""" import datetime module """
+import datetime
+USER_RECORDS = []
 
 
 class UserRecord():
     """ Views for user records """
     def __init__(self):
-        self.db = db_conn()
+        self.records = USER_RECORDS
 
     def save(self, fname, lname, email, password):
         """ Add a new record entry to the data structure"""
         data = {
+            "userId" : len(self.records)+1,
+            "CreatedOn" : datetime.datetime.now(),
             "FirstName" : fname,
             "LastName" : lname,
             "Email" : email,
             "Password" : password
         }
-        query = """INSERT INTO users(FirstName, LastName, Email, Password)
-        VALUES ('%s', '%s', '%s', '%s');""" % \
-        (data['FirstName'], data['LastName'], data['Email'], data['Password'])
+        self.records.append(data)
+        return self.records
 
-        save = self.db
-        cur = save.cursor()
-        cur.execute(query)
-        save.commit()
-        return data
-
-    """def authenticate_user(self, email, password):
-        Check if user exists and compare password
+    def authenticate_user(self, email, password):
+        """ Check if user exists and compare password"""
         user = None
         login = False
         for item in self.records:
@@ -38,4 +34,4 @@ class UserRecord():
                 login = 'Login successful'
             else:
                 login = 'f'
-        return login"""
+        return login

@@ -24,8 +24,8 @@ class TestUser(BaseTests):
         response = self.create_record()
         self.assertEqual(response.status_code, 201)
 
-    """def test_02_post(self):
-        Test for user login 
+    def test_02_post(self):
+        """ Test for user login """
         self.create_record()
         response = self.client.post('/api/v1/auth/login', \
             data=json.dumps({
@@ -33,4 +33,4 @@ class TestUser(BaseTests):
                 "Password" : "bill_Bond23",
                 }),\
             headers={"content-type": "application/json"})
-        self.assertEqual(response.status_code, 200)"""
+        self.assertEqual(response.status_code, 200)
