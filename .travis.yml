@@ -11,7 +11,7 @@ install:
     - pip install codeclimate-test-reporter
 
 before_script:
-    -psql -c 'create database Questioner;' -U postgres
+    - psql -c 'create database Questioner;' -U postgres
 
 script:
     - coverage run --source=app -m pytest && coverage report
