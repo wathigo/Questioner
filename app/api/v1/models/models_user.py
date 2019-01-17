@@ -25,9 +25,8 @@ class UserRecord():
         save.commit()
         return data
 
-
-"""    def authenticate_user(self, email, password):
-         Check if user exists and compare password
+    """def authenticate_user(self, email, password):
+        Check if user exists and compare password
         user = None
         login = False
         for item in self.records:
@@ -39,4 +38,4 @@ class UserRecord():
                 login = 'Login successful'
             else:
                 login = 'f'
-        return login  """
+        return login"""
