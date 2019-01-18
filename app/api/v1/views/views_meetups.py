@@ -21,7 +21,7 @@ class Meetup(MeetupRecord, Resource):
         description = data['Description']
         date = data['Date']
         location = data['Location']
-        responce = self.rec.save(title, description, date, location)
+        responce = self.rec.create_record(title, description, date, location)
         return make_response(jsonify({"status" : 201,
                                       "data": responce}), 201)
 
@@ -45,23 +45,22 @@ class Meetups(MeetupRecord, Resource):
     def get(self, id):
         """ get endpoint to get a specific meetup record """
         item = self.rec.get_item(id)
-        if item is not None: ### item found
+        if item: ### item found
             return make_response(jsonify({"status" : 200,
                                           "data": item}), 200)
-        else:
-            return make_response(jsonify({"status" : 404,
-                                          "Message": "Item not found!"}), 404)
+        return make_response(jsonify({"status" : 404,
+                                      "Message": "Item not found!"}), 404)
 
     def put(self, id):
         """ Update a specific meetup """
         data = request.get_json()
         item = self.rec.get_item(id)
-        if item is None: ### item not found
+        if item is False: ### item not found
             return make_response(jsonify({"status" : 404,
                                           "Message": "Item not found!"}), 404)
-        item['Title'] = data['Title']
-        item['Description'] = data['Description']
-        item['Date'] = data['Date']
-        item['Location'] = data['Location']
+        item[0]['Title'] = data['Title']
+        item[0]['Description'] = data['Description']
+        item[0]['Date'] = data['Date']
+        item[0]['Location'] = data['Location']
         return make_response(jsonify({"status" : 200,
                                       "data": item}), 200)
