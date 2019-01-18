@@ -34,7 +34,7 @@ This project requires a number of the following packages installed.
 | **POST**         | /api/v1/auth/signup                        |  Create a new user.        |  
 | **POST**         | /api/v1/auth/login                         |  Login a user.             |
 | **POST**         | /api/v1/meetups                            |  Create a new meetup.      |
-| **GET**          | /api/v1/meetups                            |  Get all the meetups.      |
+| **GET**          | /api/v1/meetups/upcoming                   |  Get all the meetups.      |
 | **GET**          | /api/v1/meetups/<int:id>                   |  Get a specific meetup.    |
 | **PUT**          | /api/v1/meetups/<int:id>                   |  Update a meetup record.   |
 | **POST**         | /api/v1/meetups/<int:id>/rsvps             |  Reserve for a meetup.     |
