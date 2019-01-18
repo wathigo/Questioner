@@ -13,12 +13,13 @@ class Reserve(ReserveRecord, Resource):
         self.validate = Views()
 
     def post(self, id):
+        """ Post endpoint for post reserve endpoint"""
         data = request.get_json()
         valid = self.validate.validate_reserve_keys(data)
         if valid:
             return make_response(jsonify({"status" : 400,
                                           "Error": valid}), 400)
         reserve = data['status']
-        response = self.rec.save(id, reserve)
+        response = self.rec.create_reserve_record(id, reserve)
         return make_response(jsonify({"status" : 201,
                                       "data": response}), 201)

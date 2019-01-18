@@ -2,6 +2,7 @@
 MEETUP_RECORD = []
 QUESTION_RECORD = []
 USER_RECORD = []
+RESERVE_RECORD = []
 
 
 class BaseModels(object):
@@ -17,6 +18,8 @@ class BaseModels(object):
             record_type = QUESTION_RECORD
         elif self.record == 'user':
             record_type = USER_RECORD
+        elif self.record == 'reserve':
+            record_type = RESERVE_RECORD
         return record_type
 
     def check_exists(self, key, value):
