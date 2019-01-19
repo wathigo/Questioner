@@ -7,15 +7,15 @@ class MeetupRecord(BaseModels):
     def __init__(self):
         self.records = BaseModels('meetup')
 
-    def create_record(self, title, description, date, location):
+    def create_record(self, data):
         """ create a new meetup record """
         data = {
             "createdOn" : datetime.datetime.now(),
             "id" : self.records.check_record_size()+1,
-            "Title": title,
-            "Description": description,
-            "Date" : date,
-            "Location" : location
+            "Title": data['Title'],
+            "Description": data['Description'],
+            "Date" : data['Date'],
+            "Location" : data['Location']
             }
         record = self.records.save(data)
         return record
