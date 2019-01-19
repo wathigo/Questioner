@@ -1,32 +1,10 @@
 """ import the necessary modules"""
 import re
+from marshmallow import ValidationError
 
 
 class Views():
     """ Validate views """
-    def validate_user(self, data):
-        """ validate user registration"""
-        response = False
-        response = self.validate_all_values(data)
-        response = self.validate_string(data)
-        try:
-            fname = data['FirstName']
-            lname = data['LastName']
-            email = data['Email']
-            password = data['Password']
-            rpassword = data['RepeatPassword']
-        except KeyError:
-            response = "Missing field!"
-        valid_email = self.validate_email(email)
-        valid_password = self.validate_password(password)
-        if password != rpassword:
-            response = "password does not match!"
-        if valid_password is not False:
-            response = valid_password
-        if valid_email is not False:
-            response = valid_email
-        return response
-
     def validate_user_login(self, data):
         """ Validate user login """
         response = False
@@ -49,20 +27,20 @@ class Views():
         """ Valiadte email format """
         response = False
         if re.match(r"(^[a-zA-z0-9_.]+@[a-zA-z0-9-]+\.[a-z]+$)", email) is None:
-            response = "Invalid email address!"
+            raise ValidationError("Invalid email address!")
         return response
 
     def validate_password(self, password):
         """ Validate user password"""
+        self.validate_all_values(password)
         if re.search('[0-9]', password) is None:
-            response = 'Password must have at least one number!'
+            raise ValidationError('Password must have at least one number!')
 
         elif re.search('[a-z]', password) is None:
-            response = 'Password must have at least one alphabet letter!'
+            raise ValidationError('Password must have at least one alphabet letter!')
 
         else:
-            return False
-        return response
+            return password
 
 
     def validate_meetups(self, data):
@@ -110,13 +88,13 @@ class Views():
             response = "This field is required!"
         return response
 
-    def validate_all_values(self, data):
+    def validate_all_values(self, value):
         """ Validate if all fields are provided """
-        response = False
-        for key in data:
-            if data[key] == "":
-                response = "All values for the fields are required!"
-        return response
+        if isinstance(value, str):
+            if not value.strip(' '):
+                raise ValidationError('This field cannot be empty!')
+        elif value:
+            return value
 
     def validate_string(self, data):
         """ Valiadate if a value is a string"""

@@ -2,47 +2,38 @@
 from flask import jsonify, make_response, request
 from flask_restful import Resource
 from ..models.models_user import UserRecord
-from ....utils.validators import Views
+from ....utils.validators_schema import UserValidate
+
 
 
 class Users(UserRecord, Resource):
     """User record endpoints"""
     def __init__(self):
         self.record = UserRecord()
-        self.validate = Views()
 
     def post(self):
         """ post endpoint for user registration """
-        data = request.get_json()
-        valid = self.validate.validate_user(data)
-        if valid:
+        json_data = request.get_json()
+        data, errors = UserValidate().load(json_data)
+        if errors:
             return make_response(jsonify({"status" : 400,
-                                          "Error": valid}), 400)
-        fname = data['FirstName']
-        lname = data['LastName']
-        email = data['Email']
-        password = data['Password']
-        response = self.record.create_user(fname, lname, email, password)
-        return make_response(jsonify({"status" : 201,
-                                      "data": response}), 201)
+                                          "Error": errors}), 400)
+        if json_data['Password'] != json_data['RepeatPassword']:
+            return make_response(jsonify({"status" : 400,
+                                          "Error": "Passwords does not match!"}), 400)
+        response = self.record.create_user(json_data)
+        return make_response(jsonify({"status" : 201, "data": response}), 201)
 
 
 class UserLogin(UserRecord, Resource):
     """ class to login a user """
     def __init__(self):
-        self.rec = UserRecord()
-        self.validate = Views()
+        self.models = UserRecord()
 
     def post(self):
         """ post request endpoint for user login """
         data = request.get_json()
-        valid = self.validate.validate_user_login(data)
-        if valid:
-            return make_response(jsonify({"status" : 400,
-                                          "Error": valid}), 400)
-        email = data['Email']
-        password = data['Password']
-        user = self.rec.authenticate_user(email, password)
+        user = self.models.authenticate_user(data)
         if not user:
             return make_response(jsonify({"status" : 404,
                                           "Error": "User not found"}), 404)

@@ -8,26 +8,26 @@ class UserRecord(BaseModels):
     def __init__(self):
         self.user_records = BaseModels('user')
 
-    def create_user(self, fname, lname, email, password):
+    def create_user(self, user_data):
         """ Add a new record entry to the data structure"""
         data = {
             "userId" : self.user_records.check_record_size()+1,
             "CreatedOn" : datetime.datetime.now(),
-            "FirstName" : fname,
-            "LastName" : lname,
-            "Email" : email,
-            "Password" : password
+            "FirstName" : user_data['FirstName'],
+            "LastName" : user_data['LastName'],
+            "Email" : user_data['Email'],
+            "Password" : user_data['Password']
         }
         self.user_records.save(data)
         return data
 
-    def authenticate_user(self, email, password):
+    def authenticate_user(self, login_data):
         """ Check if user exists and compare password"""
-        user_record = self.user_records.find('Email', email)
+        user_record = self.user_records.find('Email', login_data['Email'])
         login = False
         if user_record:
             user = user_record
-            if user[0]['Password'] == password:
+            if user[0]['Password'] == login_data['Password']:
                 login = "Login successful"
             else:
                 login = 'f'
