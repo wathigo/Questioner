@@ -1,37 +1,34 @@
 """ import datetime module """
 import datetime
-USER_RECORDS = []
+from .models_base import BaseModels
 
 
-class UserRecord():
-    """ Views for user records """
+class UserRecord(BaseModels):
+    """ Models for user records """
     def __init__(self):
-        self.records = USER_RECORDS
+        self.user_records = BaseModels('user')
 
-    def save(self, fname, lname, email, password):
+    def create_user(self, fname, lname, email, password):
         """ Add a new record entry to the data structure"""
         data = {
-            "userId" : len(self.records)+1,
+            "userId" : self.user_records.check_record_size()+1,
             "CreatedOn" : datetime.datetime.now(),
             "FirstName" : fname,
             "LastName" : lname,
             "Email" : email,
             "Password" : password
         }
-        self.records.append(data)
-        return self.records
+        self.user_records.save(data)
+        return data
 
     def authenticate_user(self, email, password):
         """ Check if user exists and compare password"""
-        user = None
+        user_record = self.user_records.find('Email', email)
         login = False
-        for item in self.records:
-            if item['Email'] == email:
-                user = item
-                break
-        if user is not None:
-            if user['Password'] == password:
-                login = 'Login successful'
+        if user_record:
+            user = user_record
+            if user[0]['Password'] == password:
+                login = "Login successful"
             else:
                 login = 'f'
         return login

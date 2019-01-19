@@ -3,7 +3,7 @@ import datetime
 from .models_base import BaseModels
 
 class MeetupRecord(BaseModels):
-    """ Contructor that calls the Constructor in BaseModels"""
+    """ Constructor that calls the Constructor in BaseModels"""
     def __init__(self):
         self.records = BaseModels('meetup')
 

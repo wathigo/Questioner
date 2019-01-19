@@ -8,7 +8,7 @@ from ....utils.validators import Views
 class Users(UserRecord, Resource):
     """User record endpoints"""
     def __init__(self):
-        self.rec = UserRecord()
+        self.record = UserRecord()
         self.validate = Views()
 
     def post(self):
@@ -22,7 +22,7 @@ class Users(UserRecord, Resource):
         lname = data['LastName']
         email = data['Email']
         password = data['Password']
-        response = self.rec.save(fname, lname, email, password)
+        response = self.record.create_user(fname, lname, email, password)
         return make_response(jsonify({"status" : 201,
                                       "data": response}), 201)
 
