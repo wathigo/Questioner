@@ -1,7 +1,7 @@
 """ import the necessary modules """
 from flask import jsonify, make_response, request
 from flask_restful import Resource
-from ....utils.validators import Views
+from ....utils.validators_schema import QuestionValidate
 
 from ..models.models_question import QuestionRecord
 
@@ -9,16 +9,15 @@ class Questions(QuestionRecord, Resource):
     """ Class to implement question endpont """
     def __init__(self):
         self.question_models = QuestionRecord()
-        self.validate = Views()
 
     def post(self, id):
         """ post question request endpoint implementation"""
-        data = request.get_json()
-        valid = self.validate.validate_question_keys(data)
-        if valid:
+        json_data = request.get_json()
+        data, errors = QuestionValidate().load(json_data)
+        if errors:
             return make_response(jsonify({"status" : 400,
-                                          "Error": valid}), 400)
-        question = data['question']
+                                          "Error": errors}), 400)
+        question = json_data['question']
         response = self.question_models.create_record(id, question)
         if response is not None:
             return make_response(jsonify({"status" : 201,

@@ -11,9 +11,14 @@ class UserValidate(Schema):
     Password = fields.Str(required=True, validate=Views().validate_password)
     RepeatPassword = fields.Str(required=True, validate=Views().validate_password)
 
+
 class MeetupValidate(Schema):
-    """ Validate data for mee creation """
+    """ Validate data for meetup creation """
     Title = fields.Str(required=True, validate=Views().validate_all_values)
     Description = fields.Str(required=True, validate=Views().validate_all_values)
     Date = fields.Date(required=True)
     Location = fields.Str(required=True, validate=Views().validate_all_values)
+
+class QuestionValidate(Schema):
+    """ Validate data for question creation """
+    question = fields.Str(required=True, validate=Views().validate_all_values)
