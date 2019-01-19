@@ -19,6 +19,12 @@ class MeetupValidate(Schema):
     Date = fields.Date(required=True)
     Location = fields.Str(required=True, validate=Views().validate_all_values)
 
+
 class QuestionValidate(Schema):
     """ Validate data for question creation """
     question = fields.Str(required=True, validate=Views().validate_all_values)
+
+
+class ReserveValidate(Schema):
+    """ Validate data for meetup reserve endpoint """
+    status = fields.Str(required=True, validate=Views().validate_reserve)

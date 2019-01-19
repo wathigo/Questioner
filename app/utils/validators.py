@@ -31,3 +31,11 @@ class Views():
                 raise ValidationError('This field cannot be empty!')
         elif value:
             return value
+
+    def validate_reserve(self, value):
+        """ Validate reserve record"""
+        self.validate_all_values(value)
+        if value in('yes', 'no', 'maybe'):
+            return value
+        raise ValidationError("Wrong choice for this field. \
+                               Valid choices are 'yes' 'no' or 'maybe'")
