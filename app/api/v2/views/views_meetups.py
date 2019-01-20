@@ -1,6 +1,7 @@
-""" import the necessary modules """
+""" import third party modules """
 from flask import jsonify, make_response, request
 from flask_restful import Resource
+""" Local imports """
 from ....utils.validators_schema import MeetupValidate
 from ..models.models_meetup import MeetupRecord
 
