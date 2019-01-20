@@ -4,14 +4,13 @@ from flask import Blueprint
 
 version_two = Blueprint('api_v2', __name__, url_prefix='/api/v2')
 api = Api(version_two)
+""" import classes containg the endpoints """
 from .views.views_meetups import Meetup, Meetups, MeetupsUpcoming
-from .views.views_questions import Questions
-from .views.views_votes import Upvotes, Downvotes
+from .views.views_questions import Questions, Upvotes, Downvotes
 from .views.views_reserve import Reserve
-from .views.views_user import Users, UserLogin
+from .views.views_user import Users
 
 api.add_resource(Users, '/auth/signup')
-api.add_resource(UserLogin, '/auth/login')
 api.add_resource(Meetup, '/meetups')
 api.add_resource(MeetupsUpcoming, '/meetups/upcoming')
 api.add_resource(Meetups, '/meetups/<int:id>')

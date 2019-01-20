@@ -6,8 +6,7 @@ version_one = Blueprint('api_v1', __name__, url_prefix='/api/v1')
 api = Api(version_one)
 """ import classes containg the endpoints """
 from .views.views_meetups import Meetup, Meetups, MeetupsUpcoming
-from .views.views_questions import Questions
-from .views.views_votes import Upvotes, Downvotes
+from .views.views_questions import Questions, Upvotes, Downvotes
 from .views.views_reserve import Reserve
 from .views.views_user import Users, UserLogin
 

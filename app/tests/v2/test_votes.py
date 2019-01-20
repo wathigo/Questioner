@@ -1,5 +1,4 @@
 """ import the necessary modules """
-import json
 from . import BaseTests
 
 

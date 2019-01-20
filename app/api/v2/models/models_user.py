@@ -24,18 +24,3 @@ class UserRecord():
         cur.execute(query)
         save.commit()
         return data
-
-    """def authenticate_user(self, email, password):
-        Check if user exists and compare password
-        user = None
-        login = False
-        for item in self.records:
-            if item['Email'] == email:
-                user = item
-                break
-        if user is not None:
-            if user['Password'] == password:
-                login = 'Login successful'
-            else:
-                login = 'f'
-        return login"""

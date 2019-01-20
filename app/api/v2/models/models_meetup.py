@@ -1,28 +1,33 @@
+""" import datetime module """
 import datetime
-MEETUP_RECORD = []
+from .models_base import BaseModels
 
-class MeetupRecord():
+class MeetupRecord(BaseModels):
+    """ Constructor that calls the Constructor in BaseModels"""
     def __init__(self):
-        self.meetup_records = MEETUP_RECORD
+        self.records = BaseModels('meetup')
 
-    def save(self, title, description, date, location):
+    def create_record(self, data):
+        """ create a new meetup record """
         data = {
             "createdOn" : datetime.datetime.now(),
-            "id" : len(self.meetup_records)+1,
-            "Title": title,
-            "Description": description,
-            "Date" : date,
-            "Location" : location
+            "id" : self.records.check_record_size()+1,
+            "Title": data['Title'],
+            "Description": data['Description'],
+            "Date" : data['Date'],
+            "Location" : data['Location']
             }
-        self.meetup_records.append(data)
-        return self.meetup_records
+        record = self.records.save(data)
+        return record
 
     def get_items(self):
-        return self.meetup_records
+        """ Return the whole data structure"""
+        return self.records.return_record()
 
     def get_item(self, item_id):
-        item = None
-        for record in self.meetup_records:
-            if record['id'] == item_id:
-                item = record
-        return item
+        """ get a specific item """
+        found = False
+        item = self.records.find('id', item_id)
+        if item:
+            found = item
+        return found

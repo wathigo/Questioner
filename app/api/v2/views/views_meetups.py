@@ -1,29 +1,25 @@
-""" import the necessary modules """
+""" import third party modules """
 from flask import jsonify, make_response, request
 from flask_restful import Resource
-from ....utils.validators import Views
+""" Local imports """
+from ....utils.validators_schema import MeetupValidate
 from ..models.models_meetup import MeetupRecord
 
 class Meetup(MeetupRecord, Resource):
     """ enpoints to route without a meetup id """
     def __init__(self):
         self.rec = MeetupRecord()
-        self.validate = Views()
 
     def post(self):
         """ post endpoint for meetup record creation """
         data = request.get_json()
-        valid = self.validate.validate_meetups(data)
-        if valid:
+        data, errors = MeetupValidate().load(data)
+        if errors:
             return make_response(jsonify({"status" : 400,
-                                          "Error": valid}), 400)
-        title = data['Title']
-        description = data['Description']
-        date = data['Date']
-        location = data['Location']
-        responce = self.rec.save(title, description, date, location)
+                                          "Error": errors}), 400)
+        response = self.rec.create_record(data)
         return make_response(jsonify({"status" : 201,
-                                      "data": responce}), 201)
+                                      "data": response}), 201)
 
 class MeetupsUpcoming(MeetupRecord, Resource):
     """ enpoints to get the upcoming meetups """
@@ -45,23 +41,26 @@ class Meetups(MeetupRecord, Resource):
     def get(self, id):
         """ get endpoint to get a specific meetup record """
         item = self.rec.get_item(id)
-        if item is not None: ### item found
+        if item: ### item found
             return make_response(jsonify({"status" : 200,
                                           "data": item}), 200)
-        else:
-            return make_response(jsonify({"status" : 404,
-                                          "Message": "Item not found!"}), 404)
+        return make_response(jsonify({"status" : 404,
+                                      "Message": "Item not found!"}), 404)
 
     def put(self, id):
         """ Update a specific meetup """
         data = request.get_json()
+        data, errors = MeetupValidate().load(data)
+        if errors:
+            return make_response(jsonify({"status" : 400,
+                                          "Error": errors}), 400)
         item = self.rec.get_item(id)
-        if item is None: ### item not found
+        if item is False: ### item not found
             return make_response(jsonify({"status" : 404,
                                           "Message": "Item not found!"}), 404)
-        item['Title'] = data['Title']
-        item['Description'] = data['Description']
-        item['Date'] = data['Date']
-        item['Location'] = data['Location']
+        item[0]['Title'] = data['Title']
+        item[0]['Description'] = data['Description']
+        item[0]['Date'] = data['Date']
+        item[0]['Location'] = data['Location']
         return make_response(jsonify({"status" : 200,
                                       "data": item}), 200)

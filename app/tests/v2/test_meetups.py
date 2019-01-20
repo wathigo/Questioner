@@ -10,7 +10,7 @@ class TestMeetups(BaseTests):
             data=json.dumps({
                 "Title": "Gaming",
                 "Description": "There will be a meetup for gamers on 25th of August...",
-                "Date" : "25th of November",
+                "Date" : "1971-09-23",
                 "Location" : "Moi Avenue"
                 }),\
             headers={"content-type": "application/json"})
@@ -42,7 +42,7 @@ class TestMeetups(BaseTests):
             data=json.dumps({
                 "Title": "Gaming",
                 "Description": "There will be a meetup for gamers on 25th of August...",
-                "Date" : "25th of August",
+                "Date" : "2019-09-23",
                 "Location" : "Andela Kenya"
                 }), headers={"content-type": "application/json"})
         self.assertEqual(response.status_code, 200)
