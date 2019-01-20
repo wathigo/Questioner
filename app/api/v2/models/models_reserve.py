@@ -1,17 +1,19 @@
+""" import the necessary modules """
 import datetime
+from .models_base import BaseModels
 
-RESERVE_RECORD = []
 
-class ReserveRecord():
+class ReserveRecord(BaseModels):
     """Models for reserve record."""
     def __init__(self):
-        self.records = RESERVE_RECORD
+        self.record = BaseModels('reserve')
 
-    def save(self, id, reserve):
+    def create_reserve_record(self, meetup_id, reserve):
+        """ Create a new reserve record """
         data = {
-            "meetup_id" : id,
+            "meetup_id" : meetup_id,
             "reserved_on" : datetime.datetime.now(),
             "status" : reserve
         }
-        self.records.append(data)
+        self.record.save(data)
         return data
