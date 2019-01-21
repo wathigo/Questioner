@@ -8,19 +8,24 @@ from ....utils.validators_schema import UserValidate
 class Users(UserRecord, Resource):
     """User record endpoints"""
     def __init__(self):
-        self.rec = UserRecord()
+        self.models = UserRecord()
 
     def post(self):
         """ post endpoint for user registration """
-        data = request.get_json()
-        data, errors = UserValidate().load(data)
+        json_data = request.get_json()
+        data, errors = UserValidate().load(json_data)
         if errors:
             return make_response(jsonify({"status" : 400,
                                           "Error": errors}), 400)
-        fname = data['FirstName']
-        lname = data['LastName']
-        email = data['Email']
-        password = data['Password']
-        response = self.rec.save(fname, lname, email, password)
+        response = self.models.create_user(json_data)
         return make_response(jsonify({"status" : 201,
                                       "data": response}), 201)
+
+class UserLogin(UserRecord, Resource):
+    """ Class to authenticate a user"""
+    def __init__(self):
+        self.models = UserRecord()
+    def post(self):
+        """ endpoint for user login"""
+        json_data = request.get_json()
+        response = self.models.authenticate_user(json_data)
