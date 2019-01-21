@@ -1,29 +1,16 @@
-""" Create data structures for the models """
-MEETUP_RECORD = []
-QUESTION_RECORD = []
-USER_RECORD = []
-RESERVE_RECORD = []
+""" Local imports """
+from ....utils.database import db_conn
 
 
-class BaseModels(object):
-    """ Constructer instantiation record variable with the record type"""
+class BaseModels():
+    """ Constructor that creates a connection and initilizes an instant variable table_name"""
     def __init__(self, record):
-        self.record = record
+        self.connection = db_conn()
+        self.table_name = record
 
-    def check_record_type(self):
-        """ Check the record type and return a reference to the data structure"""
-        if self.record == 'meetup':
-            record_type = MEETUP_RECORD
-        elif self.record == 'question':
-            record_type = QUESTION_RECORD
-        elif self.record == 'user':
-            record_type = USER_RECORD
-        elif self.record == 'reserve':
-            record_type = RESERVE_RECORD
-        return record_type
 
     def check_exists(self, key, value):
-        """ Check if an item exists in the data structure """
+        """ Check if an item exists in the database """
         record = self.check_record_type()
         items = [item for item in record if item[key] == value]
         return len(items)
@@ -42,10 +29,12 @@ class BaseModels(object):
         record = self.check_record_type()
         return record
 
-    def save(self, data):
+    def save(self, query, data):
         """ Save data to a database"""
-        record = self.check_record_type()
-        record.append(data)
+        save = self.connection
+        cur = save.cursor()
+        cur.execute(query)
+        save.commit()
         return data
 
     def check_record_size(self):
