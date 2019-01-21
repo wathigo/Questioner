@@ -8,7 +8,10 @@ class UserRecord():
         self.models = BaseModels('user_table')
 
     def create_user(self, user_data):
-        """ Add a new record entry to the data structure"""
+        ''' Add a new record entry to the data structure'''
+        exists = self.models.check_exists('email', user_data['Email'])
+        if exists:
+            return None
         data = {
             "FirstName" : user_data['FirstName'],
             "LastName" : user_data['LastName'],
@@ -21,10 +24,18 @@ class UserRecord():
         query = """INSERT INTO user_table(firstname, lastname, username, \
                                           othername, phonenumber, email, password)
         VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s');""" % \
-        (data['FirstName'], data['LastName'], data['OtherName'], data['UserName'],\
+        (data['FirstName'], data['LastName'], data['UserName'], data['OtherName'],\
          data['PhoneNumber'], data['Email'], data['Password'])
         data = self.models.save(query, data)
         return data
 
     def authenticate_user(self, data):
-        
+        ''' Check if a user exists and compare passwords'''
+        result = True
+        found = self.models.check_exists('email', data['Email'])
+        if not found:
+            return None
+        credentials = self.models.find('email', data['Email'])
+        if credentials[9] != data['Password']:
+            result = False
+        return result
