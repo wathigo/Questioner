@@ -3,7 +3,7 @@ from ....utils.database import db_conn
 
 
 class BaseModels():
-    """ Constructor that creates a connection and initilizes an instant variable table_name"""
+    ''' Constructor that creates a connection and initilizes an instant variable table_name'''
     def __init__(self, record):
         self.connection = db_conn()
         self.table_name = record
@@ -11,12 +11,12 @@ class BaseModels():
 
     def check_exists(self, key, value):
         ''' Check if an item exists in the database '''
-        query = """ SELECT EXISTS (SELECT * FROM {} WHERE {}='{}'"""\
+        query = """ SELECT EXISTS (SELECT * FROM {} WHERE {}='{}');""" \
                     .format(self.table_name, key, value)
         cur = self.connection.cursor()
         cur.execute(query)
         found = cur.fetchone()
-        return found
+        return found[0]
 
     def find(self, key, value):
         ''' Find an item with a specific key and value'''
