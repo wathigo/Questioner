@@ -1,6 +1,7 @@
 """ Import the necessary module """
 from flask import jsonify, make_response, request
 from flask_restful import Resource
+from flask_jwt_extended import jwt_required
 from ....utils.validators_schema import ReserveValidate
 
 from ..models.models_reserve import ReserveRecord
@@ -11,6 +12,7 @@ class Reserve(ReserveRecord, Resource):
     def __init__(self):
         self.rec = ReserveRecord()
 
+    @jwt_required
     def post(self, id):
         """ Post endpoint for post reserve endpoint"""
         json_data = request.get_json()
