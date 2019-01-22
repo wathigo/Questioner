@@ -6,8 +6,14 @@ class MeetupRecord(BaseModels):
     def __init__(self):
         self.records = BaseModels('meetups')
 
-    def create_record(self, data):
+    def create_record(self, data, email):
         """ create a new meetup record """
+        ### Get the userid
+        user_record = BaseModels('user_table')
+        user = user_record.find('email', email)
+        print(user)
+        if user[1] != True:
+            return False
         data = {
             "Title": data['Title'],
             "Description": data['Description'],
