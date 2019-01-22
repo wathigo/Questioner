@@ -17,8 +17,7 @@ class Questions(QuestionRecord, Resource):
         if errors:
             return make_response(jsonify({"status" : 400,
                                           "Error": errors}), 400)
-        question = json_data['question']
-        response = self.question_models.create_record(id, question)
+        response = self.question_models.create_record(id, json_data)
         if response is not None:
             return make_response(jsonify({"status" : 201,
                                           "data": response}), 201)
@@ -36,7 +35,7 @@ class Upvotes(QuestionRecord, Resource):
         response = self.models.vote(id, True)
         if not response:
             return make_response(jsonify({"status" : 404,
-                                          "Error": "Question record not found!"}), 201)
+                                          "Error": "The question record could not be retrieved!"}), 404)
         return make_response(jsonify({"status" : 201,
                                       "data": response}), 201)
 
@@ -49,5 +48,8 @@ class Downvotes(Upvotes):
     def patch(self, id):
         """ downvote question endpoint implementation """
         response = self.models.vote(id, False)
+        if not response:
+            return make_response(jsonify({"status" : 404,
+                                          "Error": "The question record could not be retrieved!"}), 404)
         return make_response(jsonify({"status" : 201,
                                       "data": response}), 201)
