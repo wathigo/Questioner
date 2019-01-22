@@ -1,6 +1,7 @@
 """ import third party modules """
 from flask import jsonify, make_response, request
 from flask_restful import Resource
+from flask_jwt_extended import jwt_required
 """ Local imports """
 from ....utils.validators_schema import MeetupValidate
 from ..models.models_meetup import MeetupRecord
@@ -10,6 +11,7 @@ class Meetup(MeetupRecord, Resource):
     def __init__(self):
         self.rec = MeetupRecord()
 
+    @jwt_required
     def post(self):
         """ post endpoint for meetup record creation """
         data = request.get_json()
@@ -26,6 +28,7 @@ class MeetupsUpcoming(MeetupRecord, Resource):
     def __init__(self):
         self.rec = MeetupRecord()
 
+    @jwt_required
     def get(self):
         """ get endpoint to get all the the upcoming meetups """
         data = self.rec.get_items()
@@ -38,6 +41,7 @@ class Meetups(MeetupRecord, Resource):
     def __init__(self):
         self.rec = MeetupRecord()
 
+    @jwt_required
     def get(self, id):
         """ get endpoint to get a specific meetup record """
         item = self.rec.get_item(id)
@@ -46,7 +50,7 @@ class Meetups(MeetupRecord, Resource):
                                           "data": item}), 200)
         return make_response(jsonify({"status" : 404,
                                       "Message": "Item not found!"}), 404)
-
+    @jwt_required
     def put(self, id):
         """ Update a specific meetup """
         data = request.get_json()
