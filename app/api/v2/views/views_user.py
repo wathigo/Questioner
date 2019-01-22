@@ -1,6 +1,7 @@
 """ import the necessary modules """
 from flask import jsonify, make_response, request
 from flask_restful import Resource
+from flask_jwt_extended import create_access_token, create_refresh_token
 from ..models.models_user import UserRecord
 from ....utils.validators_schema import UserValidate
 
@@ -21,8 +22,11 @@ class Users(UserRecord, Resource):
         if not response:
             return make_response(jsonify({"status" : 400,
                                           "Message": "A user with the given Email exists"}), 400)
-
+        access_token = create_access_token(identity=response['Email'])
         return make_response(jsonify({"status" : 201,
+                                      "message" : "Logged in as{}".\
+                                      format(response['Email'].split("@")[0]),
+                                      "Access token" : access_token,
                                       "data": response}), 201)
 
 class UserLogin(UserRecord, Resource):
@@ -40,5 +44,8 @@ class UserLogin(UserRecord, Resource):
         elif response is False:
             return make_response(jsonify({"status" : 400,
                                           "Error": "Wrong username/password!"}), 400)
+        access_token = create_access_token(identity=json_data['Email'])
         return make_response(jsonify({"status" : 200,
-                                      "Message": "Logged in successfully"}), 200)
+                                      "Message": "Logged in as {}"\
+                                      .format(json_data['Email'].split("@")[0]),
+                                      "Access token" : access_token}), 200)
