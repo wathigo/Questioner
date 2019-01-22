@@ -20,5 +20,8 @@ class Reserve(ReserveRecord, Resource):
                                           "Error": errors}), 400)
         reserve = json_data['status']
         response = self.rec.create_reserve_record(id, reserve)
+        if not response:
+            return make_response(jsonify({"status" : 400,
+                                          "Error": "Alredy reserved!"}), 201)
         return make_response(jsonify({"status" : 201,
                                       "data": response}), 201)

@@ -10,10 +10,16 @@ class ReserveRecord(BaseModels):
 
     def create_reserve_record(self, meetup_id, reserve):
         """ Create a new reserve record """
+        meetup = BaseModels('meetups')
+        exists = meetup.check_exists('meetupid', meetup_id)
+        if not exists:
+            return False
         data = {
             "meetup_id" : meetup_id,
-            "reserved_on" : datetime.datetime.now(),
             "status" : reserve
         }
-        self.record.save(data)
+        query = """INSERT INTO reserve(meetupid, response)
+        VALUES ('%s', '%s')""" % \
+        (data['meetup_id'], data['status'])
+        self.record.save(query, data)
         return data
