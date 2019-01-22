@@ -1,7 +1,7 @@
 """ import the necessary modules """
 from flask import jsonify, make_response, request
 from flask_restful import Resource
-from flask_jwt_extended import jwt_required
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from ....utils.validators_schema import QuestionValidate
 
 from ..models.models_question import QuestionRecord
@@ -10,6 +10,7 @@ class Questions(QuestionRecord, Resource):
     """ Class to implement question endpont """
     def __init__(self):
         self.question_models = QuestionRecord()
+
     @jwt_required
     def post(self, id):
         """ post question request endpoint implementation"""
@@ -18,12 +19,13 @@ class Questions(QuestionRecord, Resource):
         if errors:
             return make_response(jsonify({"status" : 400,
                                           "Error": errors}), 400)
-        response = self.question_models.create_record(id, json_data)
-        if response is not None:
+        email = get_jwt_identity()
+        response = self.question_models.create_record(id, json_data, email)
+        if response:
             return make_response(jsonify({"status" : 201,
                                           "data": response}), 201)
-        return make_response(jsonify({"status" : 500,
-                                      "Error": "Record could not be created"}), 500)
+        return make_response(jsonify({"status" : 400,
+                                      "Error": "meetup record does not exists!"}), 400)
 
 
 class Upvotes(QuestionRecord, Resource):

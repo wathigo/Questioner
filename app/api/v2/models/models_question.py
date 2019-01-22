@@ -7,10 +7,19 @@ class QuestionRecord(BaseModels):
     def __init__(self):
         self.record = BaseModels('question')
 
-    def create_record(self, meetup_id, question):
+    def create_record(self, meetup_id, question, email):
         """ Create a meetup record """
+        meetup_record = BaseModels('meetups')
+        meetup = meetup_record.find('meetupid', meetup_id)# check if the meetup exists
+        if not meetup:
+            return False # Return false if it does not exist
+        user_record = BaseModels('user_table') ## Check the userid from the user_table using the
+        user = user_record.find('email', email) # email obtained from the jwt object identity
+        userid = user[0]
+
         data = {
             "meetupId" : meetup_id,
+            "userid" : userid,
             "title" : question['title'],
             "question" : question['question'],
             "votes" : 0
