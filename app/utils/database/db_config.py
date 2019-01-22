@@ -33,7 +33,7 @@ class Tables():
         questionid SERIAL PRIMARY KEY NOT NULL,
         title char varying(30) NOT NULL,
         question char varying(80) NOT NULL,
-        votes integer NULL,
+        votes integer NOT NULL DEFAULT 0,
         userid integer NULL,
         meetupid integer NOT NULL,
         askedon timestamp,
