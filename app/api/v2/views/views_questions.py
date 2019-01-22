@@ -1,6 +1,7 @@
 """ import the necessary modules """
 from flask import jsonify, make_response, request
 from flask_restful import Resource
+from flask_jwt_extended import jwt_required
 from ....utils.validators_schema import QuestionValidate
 
 from ..models.models_question import QuestionRecord
@@ -9,7 +10,7 @@ class Questions(QuestionRecord, Resource):
     """ Class to implement question endpont """
     def __init__(self):
         self.question_models = QuestionRecord()
-
+    @jwt_required
     def post(self, id):
         """ post question request endpoint implementation"""
         json_data = request.get_json()
@@ -30,12 +31,14 @@ class Upvotes(QuestionRecord, Resource):
     def __init__(self):
         self.models = QuestionRecord()
 
+    @jwt_required
     def patch(self, id):
         """ upvote question endpoint implementation """
         response = self.models.vote(id, True)
         if not response:
             return make_response(jsonify({"status" : 404,
-                                          "Error": "The question record could not be retrieved!"}), 404)
+                                          "Error": "The question record \
+                                          could not be retrieved!"}), 404)
         return make_response(jsonify({"status" : 201,
                                       "data": response}), 201)
 
@@ -45,11 +48,13 @@ class Downvotes(Upvotes):
     def __init__(self):
         super(Downvotes, self).__init__()
 
+    @jwt_required
     def patch(self, id):
         """ downvote question endpoint implementation """
         response = self.models.vote(id, False)
         if not response:
             return make_response(jsonify({"status" : 404,
-                                          "Error": "The question record could not be retrieved!"}), 404)
+                                          "Error": "The question record \
+                                          could not be retrieved!"}), 404)
         return make_response(jsonify({"status" : 201,
                                       "data": response}), 201)
