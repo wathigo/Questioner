@@ -22,12 +22,30 @@ class MeetupRecord(BaseModels):
 
     def get_items(self):
         """ Return the whole database"""
-        return self.records.return_record()
+        response = []
+        data = self.records.return_record()
+        for item in data:
+            record = self.modify_response(item)
+            response.append(record)
+        return response
+
+    def modify_response(self, data):
+        """ Method to modify meetup response"""
+        response = {
+            "Title" : data[1],
+            "Description" : data[2],
+            "Venue" : data[3],
+            "Date" : data[4]
+            }
+        return response
 
     def get_item(self, item_id):
         """ get a specific item """
         found = False
         item = self.records.find('meetupid', item_id)
         if item:
-            found = item
+            response = []
+            record = self.modify_response(item)
+            response.append(record)
+            found = response
         return found
