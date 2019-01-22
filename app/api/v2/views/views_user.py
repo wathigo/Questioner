@@ -20,7 +20,7 @@ class Users(UserRecord, Resource):
         response = self.models.create_user(json_data)
         if not response:
             return make_response(jsonify({"status" : 400,
-                                          "Message": "A user with the given Email exists"}), 201)
+                                          "Message": "A user with the given Email exists"}), 400)
 
         return make_response(jsonify({"status" : 201,
                                       "data": response}), 201)
