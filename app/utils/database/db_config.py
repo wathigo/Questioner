@@ -24,9 +24,7 @@ class Tables():
         description char varying(100) NOT NULL,
         location char varying(30) NOT NULL,
         happeningon char(30) NOT NULL,
-        createdon timestamp,
-        userid integer NOT NULL,
-        FOREIGN KEY (userid)  REFERENCES user_table(userid)
+        createdon timestamp
         )"""
 
         """ Create question record creation table"""
