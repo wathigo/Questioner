@@ -34,7 +34,7 @@ class Tables():
         title char varying(30) NOT NULL,
         question char varying(80) NOT NULL,
         votes integer NULL,
-        userid integer NOT NULL,
+        userid integer NULL,
         meetupid integer NOT NULL,
         askedon timestamp,
         FOREIGN KEY (userid) REFERENCES user_table(userid),
@@ -45,11 +45,10 @@ class Tables():
         reserve = """CREATE TABLE IF NOT EXISTS reserve
         (
         id SERIAL NOT NULL,
-        responce char(20) NOT NULL,
-        userid integer NOT NULL,
+        response char(20) NOT NULL,
         meetupid integer NOT NULL,
         reservedon timestamp,
-        PRIMARY KEY (userid, meetupid)
+        PRIMARY KEY (meetupid)
         )"""
         self.query = [users, meetups, question, reserve]
         return self.query
