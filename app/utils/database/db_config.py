@@ -1,3 +1,4 @@
+""" Module to create all the tables"""
 class Tables():
     """ Class to create tables """
     def table_queries(self):
@@ -24,6 +25,8 @@ class Tables():
         description char varying(100) NOT NULL,
         location char varying(30) NOT NULL,
         happeningon char(30) NOT NULL,
+        userid int NOT NULL,
+        FOREIGN KEY (userid) REFERENCES user_table(userid),
         createdon timestamp
         )"""
 
@@ -34,7 +37,7 @@ class Tables():
         title char varying(30) NOT NULL,
         question char varying(80) NOT NULL,
         votes integer NOT NULL DEFAULT 0,
-        userid integer NULL,
+        userid integer NOT NULL,
         meetupid integer NOT NULL,
         askedon timestamp,
         FOREIGN KEY (userid) REFERENCES user_table(userid),
@@ -46,12 +49,13 @@ class Tables():
         (
         id SERIAL NOT NULL,
         response char(20) NOT NULL,
+        userid int NOT NULL,
         meetupid integer NOT NULL,
         reservedon timestamp,
-        PRIMARY KEY (meetupid)
+        PRIMARY KEY (meetupid, userid)
         )"""
-        self.query = [users, meetups, question, reserve]
-        return self.query
+        query = [users, meetups, question, reserve]
+        return query
 
 
     def drop_table_query(self):
