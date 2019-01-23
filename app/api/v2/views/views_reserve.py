@@ -25,6 +25,9 @@ class Reserve(ReserveRecord, Resource):
         response = self.rec.create_reserve_record(id, reserve, email)
         if not response:
             return make_response(jsonify({"status" : 400,
-                                          "Error": "Alredy reserved!"}), 201)
+                                          "Error": "Already reserved!"}), 201)
+        if response == 'f':
+            return make_response(jsonify({"status" : 400,
+                                          "Error": "You have to login/signup first!"}), 201)
         return make_response(jsonify({"status" : 201,
                                       "data": response}), 201)

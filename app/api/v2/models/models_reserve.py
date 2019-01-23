@@ -12,6 +12,8 @@ class ReserveRecord(BaseModels):
         """ Create a new reserve record """
         user = BaseModels('user_table')
         user_record = user.find('email', email)
+        if user_record is None:
+            return 'f'
         userid = user_record['userid']
         meetup = BaseModels('meetups')
         exists = meetup.check_exists('meetupid', meetup_id)
