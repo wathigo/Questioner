@@ -40,6 +40,6 @@ class UserRecord():
         if not found:
             return None
         credentials = self.models.find('email', data['Email'])
-        if credentials[9] != data['Password']:
+        if credentials['password'] != data['Password']:
             result = False
         return result
