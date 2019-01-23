@@ -1,5 +1,6 @@
 """ Local imports """
 from ....utils.database import db_conn
+from psycopg2.extras import RealDictCursor
 
 
 class BaseModels():
@@ -13,23 +14,22 @@ class BaseModels():
         ''' Check if an item exists in the database '''
         query = """ SELECT EXISTS (SELECT * FROM {} WHERE {}='{}');""" \
                     .format(self.table_name, key, value)
-        cur = self.connection.cursor()
+        cur = self.connection.cursor(cursor_factory=RealDictCursor)
         cur.execute(query)
         found = cur.fetchone()
-        return found[0]
+        return found
 
     def find(self, key, value):
         ''' Find an item with a specific key and value'''
         query = """ SELECT * FROM {} WHERE {}='{}'""".format(self.table_name, key, value)
-        cur = self.connection.cursor()
+        cur = self.connection.cursor(cursor_factory=RealDictCursor)
         cur.execute(query)
         data = cur.fetchone()
         return data
 
-    def return_record(self):
+    def return_record(self, query):
         ''' Return the whole database'''
-        query = """ SELECT * FROM {}""".format(self.table_name)
-        cur = self.connection.cursor()
+        cur = self.connection.cursor(cursor_factory=RealDictCursor)
         cur.execute(query)
         data = cur.fetchall()
         return data
@@ -37,7 +37,7 @@ class BaseModels():
     def save(self, query, data):
         ''' Save data to a database'''
         save = self.connection
-        cur = save.cursor()
+        cur = save.cursor(cursor_factory=RealDictCursor)
         cur.execute(query)
         save.commit()
         return data
@@ -48,5 +48,5 @@ class BaseModels():
         data = self.check_exists(key, value)
         if data:
             query = """ DELETE FROM {} WHERE {}='{}'""".format(self.table_name, key, value)
-            cur = self.connection.cursor()
+            cur = self.connection.cursor(cursor_factory=RealDictCursor)
             cur.execute(query)
