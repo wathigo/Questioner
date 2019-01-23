@@ -1,7 +1,7 @@
 """ Import the necessary module """
 from flask import jsonify, make_response, request
 from flask_restful import Resource
-from flask_jwt_extended import jwt_required
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from ....utils.validators_schema import ReserveValidate
 
 from ..models.models_reserve import ReserveRecord
@@ -21,7 +21,8 @@ class Reserve(ReserveRecord, Resource):
             return make_response(jsonify({"status" : 400,
                                           "Error": errors}), 400)
         reserve = json_data['status']
-        response = self.rec.create_reserve_record(id, reserve)
+        email = get_jwt_identity()
+        response = self.rec.create_reserve_record(id, reserve, email)
         if not response:
             return make_response(jsonify({"status" : 400,
                                           "Error": "Alredy reserved!"}), 201)
