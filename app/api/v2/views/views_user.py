@@ -19,7 +19,32 @@ class Users(UserRecord, Resource):
         if errors:
             return make_response(jsonify({"status" : 400,
                                           "Error": errors}), 400)
-        response = self.models.create_user(json_data)
+        response = self.models.create_user(json_data, False)
+        if not response:
+            return make_response(jsonify({"status" : 400,
+                                          "Message": "A user with the given Email exists"}), 400)
+        time = datetime.timedelta(days=2)
+        access_token = create_access_token(identity=response['Email'], expires_delta=time)
+        return make_response(jsonify({"status" : 201,
+                                      "message" : "Logged in as{}".\
+                                      format(response['Email'].split("@")[0]),
+                                      "Access token" : access_token,
+                                      "data": response}), 201)
+
+
+class AdminSignup(Users, Resource):
+    """Admin Admin signup endpoint"""
+    def __init__(self):
+        self.models = UserRecord()
+
+    def post(self):
+        """ post endpoint for user registration """
+        json_data = request.get_json()
+        data, errors = UserValidate().load(json_data)
+        if errors:
+            return make_response(jsonify({"status" : 400,
+                                          "Error": errors}), 400)
+        response = self.models.create_user(json_data, True)
         if not response:
             return make_response(jsonify({"status" : 400,
                                           "Message": "A user with the given Email exists"}), 400)

@@ -7,12 +7,13 @@ class UserRecord():
     def __init__(self):
         self.models = BaseModels('user_table')
 
-    def create_user(self, user_data):
+    def create_user(self, user_data, role):
         ''' Add a new record entry to the data structure'''
         exists = self.models.check_exists('email', user_data['Email'])
         if exists:
             return None
         data = {
+            "isadmin" : False,
             "FirstName" : user_data['FirstName'],
             "LastName" : user_data['LastName'],
             "OtherName" : user_data['OtherName'],
@@ -21,10 +22,13 @@ class UserRecord():
             "Email" : user_data['Email'],
             "Password" : user_data['Password']
         }
-        query = """INSERT INTO user_table(firstname, lastname, username, \
+        if role: # if admin
+            data['isadmin'] = True
+        query = """INSERT INTO user_table(isadmin, firstname, lastname, username, \
                                           othername, phonenumber, email, password)
-        VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s');""" % \
-        (data['FirstName'], data['LastName'], data['UserName'], data['OtherName'],\
+        VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s');""" % \
+        (data['isadmin'], data['FirstName'], data['LastName'],\
+         data['UserName'], data['OtherName'],\
          data['PhoneNumber'], data['Email'], data['Password'])
         data = self.models.save(query, data)
         return data
