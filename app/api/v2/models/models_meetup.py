@@ -1,4 +1,5 @@
 """ local imports """
+from flask import jsonify
 from .models_base import BaseModels
 
 class MeetupRecord(BaseModels):
@@ -12,46 +13,38 @@ class MeetupRecord(BaseModels):
         user_record = BaseModels('user_table')
         user = user_record.find('email', email)
         print(user)
-        if user[1] != True:
-            return False
+        userid = user['userid']
         data = {
+            "userid" : userid,
             "Title": data['Title'],
             "Description": data['Description'],
             "Date" : data['Date'],
             "Location" : data['Location']
             }
-        query = """INSERT INTO meetups(title, description, location, happeningon)
-        VALUES ('%s', '%s', '%s', '%s');""" % \
-        (data['Title'], data['Description'], data['Location'], data['Date'])
+        query = """INSERT INTO meetups(userid, title, description, location, happeningon)
+        VALUES ('%s', '%s', '%s', '%s', '%s');""" % \
+        (data['userid'], data['Title'], data['Description'], data['Location'], data['Date'])
         record = self.records.save(query, data)
         return record
 
     def get_items(self):
         """ Return the whole database"""
-        response = []
-        data = self.records.return_record()
-        for item in data:
-            record = self.modify_response(item)
-            response.append(record)
-        return response
-
-    def modify_response(self, data):
-        """ Method to modify meetup response"""
-        response = {
-            "Title" : data[1],
-            "Description" : data[2],
-            "Venue" : data[3],
-            "Date" : data[4]
-            }
-        return response
+        query = """ SELECT json_build_object('meetupid', meetupid, 'title', title, 'description', \
+        description, 'vanue', location, 'date', happeningon, 'user', userid) FROM (SELECT * FROM meetups)
+        AS get_all;""".\
+        format('meetups')
+        data = self.records.return_record(query)
+        return data
 
     def get_item(self, item_id):
         """ get a specific item """
         found = False
-        item = self.records.find('meetupid', item_id)
-        if item:
-            response = []
-            record = self.modify_response(item)
-            response.append(record)
-            found = response
+        query = """ SELECT json_build_object('meetupid', meetupid, 'title', title, 'description', \
+        description, 'venue', location, 'date', happeningon, 'user', userid) FROM (SELECT * FROM meetups\
+        WHERE meetupid = {})
+        AS fetch_specific;""".\
+        format(item_id)
+        data = self.records.return_record(query)
+        if data:
+            found = data
         return found
