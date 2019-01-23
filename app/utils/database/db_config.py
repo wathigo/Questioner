@@ -52,7 +52,8 @@ class Tables():
         userid int NOT NULL,
         meetupid integer NOT NULL,
         reservedon timestamp,
-        PRIMARY KEY (meetupid, userid)
+        FOREIGN KEY (userid) REFERENCES user_table(userid),
+        FOREIGN KEY (meetupid) REFERENCES meetups(meetupid)
         )"""
         query = [users, meetups, question, reserve]
         return query
