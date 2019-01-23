@@ -10,7 +10,8 @@ class UserRecord():
     def create_user(self, user_data, role):
         ''' Add a new record entry to the data structure'''
         exists = self.models.check_exists('email', user_data['Email'])
-        if exists:
+        print(exists)
+        if exists is None:
             return None
         data = {
             "isadmin" : False,

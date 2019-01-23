@@ -28,7 +28,7 @@ class BaseModels():
         return data
 
     def return_record(self, query):
-        ''' Return the whole database'''
+        ''' Execute any query'''
         cur = self.connection.cursor(cursor_factory=RealDictCursor)
         cur.execute(query)
         data = cur.fetchall()

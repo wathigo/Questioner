@@ -15,7 +15,7 @@ class QuestionRecord(BaseModels):
             return False # Return false if it does not exist
         user_record = BaseModels('user_table') ## Check the userid from the user_table using the
         user = user_record.find('email', email) # email obtained from the jwt object identity
-        userid = user[0]
+        userid = user['userid']
 
         data = {
             "meetupId" : meetup_id,
@@ -24,39 +24,31 @@ class QuestionRecord(BaseModels):
             "question" : question['question'],
             "votes" : 0
         }
-        query = """INSERT INTO question(meetupid, title, question, votes)
-        VALUES ('%s', '%s', '%s', '%s')""" % \
-        (data['meetupId'], data['title'], data['question'], data['votes'])
+        query = """INSERT INTO question(meetupid, userid, title, question, votes)
+        VALUES ('%s', '%s', '%s', '%s', '%s')""" % \
+        (data['meetupId'], data['userid'], data['title'], data['question'], data['votes'])
         self.record.save(query, data)
         return data
 
     def update_column_value(self, primary_key, vote):
         """ Update votes column method """
         if vote:
-            query = """ UPDATE question SET votes=votes+1 WHERE questionid={}""".format(primary_key)
+            query = """ UPDATE question SET votes=votes+1 WHERE questionid={}\
+                        RETURNING json_build_object('meetupid', meetupid, 'userid', userid, 'title', \
+                                    title, 'question', question, 'votes', votes)""".format(primary_key)
         else:
-            query = """ UPDATE question SET votes=votes-1 WHERE questionid={}""".format(primary_key)
-        cur = self.record.connection.cursor()
-        cur.execute(query)
-        return self.record.find('questionid', primary_key)
-
-    def modify_response(self, data):
-        """ Method to modify question record response(turple->dict) """
-        response = {
-            "Title" : data[1],
-            "Question" : data[2],
-            "Votes" : data[3]
-            }
+            question_record = self.record.find('questionid', primary_key)
+            if question_record['votes'] > 0:
+                query = """ UPDATE question SET votes=votes-1 WHERE questionid={}\
+                    RETURNING json_build_object('meetupid', meetupid, 'userid', userid, 'title', \
+                                title, 'question', question, 'votes', votes)""".format(primary_key)
+            else:
+                return question_record
+        response = self.record.return_record(query)
+        self.record.connection.close()
         return response
 
     def vote(self, question_id, vote):
         ''' method to upvote/downvote a question '''
-        data = False
-        item = self.record.find('questionid', question_id)
-        if item:
-            if not vote and item[3] < 1:
-                data = self.modify_response(item)
-            else:
-                record = self.update_column_value(question_id, vote)
-                data = self.modify_response(record)
-        return data
+        record = self.update_column_value(question_id, vote)
+        return record
