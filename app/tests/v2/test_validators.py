@@ -10,6 +10,8 @@ class TestValidators(BaseTests):
             "FirstName" : "",
             "LastName" : "Wathigo",
             "Email" : "wathigosimon@gmail.com",
+            "OtherName": "",
+            "PhoneNumber" : "",
             "Password" : "memory_Bad1",
             "RepeatPassword" :  "memory_Bad1"
             }
@@ -28,7 +30,7 @@ class TestValidators(BaseTests):
         record = {
             "Title" : "Games",
             "Description" : "Chess playing",
-            "Date" : "2005-05-19",
+            "Date" : "2020-05-19",
             "Loction" : "Kakamaga"
             }
         data, errors = MeetupValidate().load(record)

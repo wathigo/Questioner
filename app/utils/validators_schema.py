@@ -9,13 +9,16 @@ class UserValidate(Schema):
     LastName = fields.Str(required=True, validate=Views().validate_all_values)
     Email = fields.Str(required=True, validate=Views().validate_all_values)
     Password = fields.Str(required=True, validate=Views().validate_password)
+    RepeatPassword = fields.Str(required=True)
+    OtherName = fields.Str(required=True)
+    PhoneNumber = fields.Str(required=True)
 
 
 class MeetupValidate(Schema):
     """ Validate data for meetup creation """
     Title = fields.Str(required=True, validate=Views().validate_all_values)
     Description = fields.Str(required=True, validate=Views().validate_all_values)
-    Date = fields.Date(required=True)
+    Date = fields.Date(required=True, validate=Views().validate_date)
     Location = fields.Str(required=True, validate=Views().validate_all_values)
 
 

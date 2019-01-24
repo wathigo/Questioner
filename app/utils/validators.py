@@ -1,5 +1,6 @@
 """ import the necessary modules"""
 import re
+import datetime
 from marshmallow import ValidationError
 
 
@@ -39,3 +40,8 @@ class Views():
             return value
         raise ValidationError("Wrong choice for this field. \
                                Valid choices are 'yes' 'no' or 'maybe'")
+
+    def validate_date(self, value):
+        """ Validate if the date object is valid"""
+        if datetime.date.today() > value:
+            raise ValidationError("Invalid date. Date passed is in the past.")
