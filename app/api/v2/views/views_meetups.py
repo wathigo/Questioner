@@ -20,7 +20,6 @@ class Meetup(MeetupRecord, Resource):
             return make_response(jsonify({"status" : 400,
                                           "Error": errors}), 400)
         email = get_jwt_identity()
-        print(email)
         response = self.rec.create_record(data, email)
         if not response:
             return make_response(jsonify({"status" : 401,
