@@ -4,23 +4,18 @@ from . import BaseTests
 
 class TestQuestions(BaseTests):
     """ class to test question endpoint """
-    def create_admin_record(self):
+    def login_user(self):
         """ Create a new user record for testing """
-        response = self.client.post('/api/v2/auth/admin/signup', \
-            data=json.dumps({
-                "FirstName": "David",
-                "LastName": "Momanyi",
-                "Email" : "momanyidavid@gmail.com",
-                "OtherName" : "",
-                "PhoneNumber" : "",
-                "Password" : "bill_Bond23",
-                "RepeatPassword" : "bill_Bond23"
-                }),\
-            headers={"content-type": "application/json"})
+        response = self.client.post('/api/v2/auth/login', \
+         data=json.dumps({
+             "Email" : "wathigosimon@gmail.com",
+             "Password" : "memory_Bad1"
+             }),\
+         headers={"content-type": "application/json"})
         response_data = response.json
         return response_data
     def create_record(self):
-        user = self.create_admin_record()
+        user = self.login_user()
         response = self.client.post('/api/v2/meetups/1/questions', \
             data=json.dumps({
                 "title" : "Entertainment",
