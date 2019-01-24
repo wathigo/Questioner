@@ -27,7 +27,7 @@ def table_queries():
     userid int NOT NULL,
     FOREIGN KEY (userid) REFERENCES user_table(userid),
     createdon timestamp
-    )"""
+    );"""
 
     """ Create question record creation table"""
     question = """CREATE TABLE IF NOT EXISTS question
@@ -40,7 +40,7 @@ def table_queries():
     meetupid integer NOT NULL,
     askedon timestamp,
     FOREIGN KEY (userid) REFERENCES user_table(userid),
-    FOREIGN KEY (meetupid) REFERENCES meetups(meetupid)
+    FOREIGN KEY (meetupid) REFERENCES meetups(meetupid) ON DELETE CASCADE
     );"""
 
     """ Create reserve record creation table"""
@@ -52,8 +52,8 @@ def table_queries():
     meetupid integer NOT NULL,
     reservedon timestamp,
     FOREIGN KEY (userid) REFERENCES user_table(userid),
-    FOREIGN KEY (meetupid) REFERENCES meetups(meetupid)
-    )"""
+    FOREIGN KEY (meetupid) REFERENCES meetups(meetupid) ON DELETE CASCADE
+    );"""
 
     comment = """CREATE TABLE IF NOT EXISTS comments
     (
