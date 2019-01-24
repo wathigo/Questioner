@@ -43,10 +43,10 @@ class BaseModels():
         return data
 
 
-    def delete(self, key, value):
+    def delete(self, query):
         '''Function to delete of an a row item'''
-        data = self.check_exists(key, value)
-        if data:
-            query = """ DELETE FROM {} WHERE {}='{}'""".format(self.table_name, key, value)
-            cur = self.connection.cursor(cursor_factory=RealDictCursor)
-            cur.execute(query)
+        save = self.connection
+        cur = save.cursor(cursor_factory=RealDictCursor)
+        cur.execute(query)
+        save.commit()
+        return True

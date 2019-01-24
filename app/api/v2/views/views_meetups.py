@@ -44,32 +44,28 @@ class MeetupsUpcoming(MeetupRecord, Resource):
 class Meetups(MeetupRecord, Resource):
     """ enpoints to route with a meetup id """
     def __init__(self):
-        self.rec = MeetupRecord()
+        self.record = MeetupRecord()
 
     @jwt_required
     def get(self, id):
         """ get endpoint to get a specific meetup record """
-        item = self.rec.get_item(id)
+        item = self.record.get_item(id)
         if item: ### item found
             return make_response(jsonify({"status" : 200,
                                           "data": item}), 200)
         return make_response(jsonify({"status" : 404,
                                       "Message": "Item not found!"}), 404)
     @jwt_required
-    def put(self, id):
-        """ Update a specific meetup """
-        data = request.get_json()
-        data, errors = MeetupValidate().load(data)
-        if errors:
-            return make_response(jsonify({"status" : 400,
-                                          "Error": errors}), 400)
-        item = self.rec.get_item(id)
-        if item is False: ### item not found
+    def delete(self, id):
+        """ Endpoint to delete a meetup"""
+        email = get_jwt_identity()
+        response = self.record.delete_item(email, id)
+        if not response:
+            return make_response(jsonify({"status" : 401,
+                                          "Message": "Only admins are \
+                                           allowed to delete a meetup!"}), 401)
+        if response is None:
             return make_response(jsonify({"status" : 404,
                                           "Message": "Item not found!"}), 404)
-        item[0]['Title'] = data['Title']
-        item[0]['Description'] = data['Description']
-        item[0]['Date'] = data['Date']
-        item[0]['Location'] = data['Location']
         return make_response(jsonify({"status" : 200,
-                                      "data": item}), 200)
+                                      "data": response}), 200)

@@ -56,17 +56,3 @@ class TestMeetups(BaseTests):
         headers={"Content-Type" : "application/json",
                  "Authorization" : "Bearer " + token})
         self.assertEqual(response.status_code, 200)
-
-    def test_o4_put(self):
-        """ Test put meetup endpoint"""
-        admin = self.create_admin_record()
-        self.create_record()
-        response = self.client.put('/api/v2/meetups/1', \
-            data=json.dumps({
-                "Title": "Gaming",
-                "Description": "There will be a meetup for gamers on 25th of August...",
-                "Date" : "2019-09-23",
-                "Location" : "Andela Kenya"
-                }), headers={"Content-Type" : "application/json",
-                             "Authorization" : "Bearer " + admin['access_token']})
-        self.assertEqual(response.status_code, 200)
