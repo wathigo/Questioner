@@ -48,3 +48,11 @@ class MeetupRecord(BaseModels):
         if data:
             found = data
         return found
+
+    def delete_item(self, meetupid):
+        item = self.records.check_exists("meetupid", meetupid)
+        if item is None:
+            return False
+        query = """DELETE FROM meetups WHERE meetupid='%s';""" % (meetupid)
+        updated_records = self.records.delete(query)
+        return updated_records
