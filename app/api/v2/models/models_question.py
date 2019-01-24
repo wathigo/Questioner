@@ -16,6 +16,10 @@ class QuestionRecord(BaseModels):
         user_record = BaseModels('user_table') ## Check the userid from the user_table using the
         user = user_record.find('email', email) # email obtained from the jwt object identity
         userid = user['userid']
+        title = self.record.find('title', question['title'])
+        question_data = self.record.find('question', question['question'])
+        if title and question_data:
+            return 'f'
 
         data = {
             "meetupId" : meetup_id,
