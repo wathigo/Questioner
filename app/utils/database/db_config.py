@@ -57,11 +57,13 @@ def table_queries():
 
     comment = """CREATE TABLE IF NOT EXISTS comments
     (
+    userid int NOT NULL,
     questionid int NOT NULL,
     title char(50) NOT NULL,
     body char varying(100),
     comment char varying(100),
-    FOREIGN KEY (questionid) REFERENCES meetups(questionid)
+    FOREIGN KEY (userid) REFERENCES user_table(userid),
+    FOREIGN KEY (questionid) REFERENCES question(questionid)
     )"""
     query = [users, meetups, question, reserve, comment]
     return query
