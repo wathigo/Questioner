@@ -12,7 +12,8 @@ class MeetupRecord(BaseModels):
         ### Get the userid
         user_record = BaseModels('user_table')
         user = user_record.find('email', email)
-        print(user)
+        if not user['isadmin']:
+            return False
         userid = user['userid']
         data = {
             "userid" : userid,
