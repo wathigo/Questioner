@@ -58,7 +58,12 @@ class Meetups(MeetupRecord, Resource):
     @jwt_required
     def delete(self, id):
         """ Endpoint to delete a meetup"""
-        response = self.record.delete_item(id)
+        email = get_jwt_identity()
+        response = self.record.delete_item(email, id)
+        if not response:
+            return make_response(jsonify({"status" : 401,
+                                          "Message": "Only admins are \
+                                           allowed to delete a meetup!"}), 401)
         if response is None:
             return make_response(jsonify({"status" : 404,
                                           "Message": "Item not found!"}), 404)
