@@ -28,7 +28,7 @@ class TestMeetups(BaseTests):
             data=json.dumps({
                 "Title": "Gaming",
                 "Description": "There will be a meetup for gamers on 25th of August...",
-                "Date" : "1971-09-23",
+                "Date" : "2020-09-23",
                 "Location" : "Moi Avenue"
                 }),\
             headers={"Content-Type" : "application/json",
