@@ -9,6 +9,9 @@ class UserValidate(Schema):
     LastName = fields.Str(required=True, validate=Views().validate_all_values)
     Email = fields.Str(required=True, validate=Views().validate_all_values)
     Password = fields.Str(required=True, validate=Views().validate_password)
+    RepeatPassword = fields.Str(required=True)
+    OtherName = fields.Str(required=True)
+    PhoneNumber = fields.Str(required=True)
 
 
 class MeetupValidate(Schema):
