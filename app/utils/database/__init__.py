@@ -7,16 +7,19 @@ from dotenv import load_dotenv
 from .db_config import table_queries
 
 load_dotenv()
-ENV = os.getenv('FLASK_ENV')
-if ENV == 'testing':
-    DB_URL = os.getenv('TESTDB_URL')
-else:
-    DB_URL = os.getenv('DATABASE_URL')
+
 
 
 def db_conn():
     """" Create a database connection """
-    connection = psycopg2.connect(os.getenv('TESTDB_URL'))
+    ENV = os.getenv('APP_SETTINGS')
+    if ENV == 'testing':
+        DB_URL = os.getenv('TESTDB_URL')
+    else:
+        DB_URL = os.getenv('DATABASE_URL')
+
+    print(DB_URL)
+    connection = psycopg2.connect(DB_URL)
     return connection
 
 def create_tables():
