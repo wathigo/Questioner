@@ -30,3 +30,8 @@ class QuestionValidate(Schema):
 class ReserveValidate(Schema):
     """ Validate data for meetup reserve endpoint """
     status = fields.Str(required=True, validate=Views().validate_reserve)
+
+
+class CommentValidate(Schema):
+    """ Validators for comment creation"""
+    comment = fields.Str(required=True)
