@@ -54,7 +54,16 @@ def table_queries():
     FOREIGN KEY (userid) REFERENCES user_table(userid),
     FOREIGN KEY (meetupid) REFERENCES meetups(meetupid)
     )"""
-    query = [users, meetups, question, reserve]
+
+    comment = """CREATE TABLE IF NOT EXISTS comments
+    (
+    questionid int NOT NULL,
+    title char(50) NOT NULL,
+    body char varying(100),
+    comment char varying(100),
+    FOREIGN KEY (questionid) REFERENCES meetups(questionid)
+    )"""
+    query = [users, meetups, question, reserve, comment]
     return query
 
 
