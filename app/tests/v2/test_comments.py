@@ -4,17 +4,12 @@ from . import BaseTests
 
 class TestComments(BaseTests):
     """ Class to test meetup record requests """
-    def create_user_record(self):
+    def login_user(self):
         """ Create a new user record for testing """
-        response = self.client.post('/api/v2/auth/admin/signup', \
+        response = self.client.post('/api/v2/auth/login', \
          data=json.dumps({
-             "FirstName": "David",
-             "LastName": "Momanyi",
-             "Email" : "momanyidavid@gmail.com",
-             "OtherName" : "",
-             "PhoneNumber" : "",
-             "Password" : "bill_Bond23",
-             "RepeatPassword" : "bill_Bond23"
+             "Email" : "wathigosimon@gmail.com",
+             "Password" : "memory_Bad1"
              }),\
          headers={"content-type": "application/json"})
         response_data = response.json
@@ -22,7 +17,7 @@ class TestComments(BaseTests):
 
     def create_record(self):
         """ craete a new comment record for testing"""
-        admin = self.create_user_record()
+        admin = self.login_user()
         token = admin['access_token']
         response = self.client.post('/api/v2/question/1/comments', \
             data=json.dumps({
