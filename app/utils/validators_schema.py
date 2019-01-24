@@ -15,7 +15,7 @@ class MeetupValidate(Schema):
     """ Validate data for meetup creation """
     Title = fields.Str(required=True, validate=Views().validate_all_values)
     Description = fields.Str(required=True, validate=Views().validate_all_values)
-    Date = fields.Date(required=True)
+    Date = fields.Date(required=True, validate=Views().validate_date)
     Location = fields.Str(required=True, validate=Views().validate_all_values)
 
 
