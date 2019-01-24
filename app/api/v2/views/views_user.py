@@ -76,4 +76,4 @@ class UserLogin(UserRecord, Resource):
         return make_response(jsonify({"status" : 200,
                                       "Message": "Logged in as {}"\
                                       .format(json_data['Email'].split("@")[0]),
-                                      "Access token" : access_token}), 200)
+                                      "access_token" : access_token}), 200)
