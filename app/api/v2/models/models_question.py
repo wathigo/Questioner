@@ -1,36 +1,54 @@
-""" import the necessary modules """
-import datetime
+"""Local imports """
 from .models_base import BaseModels
 
 
 class QuestionRecord(BaseModels):
-    """ Class to create a new meetup record """
+    """ Class to create a new question record """
     def __init__(self):
         self.record = BaseModels('question')
 
-    def create_record(self, meetup_id, question):
+    def create_record(self, meetup_id, question, email):
         """ Create a meetup record """
+        meetup_record = BaseModels('meetups')
+        meetup = meetup_record.find('meetupid', meetup_id)# check if the meetup exists
+        if not meetup:
+            return False # Return false if it does not exist
+        user_record = BaseModels('user_table') ## Check the userid from the user_table using the
+        user = user_record.find('email', email) # email obtained from the jwt object identity
+        userid = user['userid']
+
         data = {
-            "createdOn": datetime.datetime.now(),
-            "id" : self.record.check_record_size() + 1,
             "meetupId" : meetup_id,
-            "question" : question,
+            "userid" : userid,
+            "title" : question['title'],
+            "question" : question['question'],
             "votes" : 0
         }
-        self.record.save(data)
+        query = """INSERT INTO question(meetupid, userid, title, question, votes)
+        VALUES ('%s', '%s', '%s', '%s', '%s')""" % \
+        (data['meetupId'], data['userid'], data['title'], data['question'], data['votes'])
+        self.record.save(query, data)
         return data
 
+    def update_column_value(self, primary_key, vote):
+        """ Update votes column method """
+        if vote:
+            query = """ UPDATE question SET votes=votes+1 WHERE questionid={}\
+                        RETURNING json_build_object('meetupid', meetupid, 'userid', userid, 'title', \
+                                    title, 'question', question, 'votes', votes)""".format(primary_key)
+        else:
+            question_record = self.record.find('questionid', primary_key)
+            if question_record['votes'] > 0:
+                query = """ UPDATE question SET votes=votes-1 WHERE questionid={}\
+                    RETURNING json_build_object('meetupid', meetupid, 'userid', userid, 'title', \
+                                title, 'question', question, 'votes', votes)""".format(primary_key)
+            else:
+                return question_record
+        response = self.record.return_record(query)
+        self.record.connection.close()
+        return response
+
     def vote(self, question_id, vote):
-        """ method to upvote/downvote a question """
-        found = False
-        item = self.record.find('id', question_id)
-        if item:
-            found = item[0]
-            found_item = item
-            if vote:
-                found_item[0]['votes'] = found_item[0]['votes'] + 1
-                found = found_item[0]
-            elif found_item[0]['votes'] > 0:
-                found_item[0]['votes'] = found_item[0]['votes'] - 1
-                found = found_item[0]
-        return found
+        ''' method to upvote/downvote a question '''
+        record = self.update_column_value(question_id, vote)
+        return record

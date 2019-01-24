@@ -1,6 +1,8 @@
 """ import the necessary modules """
 from flask import jsonify, make_response, request
 from flask_restful import Resource
+import datetime
+from flask_jwt_extended import create_access_token, create_refresh_token
 from ..models.models_user import UserRecord
 from ....utils.validators_schema import UserValidate
 
@@ -8,19 +10,70 @@ from ....utils.validators_schema import UserValidate
 class Users(UserRecord, Resource):
     """User record endpoints"""
     def __init__(self):
-        self.rec = UserRecord()
+        self.models = UserRecord()
 
     def post(self):
         """ post endpoint for user registration """
-        data = request.get_json()
-        data, errors = UserValidate().load(data)
+        json_data = request.get_json()
+        data, errors = UserValidate().load(json_data)
         if errors:
             return make_response(jsonify({"status" : 400,
                                           "Error": errors}), 400)
-        fname = data['FirstName']
-        lname = data['LastName']
-        email = data['Email']
-        password = data['Password']
-        response = self.rec.save(fname, lname, email, password)
+        response = self.models.create_user(json_data, False)
+        if not response:
+            return make_response(jsonify({"status" : 400,
+                                          "Message": "A user with the given Email exists"}), 400)
+        time = datetime.timedelta(days=2)
+        access_token = create_access_token(identity=response['Email'], expires_delta=time)
         return make_response(jsonify({"status" : 201,
+                                      "message" : "Logged in as{}".\
+                                      format(response['Email'].split("@")[0]),
+                                      "access_token" : access_token,
                                       "data": response}), 201)
+
+
+class AdminSignup(Users, Resource):
+    """Admin Admin signup endpoint"""
+    def __init__(self):
+        self.models = UserRecord()
+
+    def post(self):
+        """ post endpoint for user registration """
+        json_data = request.get_json()
+        data, errors = UserValidate().load(json_data)
+        if errors:
+            return make_response(jsonify({"status" : 400,
+                                          "Error": errors}), 400)
+        response = self.models.create_user(json_data, True)
+        if not response:
+            return make_response(jsonify({"status" : 400,
+                                          "Message": "A user with the given Email exists"}), 400)
+        time = datetime.timedelta(days=2)
+        access_token = create_access_token(identity=response['Email'], expires_delta=time)
+        return make_response(jsonify({"status" : 201,
+                                      "message" : "Logged in as{}".\
+                                      format(response['Email'].split("@")[0]),
+                                      "access_token" : access_token,
+                                      "data": response}), 201)
+
+class UserLogin(UserRecord, Resource):
+    """ Class to authenticate a user"""
+    def __init__(self):
+        self.models = UserRecord()
+
+    def post(self):
+        """ endpoint for user login"""
+        json_data = request.get_json()
+        response = self.models.authenticate_user(json_data)
+        if response is None:
+            return make_response(jsonify({"status" : 404,
+                                          "Error": "User does not exists!"}), 404)
+        elif response is False:
+            return make_response(jsonify({"status" : 400,
+                                          "Error": "Wrong username/password!"}), 400)
+        time = datetime.timedelta(days=2)
+        access_token = create_access_token(identity=json_data['Email'], expires_delta=time)
+        return make_response(jsonify({"status" : 200,
+                                      "Message": "Logged in as {}"\
+                                      .format(json_data['Email'].split("@")[0]),
+                                      "Access token" : access_token}), 200)

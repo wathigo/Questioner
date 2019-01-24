@@ -8,9 +8,11 @@ api = Api(version_two)
 from .views.views_meetups import Meetup, Meetups, MeetupsUpcoming
 from .views.views_questions import Questions, Upvotes, Downvotes
 from .views.views_reserve import Reserve
-from .views.views_user import Users
+from .views.views_user import Users, UserLogin, AdminSignup
 
 api.add_resource(Users, '/auth/signup')
+api.add_resource(AdminSignup, '/auth/admin/signup')
+api.add_resource(UserLogin, '/auth/login')
 api.add_resource(Meetup, '/meetups')
 api.add_resource(MeetupsUpcoming, '/meetups/upcoming')
 api.add_resource(Meetups, '/meetups/<int:id>')
