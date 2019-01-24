@@ -9,6 +9,7 @@ from .views.views_meetups import Meetup, Meetups, MeetupsUpcoming
 from .views.views_questions import Questions, Upvotes, Downvotes
 from .views.views_reserve import Reserve
 from .views.views_user import Users, UserLogin, AdminSignup
+from .views.view_comments import Comment
 
 api.add_resource(Users, '/auth/signup')
 api.add_resource(AdminSignup, '/auth/admin/signup')
@@ -20,3 +21,4 @@ api.add_resource(Reserve, '/meetups/<int:id>/rsvps')
 api.add_resource(Questions, '/meetups/<int:id>/questions')
 api.add_resource(Upvotes, '/questions/<int:id>/upvote')
 api.add_resource(Downvotes, '/questions/<int:id>/downvote')
+api.add_resource(Comment, '/questions/<int:id>/comments')
