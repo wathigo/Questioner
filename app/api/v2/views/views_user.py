@@ -28,7 +28,7 @@ class Users(UserRecord, Resource):
         return make_response(jsonify({"status" : 201,
                                       "message" : "Logged in as{}".\
                                       format(response['Email'].split("@")[0]),
-                                      "Access token" : access_token,
+                                      "access_token" : access_token,
                                       "data": response}), 201)
 
 
@@ -53,7 +53,7 @@ class AdminSignup(Users, Resource):
         return make_response(jsonify({"status" : 201,
                                       "message" : "Logged in as{}".\
                                       format(response['Email'].split("@")[0]),
-                                      "Access token" : access_token,
+                                      "access_token" : access_token,
                                       "data": response}), 201)
 
 class UserLogin(UserRecord, Resource):
