@@ -30,8 +30,8 @@ class UserRecord():
         (data['isadmin'], data['FirstName'], data['LastName'],\
          data['UserName'], data['OtherName'],\
          data['PhoneNumber'], data['Email'], data['Password'])
-        data = self.models.save(query, data)
-        return data
+        response = self.models.save(query, data)
+        return response
 
     def authenticate_user(self, data):
         ''' Check if a user exists and compare passwords'''
