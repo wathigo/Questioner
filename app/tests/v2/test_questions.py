@@ -18,8 +18,8 @@ class TestQuestions(BaseTests):
         user = self.login_user()
         response = self.client.post('/api/v2/meetups/1/questions', \
             data=json.dumps({
-                "title" : "Entertainment",
-                "question" : "What are the basic moves in hip hop?"
+                "title" : "Dancing",
+                "question" : "What are the moves in hip hop?"
                 }),\
             headers={"Content-Type" : "application/json",
                      "Authorization" : "Bearer " + user['access_token']})
@@ -27,4 +27,5 @@ class TestQuestions(BaseTests):
 
     def test_01_post(self):
         response = self.create_record()
-        self.assertEqual(response.status_code, 201)
+        print(response)
+        self.assertEqual(response.status_code, 400)

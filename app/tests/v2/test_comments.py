@@ -19,10 +19,14 @@ class TestComments(BaseTests):
         """ craete a new comment record for testing"""
         admin = self.login_user()
         token = admin['access_token']
-        response = self.client.post('/api/v2/question/1/comments', \
+        response = self.client.post('/api/v2/question/2/comments', \
             data=json.dumps({
                 "comment" : "sounds great!"
                 }),\
             headers={"Content-Type" : "application/json",
                      "Authorization" : "Bearer " + token})
-        return response, token
+        return response
+
+    def test_01_post(self):
+        data = self.create_record()
+        self.assertEqual(data.status_code, 404)

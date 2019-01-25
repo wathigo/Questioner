@@ -8,10 +8,12 @@ class UserRecord():
         self.models = BaseModels('user_table')
 
     def create_user(self, user_data, role):
-        ''' Add a new record entry to the data structure'''
+        ''' Add a new record entry to the database'''
         exists = self.models.check_exists('email', user_data['Email'])
-        if exists is not None:
-            return None
+        found = exists
+        print(found)
+        if found['exists']:
+            return False
         data = {
             "isadmin" : False,
             "FirstName" : user_data['FirstName'],
@@ -36,10 +38,9 @@ class UserRecord():
     def authenticate_user(self, data):
         ''' Check if a user exists and compare passwords'''
         result = True
-        found = self.models.check_exists('email', data['Email'])
-        if not found:
-            return None
         credentials = self.models.find('email', data['Email'])
+        if credentials is None:
+            return 'f'
         if credentials['password'] != data['Password']:
             result = False
         return result
