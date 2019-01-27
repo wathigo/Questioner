@@ -8,10 +8,14 @@ class UserRecord():
         self.models = BaseModels('user_table')
 
     def create_user(self, user_data, role):
-        ''' Add a new record entry to the data structure'''
+        ''' Add a new record entry to the database'''
+        if user_data['Password'] != user_data['RepeatPassword']:
+            return 'f'
         exists = self.models.check_exists('email', user_data['Email'])
-        if exists is None:
-            return None
+        found = exists
+        print(found)
+        if found['exists']:
+            return False
         data = {
             "isadmin" : False,
             "FirstName" : user_data['FirstName'],
@@ -30,16 +34,15 @@ class UserRecord():
         (data['isadmin'], data['FirstName'], data['LastName'],\
          data['UserName'], data['OtherName'],\
          data['PhoneNumber'], data['Email'], data['Password'])
-        data = self.models.save(query, data)
-        return data
+        response = self.models.save(query, data)
+        return response
 
     def authenticate_user(self, data):
         ''' Check if a user exists and compare passwords'''
         result = True
-        found = self.models.check_exists('email', data['Email'])
-        if not found:
-            return None
         credentials = self.models.find('email', data['Email'])
+        if credentials is None:
+            result = 'f'
         if credentials['password'] != data['Password']:
             result = False
         return result

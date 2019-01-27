@@ -20,11 +20,14 @@ class Users(UserRecord, Resource):
             return make_response(jsonify({"status" : 400,
                                           "Error": errors}), 400)
         response = self.models.create_user(json_data, False)
-        if not response:
+        time = datetime.timedelta(days=2)
+        access_token = create_access_token(identity=json_data['Email'], expires_delta=time)
+        if response is 'f':
+            return make_response(jsonify({"status" : 400,
+                                          "Message": "Password does not match!"}), 400)
+        if response is False:
             return make_response(jsonify({"status" : 400,
                                           "Message": "A user with the given Email exists"}), 400)
-        time = datetime.timedelta(days=2)
-        access_token = create_access_token(identity=response['Email'], expires_delta=time)
         return make_response(jsonify({"status" : 201,
                                       "message" : "Logged in as{}".\
                                       format(response['Email'].split("@")[0]),
@@ -65,7 +68,7 @@ class UserLogin(UserRecord, Resource):
         """ endpoint for user login"""
         json_data = request.get_json()
         response = self.models.authenticate_user(json_data)
-        if response is None:
+        if response == 'f':
             return make_response(jsonify({"status" : 404,
                                           "Error": "User does not exists!"}), 404)
         elif response is False:
@@ -76,4 +79,4 @@ class UserLogin(UserRecord, Resource):
         return make_response(jsonify({"status" : 200,
                                       "Message": "Logged in as {}"\
                                       .format(json_data['Email'].split("@")[0]),
-                                      "Access token" : access_token}), 200)
+                                      "access_token" : access_token}), 200)

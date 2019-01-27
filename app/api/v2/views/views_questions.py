@@ -21,12 +21,16 @@ class Questions(QuestionRecord, Resource):
                                           "Error": errors}), 400)
         email = get_jwt_identity()
         response = self.question_models.create_record(id, json_data, email)
-        if response:
-            return make_response(jsonify({"status" : 201,
-                                          "data": response}), 201)
-        return make_response(jsonify({"status" : 400,
-                                      "Error": "meetup record does not exists!"}), 400)
+        if response == 'f':
+            return make_response(jsonify({"status" : 400,
+                                          "Error": "A question with the \
+                                          given credentials exists!"}), 400)
+        if not response:
+            return make_response(jsonify({"status" : 400,
+                                          "Error": "meetup record does not exists!"}), 400)
 
+        return make_response(jsonify({"status" : 201,
+                                      "data": response}), 201)
 
 class Upvotes(QuestionRecord, Resource):
     """ Upvote a question endpoint """

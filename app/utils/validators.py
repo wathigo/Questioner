@@ -8,10 +8,9 @@ class Views():
     """ Validate views endpoints data """
     def validate_email(self, email):
         """ Valiadte email format """
-        response = False
         if re.match(r"(^[a-zA-z0-9_.]+@[a-zA-z0-9-]+\.[a-z]+$)", email) is None:
             raise ValidationError("Invalid email address!")
-        return response
+        return email
 
     def validate_password(self, password):
         """ Validate user password"""

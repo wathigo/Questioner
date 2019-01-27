@@ -25,6 +25,9 @@ class Meetup(MeetupRecord, Resource):
             return make_response(jsonify({"status" : 401,
                                           "Message": "Only Admin users \
                                           are allowed to create a meetup!"}), 401)
+        if response == 'f':
+            return make_response(jsonify({"status" : 400,
+                                          "Error": "Meetup matching the credentials given exists!"}), 400)
         return make_response(jsonify({"status" : 201,
                                       "data": response}), 201)
 
@@ -64,8 +67,8 @@ class Meetups(MeetupRecord, Resource):
             return make_response(jsonify({"status" : 401,
                                           "Message": "Only admins are \
                                            allowed to delete a meetup!"}), 401)
-        if response is None:
+        if response == 'f':
             return make_response(jsonify({"status" : 404,
                                           "Message": "Item not found!"}), 404)
         return make_response(jsonify({"status" : 200,
-                                      "data": response}), 200)
+                                      "data": "item deleted"}), 200)

@@ -5,24 +5,19 @@ from . import BaseTests
 
 class TestMeetups(BaseTests):
     """ Class to test meetup record requests """
-    def create_admin_record(self):
+    def login_user(self):
         """ Create a new user record for testing """
-        response = self.client.post('/api/v2/auth/admin/signup', \
-            data=json.dumps({
-                "FirstName": "David",
-                "LastName": "Momanyi",
-                "Email" : "momanyidavid@gmail.com",
-                "OtherName" : "",
-                "PhoneNumber" : "",
-                "Password" : "bill_Bond23",
-                "RepeatPassword" : "bill_Bond23"
-                }),\
-            headers={"content-type": "application/json"})
+        response = self.client.post('/api/v2/auth/login', \
+         data=json.dumps({
+             "Email" : "wathigosimon@gmail.com",
+             "Password" : "memory_Bad1"
+             }),\
+         headers={"content-type": "application/json"})
         response_data = response.json
         return response_data
     def create_record(self):
         """ craete a new meetup record for testing"""
-        admin = self.create_admin_record()
+        admin = self.login_user()
         token = admin['access_token']
         response = self.client.post('/api/v2/meetups', \
             data=json.dumps({

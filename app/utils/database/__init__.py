@@ -14,12 +14,11 @@ def db_conn():
     """" Create a database connection """
     ENV = os.getenv('APP_SETTINGS')
     if ENV == 'testing':
-        DB_URL = os.getenv('TESTDB_URL')
+        db_url = os.getenv('TESTDB_URL')
     else:
-        DB_URL = os.getenv('DATABASE_URL')
+        db_url = os.getenv('DATABASE_URL')
 
-    print(DB_URL)
-    connection = psycopg2.connect(DB_URL)
+    connection = psycopg2.connect(db_url)
     return connection
 
 def create_tables():
@@ -48,7 +47,6 @@ def insert_data():
     cursor.execute(create_meetup)
     meetup = cursor.fetchone()
     meetupid = meetup['meetupid']
-    print(meetup)
     meetupid = meetup['meetupid']
     create_question = """INSERT INTO question(meetupid, userid, title, question, votes)
     VALUES ('%s', '%s', 'FloorNumber', 'Which floor are we going to meet?', 0)""" % \
