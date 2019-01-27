@@ -12,7 +12,7 @@ class TestUser(BaseTests):
             data=json.dumps({
                 "FirstName": "David",
                 "LastName": "Momanyi",
-                "Email" : "kamau@gmail.com",
+                "Email" : "kamaudav@gmail.com",
                 "OtherName" : "",
                 "PhoneNumber" : "",
                 "Password" : "bill_Bond23",
@@ -33,7 +33,7 @@ class TestUser(BaseTests):
         data = self.create_record()
         response = self.client.post('/api/v2/auth/login', \
             data=json.dumps({
-                "Email" : "kamau@gmail.com",
+                "Email" : "kamaudav@gmail.com",
                 "Password" : "bill_Bond23",
                 }),\
             headers={"content-type": "application/json"})
