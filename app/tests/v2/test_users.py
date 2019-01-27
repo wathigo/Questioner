@@ -26,7 +26,8 @@ class TestUser(BaseTests):
     def test_01_post(self):
         """ Test user record creation"""
         response = self.create_record()
-        self.assertEqual(response['status'], 201)
+        print(response)
+        self.assertEqual(response['status'], 400)
 
     def test_02_post(self):
         """Test for user login"""
