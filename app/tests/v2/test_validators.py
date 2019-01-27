@@ -53,3 +53,4 @@ class TestValidators(BaseTests):
             }
         data, errors = QuestionValidate().load(question_record)
         self.assertEqual(errors, {"question": ["Not a valid string."]})
+        BaseTests().tearDown()

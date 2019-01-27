@@ -1,5 +1,5 @@
 """ Module to create all the tables"""
- 
+
 def table_queries():
     """ Create user registration table"""
     users = """CREATE TABLE IF NOT EXISTS user_table
@@ -71,7 +71,7 @@ def table_queries():
 
 def drop_table_query():
     """Resource for teardown when am testing"""
-    drop_users = """DROP TABLE IF EXISTS users"""
+    drop_users = """DROP TABLE IF EXISTS user_table CASCADE"""
     drop_meetups = """DROP TABLE IF EXISTS meetups CASCADE"""
     drop_question = """DROP TABLE IF EXISTS question CASCADE"""
     drop_reserve = """DROP TABLE IF EXISTS reserve CASCADE"""
