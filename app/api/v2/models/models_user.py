@@ -9,6 +9,8 @@ class UserRecord():
 
     def create_user(self, user_data, role):
         ''' Add a new record entry to the database'''
+        if user_data['Password'] != user_data['RepeatPassword']:
+            return 'f'
         exists = self.models.check_exists('email', user_data['Email'])
         found = exists
         print(found)
@@ -40,7 +42,7 @@ class UserRecord():
         result = True
         credentials = self.models.find('email', data['Email'])
         if credentials is None:
-            return 'f'
+            result = 'f'
         if credentials['password'] != data['Password']:
             result = False
         return result

@@ -61,8 +61,8 @@ class MeetupRecord(BaseModels):
         if not isadmin:
             return False
         item = self.records.check_exists("meetupid", meetupid)
-        if item is None:
-            return None
+        if not item:
+            return 'f'
         query = """DELETE FROM meetups WHERE meetupid='%s';""" % (meetupid)
         updated_records = self.records.delete(query)
         return updated_records

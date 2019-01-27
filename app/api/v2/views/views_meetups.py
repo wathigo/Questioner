@@ -67,8 +67,8 @@ class Meetups(MeetupRecord, Resource):
             return make_response(jsonify({"status" : 401,
                                           "Message": "Only admins are \
                                            allowed to delete a meetup!"}), 401)
-        if response is None:
+        if response == 'f':
             return make_response(jsonify({"status" : 404,
                                           "Message": "Item not found!"}), 404)
         return make_response(jsonify({"status" : 200,
-                                      "data": response}), 200)
+                                      "data": "item deleted"}), 200)

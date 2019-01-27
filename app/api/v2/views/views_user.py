@@ -22,6 +22,9 @@ class Users(UserRecord, Resource):
         response = self.models.create_user(json_data, False)
         time = datetime.timedelta(days=2)
         access_token = create_access_token(identity=json_data['Email'], expires_delta=time)
+        if response is 'f':
+            return make_response(jsonify({"status" : 400,
+                                          "Message": "Password does not match!"}), 400)
         if response is False:
             return make_response(jsonify({"status" : 400,
                                           "Message": "A user with the given Email exists"}), 400)

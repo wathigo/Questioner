@@ -1,5 +1,5 @@
 """ Module to create all the tables"""
-
+ 
 def table_queries():
     """ Create user registration table"""
     users = """CREATE TABLE IF NOT EXISTS user_table
