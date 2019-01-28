@@ -51,3 +51,11 @@ class TestMeetups(BaseTests):
         headers={"Content-Type" : "application/json",
                  "Authorization" : "Bearer " + token})
         self.assertEqual(response.status_code, 200)
+
+    def test_04_delete(self):
+        """ Test for delete meetup endpont"""
+        response, token = self.create_record()
+        response = self.client.delete('/api/v2/meetups/1', \
+        headers={"Content-Type" : "application/json",
+                 "Authorization" : "Bearer " + token})
+        self.assertEqual(response.status_code, 200)

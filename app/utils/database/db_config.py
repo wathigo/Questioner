@@ -14,7 +14,7 @@ def table_queries():
     registeredon timestamp,
     email char varying(50) NOT NULL,
     password char varying(30) NOT NULL
-    )"""
+    );"""
 
     """ Create meetup record creation table"""
     meetups = """CREATE TABLE IF NOT EXISTS meetups
@@ -24,8 +24,7 @@ def table_queries():
     description char varying(100) NOT NULL,
     location char varying(30) NOT NULL,
     happeningon char(30) NOT NULL,
-    userid int NOT NULL,
-    FOREIGN KEY (userid) REFERENCES user_table(userid),
+    userid int REFERENCES user_table(userid),
     createdon timestamp
     );"""
 
@@ -36,11 +35,9 @@ def table_queries():
     title char varying(30) NOT NULL,
     question char varying(80) NOT NULL,
     votes integer NOT NULL DEFAULT 0,
-    userid integer NOT NULL,
-    meetupid integer NOT NULL,
-    askedon timestamp,
-    FOREIGN KEY (userid) REFERENCES user_table(userid),
-    FOREIGN KEY (meetupid) REFERENCES meetups(meetupid) ON DELETE CASCADE
+    userid integer REFERENCES user_table(userid),
+    meetupid integer REFERENCES meetups(meetupid) ON DELETE CASCADE,
+    askedon timestamp
     );"""
 
     """ Create reserve record creation table"""
@@ -48,23 +45,18 @@ def table_queries():
     (
     id SERIAL PRIMARY KEY NOT NULL,
     response char(20) NOT NULL,
-    userid int NOT NULL,
-    meetupid integer NOT NULL,
-    reservedon timestamp,
-    FOREIGN KEY (userid) REFERENCES user_table(userid),
-    FOREIGN KEY (meetupid) REFERENCES meetups(meetupid) ON DELETE CASCADE
-    );"""
+    userid int REFERENCES user_table(userid),
+    meetupid integer REFERENCES meetups(meetupid) ON DELETE CASCADE,
+    reservedon timestamp);"""
 
     comment = """CREATE TABLE IF NOT EXISTS comments
     (
-    userid int NOT NULL,
-    questionid int NOT NULL,
+    userid int REFERENCES user_table(userid),
+    questionid int REFERENCES question(questionid),
     title char(50) NOT NULL,
     body char varying(100),
-    comment char varying(100),
-    FOREIGN KEY (userid) REFERENCES user_table(userid),
-    FOREIGN KEY (questionid) REFERENCES question(questionid)
-    )"""
+    comment char varying(100)
+    );"""
     query = [users, meetups, question, reserve, comment]
     return query
 
