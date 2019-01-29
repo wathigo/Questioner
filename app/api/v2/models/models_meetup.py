@@ -21,14 +21,14 @@ class MeetupRecord(BaseModels):
         userid = user['userid']
         data = {
             "userid" : userid,
-            "Title": data['title'],
-            "Description": data['description'],
-            "Date" : data['date'],
-            "Location" : data['location']
+            "title": data['title'],
+            "description": data['description'],
+            "date" : data['date'],
+            "location" : data['location']
             }
         query = """INSERT INTO meetups(userid, title, description, location, happeningon)
         VALUES ('%s', '%s', '%s', '%s', '%s');""" % \
-        (data['userid'], data['Title'], data['Description'], data['Location'], data['Date'])
+        (data['userid'], data['title'], data['description'], data['location'], data['date'])
         record = self.records.save(query, data)
         return record
 

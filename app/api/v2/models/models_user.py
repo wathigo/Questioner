@@ -18,31 +18,31 @@ class UserRecord():
             return False
         data = {
             "isadmin" : False,
-            "FirstName" : user_data['firstname'],
-            "LastName" : user_data['lastname'],
-            "OtherName" : user_data['othername'],
-            "UserName" : user_data['email'].split("@")[0],
-            "PhoneNumber" : user_data['phonenumber'],
-            "Email" : user_data['email'],
-            "Password" : user_data['password']
+            "firstname" : user_data['firstname'],
+            "lastname" : user_data['lastname'],
+            "othername" : user_data['othername'],
+            "username" : user_data['email'].split("@")[0],
+            "phonenumber" : user_data['phonenumber'],
+            "email" : user_data['email'],
+            "password" : user_data['password']
         }
         if role: # if admin
             data['isadmin'] = True
         query = """INSERT INTO user_table(isadmin, firstname, lastname, username, \
                                           othername, phonenumber, email, password)
         VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s');""" % \
-        (data['isadmin'], data['FirstName'], data['LastName'],\
-         data['UserName'], data['OtherName'],\
-         data['PhoneNumber'], data['Email'], data['Password'])
+        (data['isadmin'], data['firstname'], data['lastname'],\
+         data['username'], data['othername'],\
+         data['phonenumber'], data['email'], data['password'])
         response = self.models.save(query, data)
         return response
 
     def authenticate_user(self, data):
         ''' Check if a user exists and compare passwords'''
         result = True
-        credentials = self.models.find('email', data['Email'])
+        credentials = self.models.find('email', data['email'])
         if credentials is None:
             result = 'f'
-        if credentials['password'] != data['Password']:
+        if credentials['password'] != data['password']:
             result = False
         return result
