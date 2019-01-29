@@ -9,22 +9,22 @@ class UserRecord():
 
     def create_user(self, user_data, role):
         ''' Add a new record entry to the database'''
-        if user_data['Password'] != user_data['RepeatPassword']:
+        if user_data['password'] != user_data['repeatpassword']:
             return 'f'
-        exists = self.models.check_exists('email', user_data['Email'])
+        exists = self.models.check_exists('email', user_data['email'])
         found = exists
         print(found)
         if found['exists']:
             return False
         data = {
             "isadmin" : False,
-            "FirstName" : user_data['FirstName'],
-            "LastName" : user_data['LastName'],
-            "OtherName" : user_data['OtherName'],
-            "UserName" : user_data['Email'].split("@")[0],
-            "PhoneNumber" : user_data['PhoneNumber'],
-            "Email" : user_data['Email'],
-            "Password" : user_data['Password']
+            "FirstName" : user_data['firstname'],
+            "LastName" : user_data['lastname'],
+            "OtherName" : user_data['othername'],
+            "UserName" : user_data['email'].split("@")[0],
+            "PhoneNumber" : user_data['phonenumber'],
+            "Email" : user_data['email'],
+            "Password" : user_data['password']
         }
         if role: # if admin
             data['isadmin'] = True
