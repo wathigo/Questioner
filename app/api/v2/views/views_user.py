@@ -21,7 +21,7 @@ class Users(UserRecord, Resource):
                                           "Error": errors}), 400)
         response = self.models.create_user(json_data, False)
         time = datetime.timedelta(days=2)
-        access_token = create_access_token(identity=json_data['Email'], expires_delta=time)
+        access_token = create_access_token(identity=json_data['email'], expires_delta=time)
         if response is 'f':
             return make_response(jsonify({"status" : 400,
                                           "Message": "Password does not match!"}), 400)
@@ -30,7 +30,7 @@ class Users(UserRecord, Resource):
                                           "Message": "A user with the given Email exists"}), 400)
         return make_response(jsonify({"status" : 201,
                                       "message" : "Logged in as{}".\
-                                      format(response['Email'].split("@")[0]),
+                                      format(response['email'].split("@")[0]),
                                       "access_token" : access_token,
                                       "data": response}), 201)
 
@@ -52,10 +52,10 @@ class AdminSignup(Users, Resource):
             return make_response(jsonify({"status" : 400,
                                           "Message": "A user with the given Email exists"}), 400)
         time = datetime.timedelta(days=2)
-        access_token = create_access_token(identity=response['Email'], expires_delta=time)
+        access_token = create_access_token(identity=response['email'], expires_delta=time)
         return make_response(jsonify({"status" : 201,
                                       "message" : "Logged in as{}".\
-                                      format(response['Email'].split("@")[0]),
+                                      format(response['email'].split("@")[0]),
                                       "access_token" : access_token,
                                       "data": response}), 201)
 
@@ -75,8 +75,8 @@ class UserLogin(UserRecord, Resource):
             return make_response(jsonify({"status" : 400,
                                           "Error": "Wrong username/password!"}), 400)
         time = datetime.timedelta(days=2)
-        access_token = create_access_token(identity=json_data['Email'], expires_delta=time)
+        access_token = create_access_token(identity=json_data['email'], expires_delta=time)
         return make_response(jsonify({"status" : 200,
                                       "Message": "Logged in as {}"\
-                                      .format(json_data['Email'].split("@")[0]),
+                                      .format(json_data['email'].split("@")[0]),
                                       "access_token" : access_token}), 200)

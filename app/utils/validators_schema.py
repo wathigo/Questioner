@@ -5,21 +5,21 @@ from .validators import Views
 
 class UserValidate(Schema):
     """ Validate data for user registration """
-    FirstName = fields.Str(required=True, validate=Views().validate_all_values)
-    LastName = fields.Str(required=True, validate=Views().validate_all_values)
-    Email = fields.Str(required=True, validate=Views().validate_email)
-    Password = fields.Str(required=True, validate=Views().validate_password)
-    RepeatPassword = fields.Str(required=True)
-    OtherName = fields.Str(required=True)
-    PhoneNumber = fields.Str(required=True)
+    firstname = fields.Str(required=True, validate=Views().validate_all_values)
+    lastname = fields.Str(required=True, validate=Views().validate_all_values)
+    email = fields.Str(required=True, validate=Views().validate_email)
+    password = fields.Str(required=True, validate=Views().validate_password)
+    repeatpassword = fields.Str(required=True)
+    othername = fields.Str(required=True)
+    phonenumber = fields.Str(required=True)
 
 
 class MeetupValidate(Schema):
     """ Validate data for meetup creation """
-    Title = fields.Str(required=True, validate=Views().validate_all_values)
-    Description = fields.Str(required=True, validate=Views().validate_all_values)
-    Date = fields.Date(required=True, validate=Views().validate_date)
-    Location = fields.Str(required=True, validate=Views().validate_all_values)
+    title = fields.Str(required=True, validate=Views().validate_all_values)
+    description = fields.Str(required=True, validate=Views().validate_all_values)
+    date = fields.Date(required=True, validate=Views().validate_date)
+    location = fields.Str(required=True, validate=Views().validate_all_values)
 
 
 class QuestionValidate(Schema):

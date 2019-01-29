@@ -14,21 +14,21 @@ class MeetupRecord(BaseModels):
         user = user_record.find('email', email)
         if not user['isadmin']:
             return False
-        title = self.records.find('title', data['Title'])
-        date = self.records.find('location', data['Location'])
+        title = self.records.find('title', data['title'])
+        date = self.records.find('location', data['location'])
         if title and date:
             return 'f'
         userid = user['userid']
         data = {
             "userid" : userid,
-            "Title": data['Title'],
-            "Description": data['Description'],
-            "Date" : data['Date'],
-            "Location" : data['Location']
+            "title": data['title'],
+            "description": data['description'],
+            "date" : data['date'],
+            "location" : data['location']
             }
         query = """INSERT INTO meetups(userid, title, description, location, happeningon)
         VALUES ('%s', '%s', '%s', '%s', '%s');""" % \
-        (data['userid'], data['Title'], data['Description'], data['Location'], data['Date'])
+        (data['userid'], data['title'], data['description'], data['location'], data['date'])
         record = self.records.save(query, data)
         return record
 

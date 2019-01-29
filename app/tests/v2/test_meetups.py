@@ -9,8 +9,8 @@ class TestMeetups(BaseTests):
         """ Create a new user record for testing """
         response = self.client.post('/api/v2/auth/login', \
          data=json.dumps({
-             "Email" : "wathigosimon@gmail.com",
-             "Password" : "memory_Bad1"
+             "email" : "wathigosimon@gmail.com",
+             "password" : "memory_Bad1"
              }),\
          headers={"content-type": "application/json"})
         response_data = response.json
@@ -21,10 +21,10 @@ class TestMeetups(BaseTests):
         token = admin['access_token']
         response = self.client.post('/api/v2/meetups', \
             data=json.dumps({
-                "Title": "Gaming",
-                "Description": "There will be a meetup for gamers on 25th of August...",
-                "Date" : "2020-09-23",
-                "Location" : "Moi Avenue"
+                "title": "Gaming",
+                "description": "There will be a meetup for gamers on 25th of August...",
+                "date" : "2020-09-23",
+                "location" : "Moi Avenue"
                 }),\
             headers={"Content-Type" : "application/json",
                      "Authorization" : "Bearer " + token})

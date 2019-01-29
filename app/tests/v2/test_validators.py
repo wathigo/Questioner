@@ -7,34 +7,34 @@ class TestValidators(BaseTests):
     def test_user_registration(self):
         """ Validate user account creation """
         record = {
-            "FirstName" : "",
-            "LastName" : "Wathigo",
-            "Email" : "wathigosimon@gmail.com",
-            "OtherName": "",
-            "PhoneNumber" : "",
-            "Password" : "memory_Bad1",
-            "RepeatPassword" :  "memory_Bad1"
+            "firstname" : "",
+            "lastname" : "Wathigo",
+            "email" : "wathigosimon@gmail.com",
+            "othername": "",
+            "phonenumber" : "",
+            "password" : "memory_Bad1",
+            "repeatpassword" :  "memory_Bad1"
             }
         data, errors = UserValidate().load(record)
-        self.assertEqual(errors, {"FirstName": ["This field cannot be empty!"]})
-        record['FirstName'] = 1
+        self.assertEqual(errors, {"firstname": ["This field cannot be empty!"]})
+        record['firstname'] = 1
         data, errors = UserValidate().load(record)
-        self.assertEqual(errors, {"FirstName": ["Not a valid string."]})
-        record['Password'] = "memory_Bad"
+        self.assertEqual(errors, {"firstname": ["Not a valid string."]})
+        record['password'] = "memory_Bad"
         data, errors = UserValidate().load(record)
-        self.assertEqual(errors, {"FirstName": ["Not a valid string."],\
-                                      "Password": ["Password must have at least one number!"]})
+        self.assertEqual(errors, {"firstname": ["Not a valid string."],\
+                                      "password": ["Password must have at least one number!"]})
 
     def test_meetups_validation(self):
         """ test create meetups data validation"""
         record = {
-            "Title" : "Games",
-            "Description" : "Chess playing",
-            "Date" : "2020-05-19",
-            "Loction" : "Kakamaga"
+            "title" : "Games",
+            "description" : "Chess playing",
+            "date" : "2020-05-19",
+            "loction" : "Kakamaga"
             }
         data, errors = MeetupValidate().load(record)
-        self.assertEqual(errors, {"Location": ["Missing data for required field."]})
+        self.assertEqual(errors, {"location": ["Missing data for required field."]})
 
     def test_reserve_validation(self):
         """ Test for reserve validation"""

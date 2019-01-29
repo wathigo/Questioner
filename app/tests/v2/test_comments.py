@@ -8,8 +8,8 @@ class TestComments(BaseTests):
         """ Create a new user record for testing """
         response = self.client.post('/api/v2/auth/login', \
          data=json.dumps({
-             "Email" : "wathigosimon@gmail.com",
-             "Password" : "memory_Bad1"
+             "email" : "wathigosimon@gmail.com",
+             "password" : "memory_Bad1"
              }),\
          headers={"content-type": "application/json"})
         response_data = response.json

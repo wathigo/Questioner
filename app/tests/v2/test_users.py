@@ -10,13 +10,13 @@ class TestUser(BaseTests):
         """ Create a new user record for testing """
         response = self.client.post('/api/v2/auth/admin/signup', \
             data=json.dumps({
-                "FirstName": "David",
-                "LastName": "Momanyi",
-                "Email" : "kamaudav@gmail.com",
-                "OtherName" : "",
-                "PhoneNumber" : "",
-                "Password" : "bill_Bond23",
-                "RepeatPassword" : "bill_Bond23"
+                "firstname": "David",
+                "lastname": "Momanyi",
+                "email" : "kamaudav@gmail.com",
+                "othername" : "",
+                "phonenumber" : "",
+                "password" : "bill_Bond23",
+                "repeatpassword" : "bill_Bond23"
                 }),\
             headers={"content-type": "application/json"})
         response_data = response.json
@@ -33,8 +33,8 @@ class TestUser(BaseTests):
         data = self.create_record()
         response = self.client.post('/api/v2/auth/login', \
             data=json.dumps({
-                "Email" : "kamaudav@gmail.com",
-                "Password" : "bill_Bond23",
+                "email" : "kamaudav@gmail.com",
+                "password" : "bill_Bond23",
                 }),\
             headers={"content-type": "application/json"})
         self.assertEqual(response.status, '200 OK')
