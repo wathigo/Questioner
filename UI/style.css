@@ -31,6 +31,11 @@
 .header-right {
   float: right
 }
+body{
+  margin: 0px;
+  height: 100%;
+  
+}
 .body_container{
   background:
     linear-gradient(
@@ -46,20 +51,9 @@
   height:auto;
   overflow-y: scroll;
   position:relative;
-  float: left;
 }
 .meetup-container{
-}
-.body_content .meetups{
-  background-color: #d5dbdb;
-  margin-left: 470px;
-  margin-top: 50px;
-  margin-bottom: 50px;
-  border-radius: 15px;
-  border: 5px solid #900C3F;
-  color: black;
-  height: 250px;
-  width: 300px;
+  align-items: center;
 }
 .meetups{
   border-radius: 15px;
@@ -71,6 +65,12 @@
   background-color:  #f9ebea;
   text-align: justify;
   padding: 10px;
+}
+@media screen and (max-width:650px){
+  .meetups{
+    float: none;
+    padding: 0px;
+  }
 }
 .row:after {
   content: "";
@@ -242,4 +242,9 @@ textarea{
   width: 100px;
   margin-right: 65px;
 }
+@media(max-width: 650px){
+  #comment
+
+  }
+
 </style>
