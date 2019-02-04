@@ -36,7 +36,7 @@ class MeetupsUpcoming(MeetupRecord, Resource):
     def __init__(self):
         self.rec = MeetupRecord()
 
-    @jwt_required
+    
     def get(self):
         """ get endpoint to get all the the upcoming meetups """
         data = self.rec.get_items()
@@ -49,7 +49,7 @@ class Meetups(MeetupRecord, Resource):
     def __init__(self):
         self.record = MeetupRecord()
 
-    @jwt_required
+
     def get(self, id):
         """ get endpoint to get a specific meetup record """
         item = self.record.get_item(id)
