@@ -143,6 +143,9 @@ body{
   border: 3px solid #900C3F;
   height:auto;
 }
+.signup_form-content{
+  height: 825px;
+}
 .signup_form label, .signIn_form label{
   float: left;
 }
