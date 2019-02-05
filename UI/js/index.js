@@ -1,5 +1,6 @@
 document.getElementById('signup_form').addEventListener('submit', signUpUser);
 document.getElementById('admin_signup_form').addEventListener('submit', signUpAdmin);
+document.getElementById('login_form').addEventListener('submit', login_user);
 function signUpUser(event) {
     /*
     Function to perform user signup
@@ -48,7 +49,6 @@ function signUpAdmin(event) {
     event.preventDefault();
 
     let signupUrl = 'https://questioner-api-048.herokuapp.com/api/v2/auth/admin/signup';
-    console.log(document.getElementById('psw').value);
     fetch(signupUrl, {
         method: 'POST',
         headers: {
@@ -76,6 +76,37 @@ function signUpAdmin(event) {
         }))
         .catch((err)=>console.log(err));
 }
+
+function login_user(event) {
+    /*
+    Function to perform amin signup
+    */
+    event.preventDefault();
+
+    let signupUrl = 'https://questioner-api-048.herokuapp.com/api/v2/auth/login';
+    fetch(signupUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          'email' :document.getElementById('email_login').value,
+          'password' : document.getElementById('psw_login').value
+        })
+    })
+        .then((response) => response.json())
+        .then((data => {
+            if (data.status === 200){
+                console.log('Success:', JSON.stringify(data));
+                openForm('login')
+            }
+            else{
+                console.log(data.message);
+            }
+        }))
+        .catch((err)=>console.log(err));
+}
+
 function openForm(form_id){
   if (form_id == 'register'){
     document.getElementById('login').style.display='none';
