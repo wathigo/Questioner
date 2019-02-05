@@ -131,7 +131,7 @@ body{
     border: none;
     background: #f1f1f1;
   }
-#register, #login, #Admnlogin{
+#register, #login, #Adminsignup{
   display: none;
 }
 .signup_form-content, .signIn_form-content{
