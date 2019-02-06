@@ -98,7 +98,7 @@ function login_user(event) {
         .then((data => {
             if (data.status === 200){
                 console.log('Success:', JSON.stringify(data));
-                openForm('login')
+                window.location.href = './profile.html';
             }
             else{
                 console.log(data.message);
@@ -107,6 +107,56 @@ function login_user(event) {
         .catch((err)=>console.log(err));
 }
 
+function createNode(element) {
+    return document.createElement(element);
+}
+
+function append(parent, el) {
+  return parent.appendChild(el);
+}
+
+function get_meetups(){
+  let signupUrl = 'https://questioner-api-048.herokuapp.com/api/v2/meetups/upcoming';
+  let meetups_container = document.getElementsByClassName("meetup-container");
+
+  fetch(signupUrl, {
+    method: "get",
+    header: {
+      "Content-Type": "application/json"
+    }
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.status === 200) {
+      console.log('successful', data.status)
+      let meetup_container = document.getElementById('meetups_container')
+      let meetup_data = data.data;
+      meetup_data = meetup_data.slice(0, 6)
+      return meetup_data.map(function(meetup_record) {
+        let meetup = createNode('div');
+        meetup.classList.add('meetups')
+        let date = createNode('p');
+        let title = createNode('h4');
+        let description = createNode('p');
+        let venue = createNode('venue');
+        date.innerHTML = `${meetup_record.json_build_object.date}`;
+        title.innerHTML = `${meetup_record.json_build_object.title}`;
+        description.innerHTML = `${meetup_record.json_build_object.description}`;
+        venue.innerHTML = `${meetup_record.json_build_object.vanue}`;
+        append(meetup, date);
+        append(meetup, title);
+        append(meetup, description);
+        append(meetup, venue);
+        append(meetup_container, meetup);
+    })
+  }
+    else{
+      console.log(data.message);
+    }
+
+})
+    .catch((err)=>console.log(err));
+  }
 function openForm(form_id){
   if (form_id == 'register'){
     document.getElementById('login').style.display='none';
