@@ -246,7 +246,14 @@ textarea{
   margin-right: 65px;
 }
 @media(max-width: 650px){
-  #comment
+  .meetups{
+    margin : 0px;
+    float : none;
+  }
+  .signup_form-content, .signIn_form-content{
+    margin : 0px;
+    float : None;
+  }
 
   }
 
