@@ -248,7 +248,7 @@ textarea{
 @media(max-width: 650px){
   .meetups{
     margin : 0px;
-    width : 100%;
+    width : 85%;
     margin-bottom : 30px;
     float : none;
   }
