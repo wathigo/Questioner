@@ -248,11 +248,13 @@ textarea{
 @media(max-width: 650px){
   .meetups{
     margin : 0px;
+    width : 80%;
     float : none;
   }
   .signup_form-content, .signIn_form-content{
     margin : 0px;
     float : None;
+    height : 830px;
   }
 
   }
