@@ -100,6 +100,8 @@ document.getElementById('quiz').addEventListener('submit', create_questioon);
                   window.alert('question posted');
                   let question_data = data.data;
                   console.log(question_data);
+                  console.log(question_data.questionid)
+                  localStorage.setItem("question_id", question_data.questionid);
                     closeForm('postquestion')
                     let question_div = document.getElementById('question_container');
                     let feedback = document.getElementById('votes');
@@ -122,17 +124,43 @@ document.getElementById('quiz').addEventListener('submit', create_questioon);
   }
 
 
+function post_comment(){
+  /*
+  Function to perform post cmment request
+  */
+  event.preventDefault();
+  let questionid = localStorage.getItem('questionid')
+  console.log(questionid);
+  let signupUrl = `https://questioner-api-048.herokuapp.com/api/v2/questions/${questionid}/comments`;
+  fetch(signupUrl, {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+          'Authorization' : 'Bearer ' + localStorage.getItem('token')
+      },
+      body: JSON.stringify({
+        'comment' :document.getElementById('comment_body').value
+      })
+  })
+      .then((response) => response.json())
+      .then((data => {
+          if (data.status === 201){
+              console.log(data);
+          }
+          else{
+              console.log(data.message);
+          }
+      }))
+      .catch((err)=>console.log(err));
+}
+
+
   function pass_meetup_data(id){
     localStorage.setItem("meetupid", id);
     Openmeetup('quiz');
   }
   function Openmeetup(div_id){
-    if (div_id == "quiz"){
-      document.getElementById("profile").style.display = "none"
-    }
-    else{
-      document.getElementById("quiz").style.display = "none"
-    }
+    document.getElementById("quiz").style.display = "none"
     var i, body_content;
     body_content = document.getElementsByClassName("body_container");
     for (i = 0; i < body_content.length; i++){
