@@ -81,8 +81,8 @@ document.getElementById('quiz').addEventListener('submit', create_questioon);
       Function to perform post a question
       */
       event.preventDefault();
-
-      let signupUrl = 'https://questioner-api-048.herokuapp.com/api/v2/meetups/58/questions';
+      let meetupid = localStorage.getItem('meetupid')
+      let signupUrl = `https://questioner-api-048.herokuapp.com/api/v2/meetups/${meetupid}/questions`;
       fetch(signupUrl, {
           method: 'POST',
           headers: {
@@ -108,8 +108,8 @@ document.getElementById('quiz').addEventListener('submit', create_questioon);
                     let question_element = createNode('h4');
                     title_element.innerHTML = `${question_data.title}` ;
                     question_element.innerHTML = `${question_data.question}`;
-                    feedback_items.style.display = "block"
-                    feedback.innerHTML = `votes: ${question_data.votes}`
+                    feedback_items.style.display = "block";
+                    feedback.innerHTML = `votes: ${question_data.votes}`;
                     append(question_div, title_element);
                     append(question_div, question_element);
                     append(question_div, feedback)
