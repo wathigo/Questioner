@@ -72,10 +72,13 @@ body{
     padding: 0px;
   }
 }
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
+#postquestion{
+  border: 1px solid #900C3F;
+  border-radius: 10px;
+}
+.question_elements{
+  border-radius: 3px;
+  margin-left: 20px;
 }
 .meetups:hover{
   background-color:  #ebd7d6;
@@ -180,9 +183,13 @@ body{
 label input{
   float: left;
 }
+#feedback{
+  display: none;
+}
 .question{
   border-radius: 15px;
   height: 500px;
+  overflow-y: scroll;
   margin: 20px;
   width:auto;
   border: 2px solid #900C3F;
