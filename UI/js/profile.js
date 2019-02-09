@@ -38,32 +38,31 @@ function get_meetups(){
   .then(response => response.json())
   .then(data => {
     if (data.status === 200) {
-      console.log('successful', data.status);
       let meetup_container = document.getElementById('meetups_container')
       let meetup_data = data.data;
       return meetup_data.map(function(meetup_record) {
-      let date = meetup_record.json_build_object.date;
-      date = new Date(date);
-      let today = new Date(get_current_time());
-      let days = get_time(date, today);;
-        if (days < 20){
-          let meetup = createNode('div');
-          meetup.setAttribute("onclick", "Openmeetup('quiz')");
-          meetup.classList.add('meetups')
-          let date = createNode('p');
-          let title = createNode('h4');
-          let description = createNode('p');
-          let venue = createNode('venue');
-          date.innerHTML = `${meetup_record.json_build_object.date}`;
-          title.innerHTML = `${meetup_record.json_build_object.title}`;
-          description.innerHTML = `${meetup_record.json_build_object.description}`;
-          venue.innerHTML = `${meetup_record.json_build_object.vanue}`;
-          append(meetup, date);
-          append(meetup, title);
-          append(meetup, description);
-          append(meetup, venue);
-          append(meetup_container, meetup);
-
+        let date = meetup_record.json_build_object.date;
+        date = new Date(date);
+        let today = new Date(get_current_time());
+        let days = get_time(date, today);;
+          if (days < 20){
+            let meetup = createNode('div');
+            let meetupid = meetup_record.json_build_object.meetupid;
+            meetup.addEventListener("click", function meetups(){pass_meetup_data(meetupid);});
+            meetup.classList.add('meetups')
+            let date = createNode('p');
+            let title = createNode('h4');
+            let description = createNode('p');
+            let venue = createNode('venue');
+            date.innerHTML = `${meetup_record.json_build_object.date}`;
+            title.innerHTML = `${meetup_record.json_build_object.title}`;
+            description.innerHTML = `${meetup_record.json_build_object.description}`;
+            venue.innerHTML = `${meetup_record.json_build_object.vanue}`;
+            append(meetup, date);
+            append(meetup, title);
+            append(meetup, description);
+            append(meetup, venue);
+            append(meetup_container, meetup);
         }
     })
   }
@@ -74,6 +73,58 @@ function get_meetups(){
 })
 
     .catch((err)=>console.log(err));
+  }
+
+document.getElementById('quiz').addEventListener('submit', create_questioon);
+  function create_questioon(event) {
+      /*
+      Function to perform post a question
+      */
+      event.preventDefault();
+
+      let signupUrl = 'https://questioner-api-048.herokuapp.com/api/v2/meetups/58/questions';
+      fetch(signupUrl, {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+              'Authorization' : 'Bearer ' + localStorage.getItem('token')
+          },
+          body: JSON.stringify({
+            'title' :document.getElementById('title').value,
+            'question' : document.getElementById('quest').value
+          })
+      })
+          .then((response) => response.json())
+          .then((data => {
+              if (data.status === 201){
+                  window.alert('question posted');
+                  let question_data = data.data;
+                  console.log(question_data);
+                    closeForm('postquestion')
+                    let question_div = document.getElementById('question_container');
+                    let feedback = document.getElementById('votes');
+                    let feedback_items = document.getElementById('feedback');
+                    let title_element = createNode('h3');
+                    let question_element = createNode('h4');
+                    title_element.innerHTML = `${question_data.title}` ;
+                    question_element.innerHTML = `${question_data.question}`;
+                    feedback_items.style.display = "block"
+                    feedback.innerHTML = `votes: ${question_data.votes}`
+                    append(question_div, title_element);
+                    append(question_div, question_element);
+                    append(question_div, feedback)
+            }
+              else{
+                  console.log(data.Error);
+              }
+          }))
+          .catch((err)=>console.log(err));
+  }
+
+
+  function pass_meetup_data(id){
+    localStorage.setItem("meetupid", id);
+    Openmeetup('quiz');
   }
   function Openmeetup(div_id){
     if (div_id == "quiz"){
@@ -91,4 +142,7 @@ function get_meetups(){
   }
   function openForm(fid) {
     document.getElementById(fid).style.display = "block";
+}
+function closeForm(fid) {
+  document.getElementById(fid).style.display = "none";
 }
