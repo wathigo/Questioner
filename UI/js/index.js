@@ -97,7 +97,10 @@ function login_user(event) {
         .then((response) => response.json())
         .then((data => {
             if (data.status === 200){
-                console.log('Success:', JSON.stringify(data));
+                window.alert(data.Message);
+                let token = data.access_token;
+                console.log(token);
+                localStorage.setItem("token", token);
                 window.location.href = './profile.html';
             }
             else{
@@ -117,7 +120,6 @@ function append(parent, el) {
 
 function get_meetups(){
   let signupUrl = 'https://questioner-api-048.herokuapp.com/api/v2/meetups/upcoming';
-  let meetups_container = document.getElementsByClassName("meetup-container");
 
   fetch(signupUrl, {
     method: "get",
