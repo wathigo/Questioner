@@ -25,13 +25,22 @@
      </div>
        <div id="quiz" class="question">
          <div class="left">
-           <h1> Dancing routines</h1>
            <h2> Top questions <button onclick="openForm('postquestion')" type="button" class="askbtn">Ask</button></h2>
-              <textarea name="question" id="postquestion"  placeholder="Post your question here."></textarea>
-           <p><b> What are the hardest routines in hiphop?</b></p>
-           <div class="feedback">
-    <p><i class="fa fa-thumbs-up"></i>27
-       <i class="fa fa-thumbs-down"></i>9
+                <form id="postquestion" class="form-container">
+                  <p><b>Title:</b></p>
+                  <textarea id="title"class="question_elements" type="text" placeholder="Enter Title" required></textarea>
+                  <p><b>Question:</b></p>
+                  <textarea id="quest"class="question_elements" placeholder="Type your question here"></textarea>
+
+                  <button type="submit" class="btn">Submit</button>
+                  <button onclick="closeForm('postquestion')" type="button" class="clbtn" onclick="closeForm()">Close</button>
+              </form>
+            <div id="question_container"></div>
+           <div id="feedback">
+    <p>
+      <i id="votes"></i>
+      <i class="fa fa-thumbs-up"></i>
+       <i class="fa fa-thumbs-down"></i>
        <a onclick="openForm('comment')"><i  class="fa fa-comment-o"></i></a>
      </p>
 </div>
