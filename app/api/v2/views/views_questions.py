@@ -26,8 +26,8 @@ class Questions(QuestionRecord, Resource):
                                           "Error": "A question with the \
                                           given credentials exists!"}), 400)
         if not response:
-            return make_response(jsonify({"status" : 400,
-                                          "Error": "meetup record does not exists!"}), 400)
+            return make_response(jsonify({"status" : 404,
+                                          "Error": "meetup record does not exists!"}), 404)
 
         return make_response(jsonify({"status" : 201,
                                       "data": response}), 201)

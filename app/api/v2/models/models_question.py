@@ -29,9 +29,12 @@ class QuestionRecord(BaseModels):
             "votes" : 0
         }
         query = """INSERT INTO question(meetupid, userid, title, question, votes)
-        VALUES ('%s', '%s', '%s', '%s', '%s')""" % \
+        VALUES ('%s', '%s', '%s', '%s', '%s') \
+        RETURNING questionid, title, meetupid, userid, question, votes, askedon""" % \
         (data['meetupId'], data['userid'], data['title'], data['question'], data['votes'])
-        return self.record.save(query, data)
+        response = self.record.save(query, data)
+        print(response)
+        return response
 
     def update_column_value(self, primary_key, vote):
         """ Update votes column method """
