@@ -107,7 +107,7 @@ document.getElementById('quiz').addEventListener('submit', create_questioon);
                     let question_div = document.getElementById('question_container');
                     let feedback = document.getElementById('votes');
                     let feedback_items = document.getElementById('feedback');
-                    let title_element = createNode('h3');
+                    let title_element = createNode('h2');
                     let question_element = createNode('h4');
                     title_element.innerHTML = `${question_data.title}` ;
                     question_element.innerHTML = `${question_data.question}`;
@@ -140,7 +140,7 @@ function post_comment(){
           'Authorization' : 'Bearer ' + localStorage.getItem('token')
       },
       body: JSON.stringify({
-        'comment' :document.getElementById('comment_body').value;
+        'comment' :document.getElementById('comment_body').value
       })
   })
       .then((response) => response.json())
@@ -150,7 +150,7 @@ function post_comment(){
               console.log(data);
               closeForm('comment');
               let comment_element = document.getElementById('comment_element')
-              comment_element.innerHTML = `${data.comment}`;
+              comment_element.innerHTML = `${data.data.comment}`;
           }
           else{
               console.log(data.message);
