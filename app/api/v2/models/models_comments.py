@@ -23,8 +23,8 @@ class CommentsRecord():
             "title" : question_title,
             "comment" : comment
         }
-        query = """INSERT INTO comments(questionid, userid, body, title)
-        VALUES ('%s', '%s', '%s', '%s') RETURNING userid, questionid, title, body, comment""" % \
+        query = """INSERT INTO comments(questionid, userid, body, title, comment)
+        VALUES ('%s', '%s', '%s', '%s', '%s') RETURNING userid, questionid, title, body, comment""" % \
         (data['questionid'], data['userid'], data['body'], data['title'])
         response = self.record.save(query)
         return response
