@@ -25,7 +25,7 @@
      </div>
        <div id="quiz" class="question">
          <div class="left">
-           <h2> Top questions <button onclick="openForm('postquestion')" type="button" class="askbtn">Ask</button></h2>
+           <h1> Top questions <button onclick="openForm('postquestion')" type="button" class="askbtn">Ask</button></h1>
                 <form id="postquestion" class="form-container">
                   <p><b>Title:</b></p>
                   <textarea id="title"class="question_elements" type="text" placeholder="Enter Title" required></textarea>
@@ -41,7 +41,8 @@
       <i id="votes"></i>
       <i class="fa fa-thumbs-up"></i>
        <i class="fa fa-thumbs-down"></i>
-       <a onclick="openForm('comment')"><i  class="fa fa-comment-o"></i></a>
+       <a id="comment_icon"><i  class="fa fa-comment-o"></i></a>
+       <p id="comment_element"></p>
      </p>
 </div>
 <div id="comment">

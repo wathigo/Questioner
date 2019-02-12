@@ -100,9 +100,10 @@ document.getElementById('quiz').addEventListener('submit', create_questioon);
                   window.alert('question posted');
                   let question_data = data.data;
                   console.log(question_data);
-                  console.log(question_data.questionid)
-                  localStorage.setItem("question_id", question_data.questionid);
+                  console.log(question_data.questionid);
                     closeForm('postquestion')
+                    let comment = document.getElementById('comment_icon');
+                    comment.addEventListener("click", function meetups(){pass_question_data(question_data.questionid);});
                     let question_div = document.getElementById('question_container');
                     let feedback = document.getElementById('votes');
                     let feedback_items = document.getElementById('feedback');
@@ -139,13 +140,17 @@ function post_comment(){
           'Authorization' : 'Bearer ' + localStorage.getItem('token')
       },
       body: JSON.stringify({
-        'comment' :document.getElementById('comment_body').value
+        'comment' :document.getElementById('comment_body').value;
       })
   })
       .then((response) => response.json())
       .then((data => {
           if (data.status === 201){
+            window.alert('Successful');
               console.log(data);
+              closeForm('comment');
+              let comment_element = document.getElementById('comment_element')
+              comment_element.innerHTML = `${data.comment}`;
           }
           else{
               console.log(data.message);
@@ -159,6 +164,12 @@ function post_comment(){
     localStorage.setItem("meetupid", id);
     Openmeetup('quiz');
   }
+
+  function pass_question_data(id){
+    localStorage.setItem("questionid", id);
+    openForm('comment');
+  }
+
   function Openmeetup(div_id){
     document.getElementById("quiz").style.display = "none"
     var i, body_content;
