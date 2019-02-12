@@ -34,13 +34,14 @@ class BaseModels():
         data = cur.fetchall()
         return data
 
-    def save(self, query, data):
+    def save(self, query):
         ''' Save data to a database'''
         save = self.connection
         cur = save.cursor(cursor_factory=RealDictCursor)
         cur.execute(query)
         save.commit()
-        return data
+        record = cur.fetchone()
+        return record
 
 
     def delete(self, query):

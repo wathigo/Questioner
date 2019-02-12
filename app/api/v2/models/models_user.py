@@ -30,11 +30,11 @@ class UserRecord():
             data['isadmin'] = True
         query = """INSERT INTO user_table(isadmin, firstname, lastname, username, \
                                           othername, phonenumber, email, password)
-        VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s');""" % \
+        VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s') RETURNING userid, isadmin, firstname, lastname, email;""" % \
         (data['isadmin'], data['firstname'], data['lastname'],\
          data['username'], data['othername'],\
          data['phonenumber'], data['email'], data['password'])
-        response = self.models.save(query, data)
+        response = self.models.save(query)
         return response
 
     def authenticate_user(self, data):

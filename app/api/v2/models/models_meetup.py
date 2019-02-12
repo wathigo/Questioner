@@ -27,9 +27,10 @@ class MeetupRecord(BaseModels):
             "location" : data['location']
             }
         query = """INSERT INTO meetups(userid, title, description, location, happeningon)
-        VALUES ('%s', '%s', '%s', '%s', '%s');""" % \
+        VALUES ('%s', '%s', '%s', '%s', '%s')
+        RETURNING meetupid, title, description, location, happeningon, userid, createdon;""" % \
         (data['userid'], data['title'], data['description'], data['location'], data['date'])
-        record = self.records.save(query, data)
+        record = self.records.save(query)
         return record
 
     def get_items(self):

@@ -43,7 +43,7 @@ def table_queries():
     """ Create reserve record creation table"""
     reserve = """CREATE TABLE IF NOT EXISTS reserve
     (
-    id SERIAL PRIMARY KEY NOT NULL,
+    reserveid SERIAL PRIMARY KEY NOT NULL,
     response char(20) NOT NULL,
     userid int REFERENCES user_table(userid),
     meetupid integer REFERENCES meetups(meetupid) ON DELETE CASCADE,

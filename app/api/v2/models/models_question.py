@@ -32,7 +32,7 @@ class QuestionRecord(BaseModels):
         VALUES ('%s', '%s', '%s', '%s', '%s') \
         RETURNING questionid, title, meetupid, userid, question, votes, askedon""" % \
         (data['meetupId'], data['userid'], data['title'], data['question'], data['votes'])
-        response = self.record.save(query, data)
+        response = self.record.save(query)
         print(response)
         return response
 

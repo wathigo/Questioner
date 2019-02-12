@@ -25,7 +25,7 @@ class ReserveRecord(BaseModels):
             "status" : reserve
         }
         query = """INSERT INTO reserve(userid, meetupid, response)
-        VALUES ('%s', '%s', '%s')""" % \
+        VALUES ('%s', '%s', '%s') RETURNING reserveid, response, userid, meetupid, reservedon""" % \
         (data['userid'], data['meetup_id'], data['status'])
-        self.record.save(query, data)
+        self.record.save(query)
         return data
