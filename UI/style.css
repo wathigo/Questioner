@@ -18,6 +18,9 @@
   border-radius: 4px;
 }
 
+#comment_element{
+  font-style: italic;
+}
 .header a.name {
   font-size: 25px;
   font-weight: bold;

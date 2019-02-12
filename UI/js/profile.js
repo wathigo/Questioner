@@ -81,8 +81,8 @@ document.getElementById('quiz').addEventListener('submit', create_questioon);
       Function to perform post a question
       */
       event.preventDefault();
-
-      let signupUrl = 'https://questioner-api-048.herokuapp.com/api/v2/meetups/58/questions';
+      let meetupid = localStorage.getItem('meetupid')
+      let signupUrl = `https://questioner-api-048.herokuapp.com/api/v2/meetups/${meetupid}/questions`;
       fetch(signupUrl, {
           method: 'POST',
           headers: {
@@ -100,16 +100,19 @@ document.getElementById('quiz').addEventListener('submit', create_questioon);
                   window.alert('question posted');
                   let question_data = data.data;
                   console.log(question_data);
+                  console.log(question_data.questionid);
                     closeForm('postquestion')
+                    let comment = document.getElementById('comment_icon');
+                    comment.addEventListener("click", function meetups(){pass_question_data(question_data.questionid);});
                     let question_div = document.getElementById('question_container');
                     let feedback = document.getElementById('votes');
                     let feedback_items = document.getElementById('feedback');
-                    let title_element = createNode('h3');
+                    let title_element = createNode('h2');
                     let question_element = createNode('h4');
                     title_element.innerHTML = `${question_data.title}` ;
                     question_element.innerHTML = `${question_data.question}`;
-                    feedback_items.style.display = "block"
-                    feedback.innerHTML = `votes: ${question_data.votes}`
+                    feedback_items.style.display = "block";
+                    feedback.innerHTML = `votes: ${question_data.votes}`;
                     append(question_div, title_element);
                     append(question_div, question_element);
                     append(question_div, feedback)
@@ -122,17 +125,53 @@ document.getElementById('quiz').addEventListener('submit', create_questioon);
   }
 
 
+function post_comment(){
+  /*
+  Function to perform post cmment request
+  */
+  event.preventDefault();
+  let questionid = localStorage.getItem('questionid')
+  console.log(questionid);
+  let signupUrl = `https://questioner-api-048.herokuapp.com/api/v2/questions/${questionid}/comments`;
+  fetch(signupUrl, {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+          'Authorization' : 'Bearer ' + localStorage.getItem('token')
+      },
+      body: JSON.stringify({
+        'comment' :document.getElementById('comment_body').value
+      })
+  })
+      .then((response) => response.json())
+      .then((data => {
+          if (data.status === 201){
+            window.alert('Successful');
+              console.log(data);
+              closeForm('comment');
+              let comment_element = document.getElementById('comment_element')
+              comment_element.innerHTML = `${data.data.comment}`;
+          }
+          else{
+              console.log(data.message);
+          }
+      }))
+      .catch((err)=>console.log(err));
+}
+
+
   function pass_meetup_data(id){
     localStorage.setItem("meetupid", id);
     Openmeetup('quiz');
   }
+
+  function pass_question_data(id){
+    localStorage.setItem("questionid", id);
+    openForm('comment');
+  }
+
   function Openmeetup(div_id){
-    if (div_id == "quiz"){
-      document.getElementById("profile").style.display = "none"
-    }
-    else{
-      document.getElementById("quiz").style.display = "none"
-    }
+    document.getElementById("quiz").style.display = "none"
     var i, body_content;
     body_content = document.getElementsByClassName("body_container");
     for (i = 0; i < body_content.length; i++){
