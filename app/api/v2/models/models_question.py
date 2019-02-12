@@ -1,6 +1,6 @@
 """Local imports """
 from .models_base import BaseModels
-
+ 
 
 class QuestionRecord(BaseModels):
     """ Class to create a new question record """
