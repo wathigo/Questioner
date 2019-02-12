@@ -40,8 +40,7 @@ class BaseModels():
         cur = save.cursor(cursor_factory=RealDictCursor)
         cur.execute(query)
         save.commit()
-        record = cur.fetchone()
-        return record
+        return data
 
 
     def delete(self, query):
