@@ -27,9 +27,9 @@ function get_time(date1, date2){
 
 }
 function get_meetups(){
-  let signupUrl = 'https://questioner-api-048.herokuapp.com/api/v2/meetups/upcoming';
+  let Url = 'https://questioner-api-048.herokuapp.com/api/v2/meetups/upcoming';
 
-  fetch(signupUrl, {
+  fetch(Url, {
     method: "get",
     header: {
       "Content-Type": "application/json"
@@ -82,8 +82,8 @@ document.getElementById('quiz').addEventListener('submit', create_questioon);
       */
       event.preventDefault();
       let meetupid = localStorage.getItem('meetupid')
-      let signupUrl = `https://questioner-api-048.herokuapp.com/api/v2/meetups/${meetupid}/questions`;
-      fetch(signupUrl, {
+      let Url = `https://questioner-api-048.herokuapp.com/api/v2/meetups/${meetupid}/questions`;
+      fetch(Url, {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json',
@@ -105,6 +105,10 @@ document.getElementById('quiz').addEventListener('submit', create_questioon);
                     let comment = document.getElementById('comment_icon');
                     comment.addEventListener("click", function meetups(){pass_question_data(question_data.questionid);});
                     let question_div = document.getElementById('question_container');
+                    let upvote = document.getElementById('upvote');
+                    let downvote = document.getElementById('downvote');
+                    upvote.addEventListener("click", function upvote(){upvote_question(question_data.questionid);});
+                    downvote.addEventListener("click", function downvote(){downvote_question(question_data.questionid);});
                     let feedback = document.getElementById('votes');
                     let feedback_items = document.getElementById('feedback');
                     let title_element = createNode('h2');
@@ -124,6 +128,39 @@ document.getElementById('quiz').addEventListener('submit', create_questioon);
           .catch((err)=>console.log(err));
   }
 
+function upvote_question(questionid){
+  Url = `https://questioner-api-048.herokuapp.com/api/v2/questions/${questionid}/upvote`
+  fetch(Url, {
+    method: 'PATCH',
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization' : 'Bearer ' + localStorage.getItem('token')
+    },
+  })
+  .then((response) => response.json())
+  .then((data => {
+    data = data.data[0];
+    let votes = document.getElementById('votes');
+    votes.innerHTML = `votes: ${data.json_build_object.votes}`;
+  }))
+}
+
+function downvote_question(questionid){
+  Url = `https://questioner-api-048.herokuapp.com/api/v2/questions/${questionid}/downvote`
+  fetch(Url, {
+    method: 'PATCH',
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization' : 'Bearer ' + localStorage.getItem('token')
+    },
+  })
+  .then((response) => response.json())
+  .then((data => {
+    data = data.data;
+    let votes = document.getElementById('votes');
+    votes.innerHTML = `votes: ${data.votes}`;
+  }))
+}
 
 function post_comment(){
   /*
@@ -132,8 +169,8 @@ function post_comment(){
   event.preventDefault();
   let questionid = localStorage.getItem('questionid')
   console.log(questionid);
-  let signupUrl = `https://questioner-api-048.herokuapp.com/api/v2/questions/${questionid}/comments`;
-  fetch(signupUrl, {
+  let Url = `https://questioner-api-048.herokuapp.com/api/v2/questions/${questionid}/comments`;
+  fetch(Url, {
       method: 'POST',
       headers: {
           'Content-Type': 'application/json',
