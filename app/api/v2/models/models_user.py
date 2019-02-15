@@ -43,6 +43,9 @@ class UserRecord():
         credentials = self.models.find('email', data['email'])
         if credentials is None:
             result = 'f'
+        elif credentials['isadmin'] == True:
+            result = 'isadmin'
         if credentials['password'] != data['password']:
             result = False
+        print (result)
         return result

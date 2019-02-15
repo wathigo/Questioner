@@ -77,6 +77,7 @@ class UserLogin(UserRecord, Resource):
         time = datetime.timedelta(days=2)
         access_token = create_access_token(identity=json_data['email'], expires_delta=time)
         return make_response(jsonify({"status" : 200,
+                                      "admin" : response,
                                       "Message": "Logged in as {}"\
                                       .format(json_data['email'].split("@")[0]),
                                       "access_token" : access_token}), 200)
