@@ -4,7 +4,7 @@ from .models_base import BaseModels
 class CommentsRecord():
     """ class to define methods utilized by comment views"""
     def __init__(self):
-        self.record = BaseModels('comments')
+        self.record = BaseModels('comments') 
 
     def create_comment_record(self, data, questionid, email):
         """ method to create a comment record"""
