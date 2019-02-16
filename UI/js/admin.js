@@ -62,6 +62,8 @@ function get_meetups(){
         let delete_meetup = createNode('button');
         delete_meetup.classList.add('delbtn');
         delete_meetup.setAttribute('type', 'button');
+        let meetupid = meetup_record.json_build_object.meetupid;
+        delete_meetup.addEventListener("click", function meetups(){delete_meetup_record(meetupid);});
         let title = createNode('h4');
         let description = createNode('p');
         let venue = createNode('venue');
@@ -85,6 +87,29 @@ function get_meetups(){
 })
     .catch((err)=>console.log(err));
   }
+
+function delete_meetup_record(meetupid){
+  /*
+  Function to delete a meetup
+  */
+  event.preventDefault();
+  Url = `https://questioner-api-048.herokuapp.com/api/v2/meetups/${meetupid}`;
+  fetch(Url, {
+    method: "DELETE",
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization' : 'Bearer ' + localStorage.getItem('token')
+    }
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.status === 200){
+      window.alert('meetup delete succssfully');
+      window.location.href = './admin.html';
+    }
+  });
+}
+
   function createNode(element) {
       return document.createElement(element);
   }
