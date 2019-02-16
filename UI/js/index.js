@@ -123,9 +123,9 @@ function append(parent, el) {
 }
 
 function get_meetups(){
-  let signupUrl = 'https://questioner-api-048.herokuapp.com/api/v2/meetups/upcoming';
+  let Url = 'https://questioner-api-048.herokuapp.com/api/v2/meetups/upcoming';
 
-  fetch(signupUrl, {
+  fetch(Url, {
     method: "get",
     header: {
       "Content-Type": "application/json"
