@@ -101,7 +101,11 @@ function login_user(event) {
                 let token = data.access_token;
                 console.log(token);
                 localStorage.setItem("token", token);
-                window.location.href = './profile.html';
+                if (data.admin === 'isadmin'){
+                  window.location.href = './admin.html';}
+                else{
+                  window.location.href = './profile.html';
+                }
             }
             else{
                 console.log(data.message);
@@ -119,9 +123,9 @@ function append(parent, el) {
 }
 
 function get_meetups(){
-  let signupUrl = 'https://questioner-api-048.herokuapp.com/api/v2/meetups/upcoming';
+  let Url = 'https://questioner-api-048.herokuapp.com/api/v2/meetups/upcoming';
 
-  fetch(signupUrl, {
+  fetch(Url, {
     method: "get",
     header: {
       "Content-Type": "application/json"
@@ -141,10 +145,10 @@ function get_meetups(){
         let title = createNode('h4');
         let description = createNode('p');
         let venue = createNode('venue');
-        date.innerHTML = `${meetup_record.json_build_object.date}`;
-        title.innerHTML = `${meetup_record.json_build_object.title}`;
-        description.innerHTML = `${meetup_record.json_build_object.description}`;
-        venue.innerHTML = `${meetup_record.json_build_object.vanue}`;
+        date.innerHTML = `Date: ${meetup_record.json_build_object.date}`;
+        title.innerHTML = `Title: ${meetup_record.json_build_object.title}`;
+        description.innerHTML = `Description: ${meetup_record.json_build_object.description}`;
+        venue.innerHTML = `Venue: ${meetup_record.json_build_object.vanue}`;
         append(meetup, date);
         append(meetup, title);
         append(meetup, description);

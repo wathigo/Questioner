@@ -7,72 +7,44 @@
      </title>
         <link rel="stylesheet"href="style.css">
       <script>
-      function openForm(fid) {
- document.getElementById(fid).style.display = "block";
-   }
+
       </script>
       </head>
-      <body>
+      <body onload="get_meetups()">
         <div class="header">
      <a href="index.html" class="name">Qustioner</a>
 
      </div>
    </div>
-        <div class="body_container">
+        <div id="meetup_container"class="body_container">
           <h1>Meetups created.</h1>
           <p>Create meetup? <button onclick="openForm('myForm')" type="button" class="createbtn">create</button></p>
           <div class="meetup-form" id="myForm">
-  <form class="form-container">
-    <h1>Create a meetup</h1>
+             <form id="meetup_form"class="form-container">
+               <h1>Create a meetup</h1>
 
-    <p ><b>Title:</b></p>
-    <input type="text" placeholder="Enter Title" name="title" required>
+               <p class="label"><b>Title:</b></p>
+               <input id="title" type="text" placeholder="Enter Title" name="title" required>
 
-    <p><b>Description:</b></p>
-    <textarea  id="postmeetup" cols="108" rows="10" placeholder="Write your Description here"></textarea>
+               <p class="label"><b>Date:</b></p>
+               <input id="date" type="text" placeholder="Enter meetup date" name="title" required>
 
-    <button type="submit" class="btn">Submit</button>
-    <button type="button" class="clbtn" onclick="closeForm()">Close</button>
-</form>
-</div>
+               <p class="label"><b>Venue:</b></p>
+               <input id="location" type="text" placeholder="Enter meetup venue" name="title" required>
+
+               <p class="label"><b>Description:</b></p>
+               <textarea  id="description" cols="108" rows="10" placeholder="Write your Description here"></textarea>
+
+               <button type="submit" class="btn">Submit</button>
+               <button type="button" class="clbtn" onclick="closeForm('myForm')">Close</button>
+           </form>
+           </div>
           <hr>
-          <div class="row">
-              <a  onclick="Openmeetup('quiz')">
-                <div class="meetups">
-                 <p> Sunday, February 06, 2019 <button  type="button" class="delbtn">delete</button></p>
-                 <h4>Dancing routines</h4>
-                 <p>hosted by: Octerd Divel</p>
-                 <p>From: Urgway danvsers Crew</p>
-               </div></a>
-               <a  onclick="Openmeetup('quiz')">
-               <div class="meetups">
-                 <p> Sunday, February 06, 2019 <button  type="button" class="delbtn">delete</button></p>
-                 <h4>Dancing routines</h4>
-                 <p>hosted by: Octerd Divel</p>
-                 <p>From: Urgway danvsers Crew</p>
-               </div>
-             </a>
            </div>
-           <div class="row">
-             <a  onclick="Openmeetup('quiz')">
-               <div class="meetups">
-                 <p> Sunday, February 06, 2019 <button  type="button" class="delbtn">delete</button></p>
-                 <h4>Dancing routines</h4>
-                 <p>hosted by: Octerd Divel</p>
-                 <p>From: Urgway danvsers Crew</p>
-               </div>
-             </a>
-             <a  onclick="Openmeetup('quiz')">
-               <div class="meetups">
-                 <p> Sunday, February 06, 2019 <button  type="button" class="delbtn">delete</button></p>
-                 <h4>Dancing routines</h4>
-                 <p>hosted by: Octerd Divel</p>
-                 <p>From: Urgway danvsers Crew</p>
-               </div>
-             </a>
-           </div>
-           </div>
+
            <div class="footer">
              <p>@2019 Questioner. All rights reserved.</p>
            </div>
+           <script src="./js/admin.js" type="text/javascript"></script>
       </body>
+</html>

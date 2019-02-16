@@ -8,6 +8,11 @@
   line-height: 25px;
 }
 
+.label{
+  text-align: left;
+  margin-left: 15px;
+}
+
 .header a {
   color: white;
   text-align: center;
@@ -214,7 +219,9 @@ label input{
 }
 .delbtn{
   background-color: red;
-  border-radius: 2px;
+  border-radius: 5px;
+  height: 25px;
+  width: 50px;
 }
 #myForm{
   display: none;

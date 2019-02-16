@@ -54,10 +54,10 @@ function get_meetups(){
             let title = createNode('h4');
             let description = createNode('p');
             let venue = createNode('venue');
-            date.innerHTML = `${meetup_record.json_build_object.date}`;
-            title.innerHTML = `${meetup_record.json_build_object.title}`;
-            description.innerHTML = `${meetup_record.json_build_object.description}`;
-            venue.innerHTML = `${meetup_record.json_build_object.vanue}`;
+            date.innerHTML = `Date: ${meetup_record.json_build_object.date}`;
+            title.innerHTML = `Title: ${meetup_record.json_build_object.title}`;
+            description.innerHTML = `Description: ${meetup_record.json_build_object.description}`;
+            venue.innerHTML = `Venue: ${meetup_record.json_build_object.vanue}`;
             append(meetup, date);
             append(meetup, title);
             append(meetup, description);
