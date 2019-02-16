@@ -101,7 +101,11 @@ function login_user(event) {
                 let token = data.access_token;
                 console.log(token);
                 localStorage.setItem("token", token);
-                window.location.href = './profile.html';
+                if (data.admin === 'isadmin'){
+                  window.location.href = './admin.html';}
+                else{
+                  window.location.href = './profile.html';
+                }
             }
             else{
                 console.log(data.message);
