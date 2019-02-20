@@ -58,3 +58,10 @@ class QuestionRecord(BaseModels):
         ''' method to upvote/downvote a question '''
         record = self.update_column_value(question_id, vote)
         return record
+
+    def retrive_records(self, meetup_id):
+        query = """SELECT question, title, questionid, votes FROM question
+        WHERE meetupid = {}""".\
+        format(meetup_id)
+        data = self.record.return_record(query)
+        return data

@@ -4,7 +4,7 @@ from .models_base import BaseModels
 class CommentsRecord():
     """ class to define methods utilized by comment views"""
     def __init__(self):
-        self.record = BaseModels('comments') 
+        self.record = BaseModels('comments')
 
     def create_comment_record(self, data, questionid, email):
         """ method to create a comment record"""
@@ -28,3 +28,10 @@ class CommentsRecord():
         (data['questionid'], data['userid'], data['body'], data['title'], data['comment'])
         response = self.record.save(query)
         return response
+
+    def retrive_records(self, question_id):
+        query = """SELECT comment FROM comments
+        WHERE questionid = {}""".\
+        format(question_id)
+        data = self.record.return_record(query)
+        return data

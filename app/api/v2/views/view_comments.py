@@ -24,3 +24,12 @@ class Comment(CommentsRecord, Resource):
         response = self.models.create_comment_record(json_data, id, email)
         return make_response(jsonify({"status" : 201,
                                       "data": response}), 201)
+
+    def get(self, id):
+        """ endpoint to retrieve all the comments with a specific question id"""
+        response = self.models.retrive_records(id)
+        if response == []:
+            return make_response(jsonify({"status" : 404,
+                                          "Message": "No comments for this question exists!"}), 404)
+        return make_response(jsonify({"status" : 200,
+                                      "data": response}), 200)
