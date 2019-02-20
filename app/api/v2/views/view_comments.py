@@ -27,9 +27,6 @@ class Comment(CommentsRecord, Resource):
 
     def get(self, id):
         """ endpoint to retrieve all the comments with a specific question id"""
-        response = self.models.retrive_records(id)
-        if response == []:
-            return make_response(jsonify({"status" : 404,
-                                          "Message": "No comments for this question exists!"}), 404)
+        response = self.models.retrive_records(id) 
         return make_response(jsonify({"status" : 200,
                                       "data": response}), 200)
