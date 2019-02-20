@@ -60,7 +60,7 @@ class QuestionRecord(BaseModels):
         return record
 
     def retrive_records(self, meetup_id):
-        query = """SELECT question, title FROM question
+        query = """SELECT question, title, questionid, votes FROM question
         WHERE meetupid = {}""".\
         format(meetup_id)
         data = self.record.return_record(query)
