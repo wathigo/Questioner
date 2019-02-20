@@ -25,7 +25,7 @@ function create_meetup(){
       window.alert('meetup created successfully!');
     }
     else{
-      windows.alert(data);
+      window.alert(data);
     }
   })
 
