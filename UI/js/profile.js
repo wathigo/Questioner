@@ -169,7 +169,7 @@ function post_comment(){
   event.preventDefault();
   let questionid = localStorage.getItem('questionid')
   console.log(questionid);
-  let Url = `https://questioner-api-048.herokuapp.com/api/v2/questions/${questionid}/comments`;
+  let Url = `event.preventDefault();/api/v2/questions/${questionid}/comments`;
   fetch(Url, {
       method: 'POST',
       headers: {
@@ -196,6 +196,63 @@ function post_comment(){
       .catch((err)=>console.log(err));
 }
 
+function fetch_comments(question_id){}
+  Url = `https://questioner-api-048.herokuapp.com/api/v2/questions/${question_id}/comments`;
+  fetch(Url, {
+    method: "get",
+    header: {
+      "Content-Type": "application/json"
+    }
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.status === 200) {
+      return data.data
+    });
+}
+
+function get_question(){
+  event.preventDefault();
+  let meetupid = localStorage.getItem('meetupid')
+  Url = `https://questioner-api-048.herokuapp.com/api/v2/meetups/${meetupid}/questions`
+
+  fetch(Url, {
+    method: "get",
+    header: {
+      "Content-Type": "application/json"
+    }
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.status === 200) {
+      let question_data = data.data;
+      let question_div = document.getElementById('question_container');
+      return question_data.map(function(question_record) {
+        let question_data = createNode('div');
+        let title_element = createNode('h2');
+        let question_element = createNode('h4');
+        let feedback = document.getElementById('votes');
+        let feedback_items = document.getElementById('feedback');
+        title_element.innerHTML = `${question_record.title}`;
+        question_element.innerHTML = `${question_record.question}`;
+        feedback_items.style.display = "block";
+        feedback.innerHTML = `${question_record.votes}`;
+        comment_array = fetch_comments(question_record.questionid)
+        let comment_element = document.getElementById('comment_element')
+        comment_array.map(function(comment_record) {
+          let comment_rec = createNode('p');
+          comment_rec.innerHTML = `${comment_record.comment}`;
+          append(comment_element, comment_rec);
+        })
+        append(question_data, title_element);
+        append(question_data, question_element);
+        append(question_data, feedback);
+        append(question_data, comment_element);
+      }
+    }
+
+}))
+}
 
   function pass_meetup_data(id){
     localStorage.setItem("meetupid", id);
