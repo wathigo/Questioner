@@ -32,6 +32,14 @@ class Questions(QuestionRecord, Resource):
         return make_response(jsonify({"status" : 201,
                                       "data": response}), 201)
 
+    def get(self, id):
+        response = self.question_models.retrive_records(id)
+        if response == []:
+            return make_response(jsonify({"status" : 404,
+                                          "Message": "No questions for this meetup exists!"}), 404)
+        return make_response(jsonify({"status" : 200,
+                                      "data": response}), 200)
+
 class Upvotes(QuestionRecord, Resource):
     """ Upvote a question endpoint """
     def __init__(self):
