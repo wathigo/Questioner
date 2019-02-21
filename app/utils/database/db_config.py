@@ -52,7 +52,7 @@ def table_queries():
     comment = """CREATE TABLE IF NOT EXISTS comments
     (
     userid int REFERENCES user_table(userid),
-    questionid int REFERENCES question(questionid),
+    questionid int REFERENCES question(questionid) ON DELETE CASCADE,
     title char(50) NOT NULL,
     body char varying(100),
     comment char varying(100)
