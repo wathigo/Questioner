@@ -191,7 +191,7 @@ body{
 label input{
   float: left;
 }
-#feedback{
+.feedback{
   display: none;
 }
 .question{

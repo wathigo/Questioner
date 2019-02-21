@@ -196,7 +196,7 @@ function post_comment(){
       .catch((err)=>console.log(err));
 }
 
-function fetch_comments(question_id){}
+function fetch_comments(question_id){
   Url = `https://questioner-api-048.herokuapp.com/api/v2/questions/${question_id}/comments`;
   fetch(Url, {
     method: "get",
@@ -208,10 +208,11 @@ function fetch_comments(question_id){}
   .then(data => {
     if (data.status === 200) {
       return data.data
-    });
+    }
+  })
 }
-
 function get_question(){
+  console.log('get question launched!')
   event.preventDefault();
   let meetupid = localStorage.getItem('meetupid')
   Url = `https://questioner-api-048.herokuapp.com/api/v2/meetups/${meetupid}/questions`
@@ -228,35 +229,56 @@ function get_question(){
       let question_data = data.data;
       let question_div = document.getElementById('question_container');
       return question_data.map(function(question_record) {
+        console.log(question_record);
         let question_data = createNode('div');
         let title_element = createNode('h2');
         let question_element = createNode('h4');
-        let feedback = document.getElementById('votes');
-        let feedback_items = document.getElementById('feedback');
+        let feedback = createNode('div');
+        let feedback_p = createNode('p');
+        let vote_element = createNode('i');
+        vote_element.setAttribute('id', 'votes');
+        let upvote_element = createNode('i');
+        upvote_element.classList.add('fa', 'fa-thumbs-up');
+        upvote_element.setAttribute('id', 'upvote');
+        let downvote_element = createNode('i');
+        downvote_element.classList.add('fa', 'fa-thumbs-down');
+        let comment_link = createNode('a');
+        comment_link.setAttribute('id', 'comment_icon');
+        let icon_element = createNode('i');
+        icon_element.classList.add('fa', 'fa-comment-o');
         title_element.innerHTML = `${question_record.title}`;
         question_element.innerHTML = `${question_record.question}`;
-        feedback_items.style.display = "block";
-        feedback.innerHTML = `${question_record.votes}`;
-        comment_array = fetch_comments(question_record.questionid)
-        let comment_element = document.getElementById('comment_element')
-        comment_array.map(function(comment_record) {
-          let comment_rec = createNode('p');
-          comment_rec.innerHTML = `${comment_record.comment}`;
-          append(comment_element, comment_rec);
-        })
+        comment_array = fetch_comments(question_record.questionid);
+        let comment_element = document.getElementById('comment_element');
+        if (comment_array > 0){
+          comment_array.map(function(comment_record) {
+            let comment_rec = createNode('p');
+            comment_rec.innerHTML = `${comment_record.comment}`;
+            append(comment_element, comment_rec);
+        })}
         append(question_data, title_element);
         append(question_data, question_element);
+        append(feedback, feedback_p);
+        append(feedback, vote_element);
+        append(feedback, upvote_element);
+        append(feedback, downvote_element);
+        append(comment_link, icon_element);
+        append(feedback, comment_link);
         append(question_data, feedback);
-        append(question_data, comment_element);
-      }
+        if (comment_array > 0){
+          append(question_data, comment_element);
+        }
+        append(question_div, question_data)
+      })
     }
 
-}))
+})
 }
 
   function pass_meetup_data(id){
     localStorage.setItem("meetupid", id);
     Openmeetup('quiz');
+    get_question();
   }
 
   function pass_question_data(id){
