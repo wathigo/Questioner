@@ -191,7 +191,7 @@ body{
 label input{
   float: left;
 }
-#feedback{
+.feedback{
   display: none;
 }
 .question{
@@ -215,6 +215,7 @@ label input{
 }
 #postquestion, #comment{
   display: none;
+  z-index: 99 !important;
   width: 70%;
 }
 .delbtn{

@@ -102,23 +102,36 @@ document.getElementById('quiz').addEventListener('submit', create_questioon);
                   console.log(question_data);
                   console.log(question_data.questionid);
                     closeForm('postquestion')
-                    let comment = document.getElementById('comment_icon');
-                    comment.addEventListener("click", function meetups(){pass_question_data(question_data.questionid);});
+                    let feedback = createNode('div');
+                    let feedback_p = createNode('p');
+                    let vote_element = createNode('i');
+                    vote_element.setAttribute('id', 'votes');
+                    let upvote_element = createNode('i');
+                    upvote_element.classList.add('fa', 'fa-thumbs-up');
+                    upvote_element.setAttribute('id', 'upvote');
+                    let downvote_element = createNode('i');
+                    downvote_element.classList.add('fa', 'fa-thumbs-down');
+                    let comment_link = createNode('a');
+                    comment_link.setAttribute('id', 'comment_icon');
+                    let icon_element = createNode('i');
+                    icon_element.classList.add('fa', 'fa-comment-o');
+                    comment_link.addEventListener("click", function meetups(){pass_question_data(question_data.questionid);});
                     let question_div = document.getElementById('question_container');
-                    let upvote = document.getElementById('upvote');
-                    let downvote = document.getElementById('downvote');
-                    upvote.addEventListener("click", function upvote(){upvote_question(question_data.questionid);});
-                    downvote.addEventListener("click", function downvote(){downvote_question(question_data.questionid);});
-                    let feedback = document.getElementById('votes');
-                    let feedback_items = document.getElementById('feedback');
+                    upvote_element.addEventListener("click", function upvote(){upvote_question(question_data.questionid);});
+                    downvote_element.addEventListener("click", function downvote(){downvote_question(question_data.questionid);});
                     let title_element = createNode('h2');
                     let question_element = createNode('h4');
                     title_element.innerHTML = `${question_data.title}` ;
                     question_element.innerHTML = `${question_data.question}`;
-                    feedback_items.style.display = "block";
-                    feedback.innerHTML = `votes: ${question_data.votes}`;
+                    vote_element.innerHTML = `votes: ${question_data.votes}`;
                     append(question_div, title_element);
                     append(question_div, question_element);
+                    append(feedback, feedback_p);
+                    append(question_div, vote_element);
+                    append(feedback, upvote_element);
+                    append(feedback, downvote_element);
+                    append(comment_link, icon_element);
+                    append(feedback, comment_link);
                     append(question_div, feedback)
             }
               else{
@@ -166,7 +179,6 @@ function post_comment(){
   /*
   Function to perform post cmment request
   */
-  event.preventDefault();
   let questionid = localStorage.getItem('questionid')
   console.log(questionid);
   let Url = `https://questioner-api-048.herokuapp.com/api/v2/questions/${questionid}/comments`;
@@ -196,14 +208,133 @@ function post_comment(){
       .catch((err)=>console.log(err));
 }
 
+function fetch_comments(question_id){
+  Url = `https://questioner-api-048.herokuapp.com/api/v2/questions/${question_id}/comments`;
+  return fetch(Url, {
+    method: "get",
+    header: {
+      "Content-Type": "application/json"
+    }
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.status === 200) {
+      console.log(data.data);
+      return data.data;
+    }
+  })
+  console.log('not returning!')
+}
+function get_question(){
+  console.log('get question launched!')
+  event.preventDefault();
+  let meetupid = localStorage.getItem('meetupid')
+  Url = `https://questioner-api-048.herokuapp.com/api/v2/meetups/${meetupid}/questions`
+
+  fetch(Url, {
+    method: "get",
+    header: {
+      "Content-Type": "application/json"
+    }
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.status === 200) {
+      let question_data = data.data;
+      let question_div = document.getElementById('question_container');
+      return question_data.map(function(question_record) {
+        console.log(question_record);
+        let comment_div = create_comment_div(question_record.question_id);
+        let question_data = createNode('div');
+        let title_element = createNode('h2');
+        let question_element = createNode('h4');
+        let feedback = createNode('div');
+        let feedback_p = createNode('p');
+        let vote_element = createNode('i');
+        vote_element.setAttribute('id', 'votes');
+        let upvote_element = createNode('i');
+        upvote_element.classList.add('fa', 'fa-thumbs-up');
+        upvote_element.setAttribute('id', 'upvote');
+        let downvote_element = createNode('i');
+        downvote_element.classList.add('fa', 'fa-thumbs-down');
+        let comment_link = createNode('a');
+        comment_link.classList.add('comment_icon');
+        let icon_element = createNode('i');
+        icon_element.classList.add('fa', 'fa-comment-o');
+        let comment_element = createNode('p');
+        comment_element.setAttribute('id', 'comment_element');
+        title_element.innerHTML = `${question_record.title}`;
+        question_element.innerHTML = `${question_record.question}`;
+        vote_element.innerHTML = `votes: ${question_record.votes}`;
+        console.log(question_record.questionid)
+        append(question_data, title_element);
+        append(question_data, question_element);
+        append(feedback, feedback_p);
+        append(feedback, upvote_element);
+        append(feedback, downvote_element);
+        append(comment_link, icon_element);
+        append(feedback, comment_link);
+        append(question_data, vote_element);
+        append(question_data, feedback);
+        let comment_array = fetch_comments(question_record.questionid);
+        comment_array.then(function(value){
+          console.log(value.length);
+          if (value.length > 0){
+            value.map(function(comment_record) {
+              let comment_rec = createNode('p');
+              comment_rec.innerHTML = `${comment_record.comment}`;
+              append(comment_element, comment_rec);
+              append(question_data, comment_element);
+        })}});
+        append(question_div, question_data);
+        append(question_div, comment_div);
+        upvote_element.addEventListener("click", function upvote(){upvote_question(question_record.questionid);});
+        downvote_element.addEventListener("click", function downvote(){downvote_question(question_record.questionid);});
+        comment_link.addEventListener("click", function meetups(){pass_question_data(event, question_record.questionid)});
+
+
+      })
+    }
+
+})
+}
+
+function create_comment_div(questionid){
+  let comment_div = createNode('div');
+  comment_div.setAttribute('id', 'comment');
+  let comment_body = createNode('textarea');
+  comment_body.setAttribute('id', 'comment_body');
+  comment_body.setAttribute('placeholder', 'comment');
+  let comment_submit = createNode('button');
+  comment_submit.setAttribute('type', 'submit');
+  comment_submit.setAttribute('id', 'submitbtn');
+  comment_submit.classList.add('btn');
+  comment_submit.innerHTML = `Submit`;
+  comment_submit.addEventListener('click', function comment(){
+    console.log('clicked');
+    localStorage.setItem('question_id', questionid);
+    post_comment();
+  });
+  let comment_close = createNode('button');
+  comment_close.classList.add('clbtn');
+  comment_close.setAttribute('type', 'button');
+  comment_close.innerHTML = `close`;
+  comment_close.addEventListener('click', function comment(){closeForm('comment');});
+  append(comment_div, comment_body);
+  append(comment_div, comment_submit);
+  append(comment_div, comment_close);
+  return comment_div
+}
 
   function pass_meetup_data(id){
     localStorage.setItem("meetupid", id);
     Openmeetup('quiz');
+    get_question();
   }
 
-  function pass_question_data(id){
+  function pass_question_data(event, id){
     localStorage.setItem("questionid", id);
+    console.log(id)
     openForm('comment');
   }
 
