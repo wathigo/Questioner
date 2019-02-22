@@ -299,6 +299,36 @@ function get_question(){
 })
 }
 
+function send_reserve(reserve_status){
+  event.preventDefault();
+  meetupid = localStorage.getItem('meetupid');
+  Url = `https://questioner-api-048.herokuapp.com/api/v2/meetups/${meetupid}/rsvps`;
+  fetch(Url, {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+          'Authorization' : 'Bearer ' + localStorage.getItem('token')
+      },
+      body: JSON.stringify({
+        'status' :reserve_status
+      })
+  })
+      .then((response) => response.json())
+      .then(data => {
+          if (data.status === 201){
+            if (reserve_status === 'yes'){
+              window.alert('meetup reserved');
+            }
+            else{
+              window.alert('response recorded');
+            }
+          }
+          else{
+            window.alert('oops... something went wrong');
+          }
+        })
+}
+
 function create_comment_div(questionid){
   let comment_div = createNode('div');
   comment_div.setAttribute('id', 'comment');
